@@ -3,9 +3,12 @@ name = "quantum-random"
 version = "0.1.0"
 description = ""
 authors = ["Seto Balian <seto.balian@gmail.com>"]
+packages = [{include = "qrandom"}]
+
 
 [tool.poetry.dependencies]
 python = "^3.8"
+requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
