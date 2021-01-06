@@ -2,7 +2,7 @@
 
 import random
 import warnings
-from typing import NoReturn
+from typing import Any, NoReturn
 
 from . import _anu_api
 
@@ -35,5 +35,5 @@ class QuantumRandom(random.Random):
     def getstate(self) -> NoReturn:
         raise NotImplementedError
 
-    def setstate(self, state) -> NoReturn:
+    def setstate(self, state: Any) -> NoReturn:
         raise NotImplementedError
