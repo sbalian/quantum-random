@@ -5,7 +5,7 @@ from typing import List
 import requests
 
 
-def fetch_quantum_random_numbers(length: int = 1024) -> List[int]:
+def fetch_quantum_rand_ints(length: int = 1024) -> List[int]:
     r = requests.get(
         "https://qrng.anu.edu.au/API/jsonI.php",
         {"length": length, "type": "uint16"},
@@ -16,4 +16,3 @@ def fetch_quantum_random_numbers(length: int = 1024) -> List[int]:
         return r_json["data"]
     else:
         raise ConnectionError("ANU API failed (with a 200 status code)")
-    return r.json()
