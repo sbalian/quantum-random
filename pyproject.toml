@@ -17,6 +17,7 @@ flake8 = "^3.8.4"
 ipython = "^7.19.0"
 pytest = "^6.2.1"
 mypy = "^0.790"
+pytest-mock = "^3.5.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

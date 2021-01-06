@@ -376,6 +376,20 @@ toml = "*"
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
+name = "pytest-mock"
+version = "3.5.0"
+description = "Thin-wrapper around the mock package for easier use with pytest"
+category = "dev"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+pytest = ">=5.0"
+
+[package.extras]
+dev = ["pre-commit", "tox", "pytest-asyncio"]
+
+[[package]]
 name = "regex"
 version = "2020.11.13"
 description = "Alternative regular expression module, to replace re."
@@ -463,7 +477,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "0f772ad01366455965f74d8b7755061a4323141d11956aa82ce786b0bfee0522"
+content-hash = "f26c9db678a9bbb43545cfb2d388a9afea7fb85091493d27e0ea281a6af140ec"
 
 [metadata.files]
 appdirs = [
@@ -616,6 +630,10 @@ pyparsing = [
 pytest = [
     {file = "pytest-6.2.1-py3-none-any.whl", hash = "sha256:1969f797a1a0dbd8ccf0fecc80262312729afea9c17f1d70ebf85c5e76c6f7c8"},
     {file = "pytest-6.2.1.tar.gz", hash = "sha256:66e419b1899bc27346cb2c993e12c5e5e8daba9073c1fbce33b9807abc95c306"},
+]
+pytest-mock = [
+    {file = "pytest-mock-3.5.0.tar.gz", hash = "sha256:4992db789175540d40a193bc60e987b1e69f1a989adad525a44e581c82149b14"},
+    {file = "pytest_mock-3.5.0-py3-none-any.whl", hash = "sha256:f9d77233b3af6c71cec6a8b8b5e9e9a2effd1bb6ff56e9ace72541ff6843ac81"},
 ]
 regex = [
     {file = "regex-2020.11.13-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:8b882a78c320478b12ff024e81dc7d43c1462aa4a3341c754ee65d857a521f85"},

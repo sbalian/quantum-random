@@ -2,6 +2,12 @@ import pytest
 from qrandom import _quantum_random
 
 
+def read_sample_qrns():
+    with open("tests/sample_qrns.txt") as f:
+        samples = f.read().strip().split("\n")
+    return [[int(s) for s in sample.split(",")] for sample in samples]
+
+
 @pytest.fixture
 def quantum_random():
     return _quantum_random.QuantumRandom()
@@ -22,7 +28,11 @@ def test_seed(quantum_random):
         quantum_random.seed(42, 1)
 
 
-def test_random(quantum_random):
+def test_random_short(mocker, quantum_random):
+    mocker.patch(
+        "qrandom._anu_api.fetch_quantum_rand_ints",
+        side_effect=read_sample_qrns(),
+    )
     numbers = [
         [quantum_random.random() for _ in range(10)],
         [quantum_random.random() for _ in range(1200)],
