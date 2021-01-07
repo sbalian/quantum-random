@@ -30,7 +30,7 @@ def test_seed(quantum_random):
 
 def test_random_short(mocker, quantum_random):
     mocker.patch(
-        "qrandom._anu_api.fetch_quantum_rand_ints",
+        "qrandom._api.fetch_quantum_rand_ints",
         side_effect=read_sample_qrns(),
     )
     numbers = [

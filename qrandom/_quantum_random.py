@@ -4,7 +4,7 @@ import random
 import warnings
 from typing import Any, NoReturn
 
-from . import _anu_api
+from . import _api
 
 
 class QuantumRandom(random.Random):
@@ -15,7 +15,7 @@ class QuantumRandom(random.Random):
         self._rand_ints = []
 
     def _refresh_rand_ints(self, length: int = 1024) -> None:
-        self._rand_ints = _anu_api.fetch_quantum_rand_ints(length)
+        self._rand_ints = _api.fetch_quantum_rand_ints(length)
 
     def _rand_int(self) -> int:
         if not self._rand_ints:
