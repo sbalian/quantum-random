@@ -2,8 +2,8 @@ import pytest
 import qrandom
 
 
-def read_sample_qrns():
-    with open("tests/sample_qrns.txt") as f:
+def read_samples():
+    with open("tests/data/samples.txt") as f:
         samples = f.read().strip().split("\n")
     return [[int(s) for s in sample.split(",")] for sample in samples]
 
@@ -38,8 +38,8 @@ def test_seed(quantum_random):
 
 def test_random_short(mocker, quantum_random):
     mocker.patch(
-        "qrandom._api.fetch_quantum_rand_ints",
-        side_effect=read_sample_qrns(),
+        "qrandom._api.fetch",
+        side_effect=read_samples(),
     )
     numbers = [
         [quantum_random.random() for _ in range(10)],

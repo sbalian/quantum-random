@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+
+import qrandom
+
+
+def main():
+    sample = qrandom._api.fetch()
+    print(",".join(map(str, sample)))
+
+
+if __name__ == "__main__":
+    main()

@@ -5,8 +5,12 @@ from typing import Dict, List, Union
 import requests
 
 
-def fetch_quantum_rand_ints() -> List[int]:
-    params: Dict[str, Union[int, str]] = {"length": 1024, "type": "uint16"}
+def fetch() -> List[int]:
+    params: Dict[str, Union[int, str]] = {
+        "length": 1024,
+        "type": "hex16",
+        "size": 8,
+    }
     r = requests.get(
         "https://qrng.anu.edu.au/API/jsonI.php",
         params,
@@ -14,6 +18,6 @@ def fetch_quantum_rand_ints() -> List[int]:
     r.raise_for_status()
     r_json = r.json()
     if r_json["success"]:
-        return r_json["data"]
+        return [int(number, 16) for number in r_json["data"]]
     else:
         raise ConnectionError("ANU API failed (with a 200 status code)")

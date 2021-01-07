@@ -4,14 +4,14 @@ Defines the QRN generator as a subclass of random.Random.
 
 """
 
-import random
+import random as pyrandom
 import warnings
 from typing import Any, NoReturn
 
 from . import _api
 
 
-class QuantumRandom(random.Random):
+class QuantumRandom(pyrandom.Random):
     def __init__(self):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
@@ -19,7 +19,7 @@ class QuantumRandom(random.Random):
         self._rand_ints = []
 
     def _refresh_rand_ints(self) -> None:
-        self._rand_ints = _api.fetch_quantum_rand_ints()
+        self._rand_ints = _api.fetch()
 
     def _rand_int(self) -> int:
         if not self._rand_ints:
@@ -27,7 +27,7 @@ class QuantumRandom(random.Random):
         return self._rand_ints.pop()
 
     def random(self) -> float:
-        return self._rand_int() / 65536
+        return self._rand_int() / (2 ** 64)
 
     def seed(self, a=None, version=None) -> None:
         warnings.warn("seed is ignored")
