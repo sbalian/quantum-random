@@ -18,12 +18,12 @@ class QuantumRandom(random.Random):
             super().__init__()
         self._rand_ints = []
 
-    def _refresh_rand_ints(self, length: int = 1024) -> None:
-        self._rand_ints = _api.fetch_quantum_rand_ints(length)
+    def _refresh_rand_ints(self) -> None:
+        self._rand_ints = _api.fetch_quantum_rand_ints()
 
     def _rand_int(self) -> int:
         if not self._rand_ints:
-            self._refresh_rand_ints(1024)
+            self._refresh_rand_ints()
         return self._rand_ints.pop()
 
     def random(self) -> float:
