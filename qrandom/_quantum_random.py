@@ -20,11 +20,7 @@ class QuantumRandom(random.Random):
     def _rand_int(self) -> int:
         if not self._rand_ints:
             self._refresh_rand_ints(1024)
-        rand_int = self._rand_ints.pop()
-        if rand_int == 65535:
-            return self._rand_int()
-        else:
-            return rand_int
+        return self._rand_ints.pop()
 
     def random(self) -> float:
         return self._rand_int() / 65536
