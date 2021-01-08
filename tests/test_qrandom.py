@@ -1,6 +1,7 @@
 import pytest
 import qrandom
 import utils
+from scipy import stats
 
 
 @pytest.fixture
@@ -28,7 +29,7 @@ def test_seed(quantum_random):
         quantum_random.seed(42, 1)
 
 
-def test_random_short(mocker, quantum_random):
+def test_random(mocker, quantum_random):
     mocker.patch(
         "qrandom._anu_service.fetch",
         side_effect=utils.read_samples(),
@@ -54,3 +55,12 @@ def test_qrandom(mocker):
     assert len(numbers) == 2
     assert len(set(numbers)) == len(numbers)
     assert set(numbers).issubset(set(population))
+
+
+def test_for_uniformity(mocker):
+    mocker.patch(
+        "qrandom._anu_service.fetch",
+        side_effect=utils.read_samples(),
+    )
+    numbers = [qrandom.random() for _ in range(10000)]
+    assert stats.kstest(numbers, "uniform").statistic < 0.01
