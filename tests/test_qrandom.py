@@ -21,6 +21,11 @@ def quantum_random():
     return qrandom.QuantumRandom()
 
 
+def test__notimplemented(quantum_random):
+    with pytest.raises(NotImplementedError):
+        quantum_random._notimplemented(10, 100, x=1000)
+
+
 def test_get_state(quantum_random):
     with pytest.raises(NotImplementedError):
         quantum_random.getstate()

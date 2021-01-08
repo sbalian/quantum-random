@@ -32,11 +32,11 @@ class QuantumRandom(pyrandom.Random):
     def seed(self, *args, **kwds) -> None:
         warnings.warn("seed is ignored")
 
-    def getstate(self, *args, **kwds) -> NoReturn:
-        raise NotImplementedError
+    def _notimplemented(self, *args, **kwds) -> NoReturn:
+        "Method should not be called for a quantum random number generator."
+        raise NotImplementedError("Quantum source does not have state.")
 
-    def setstate(self, *args, **kwds) -> NoReturn:
-        raise NotImplementedError
+    getstate = setstate = _notimplemented
 
 
 _inst = QuantumRandom()
