@@ -16,7 +16,7 @@ def get_hex():
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Get samples for testing.",
+        description="Get samples for testing (hits the real API).",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
