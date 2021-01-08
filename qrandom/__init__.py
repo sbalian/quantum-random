@@ -30,7 +30,9 @@ class _QuantumRandom(pyrandom.Random):
         return self._rand_int() / (2 ** 64)
 
     def seed(self, *args, **kwds) -> None:
-        warnings.warn("seed is ignored")
+        warnings.warn(
+            "Method is ignored. There is no seed for the quantum vacuum."
+        )
 
     def _notimplemented(self, *args, **kwds) -> NoReturn:
         "Method should not be called for a quantum random number generator."

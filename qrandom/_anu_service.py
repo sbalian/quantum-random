@@ -30,7 +30,7 @@ def extract_data(response: requests.models.Response) -> List[int]:
         return [int(number, 16) for number in r_json["data"]]
     else:
         raise RuntimeError(
-            "ANU data extraction failed because 'success' in the response was False."  # noqa
+            "The 'success' field in the ANU response was False."
         )
         # The status code is 200 when this happens
 
