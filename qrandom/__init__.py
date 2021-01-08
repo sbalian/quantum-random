@@ -11,7 +11,7 @@ from typing import NoReturn
 from . import _api
 
 
-class QuantumRandom(pyrandom.Random):
+class _QuantumRandom(pyrandom.Random):
     def __init__(self):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
@@ -39,7 +39,7 @@ class QuantumRandom(pyrandom.Random):
     getstate = setstate = _notimplemented
 
 
-_inst = QuantumRandom()
+_inst = _QuantumRandom()
 seed = _inst.seed
 random = _inst.random
 uniform = _inst.uniform

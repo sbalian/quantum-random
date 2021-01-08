@@ -18,7 +18,7 @@ def test_qrandom():
 
 @pytest.fixture
 def quantum_random():
-    return qrandom.QuantumRandom()
+    return qrandom._QuantumRandom()
 
 
 def test__notimplemented(quantum_random):
