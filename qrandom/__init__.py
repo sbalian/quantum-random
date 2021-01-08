@@ -6,7 +6,7 @@ Defines the QRN generator as a subclass of random.Random.
 
 import random as pyrandom
 import warnings
-from typing import Any, NoReturn
+from typing import NoReturn
 
 from . import _api
 
@@ -29,13 +29,13 @@ class QuantumRandom(pyrandom.Random):
     def random(self) -> float:
         return self._rand_int() / (2 ** 64)
 
-    def seed(self, a=None, version=None) -> None:
+    def seed(self, *args, **kwds) -> None:
         warnings.warn("seed is ignored")
 
-    def getstate(self) -> NoReturn:
+    def getstate(self, *args, **kwds) -> NoReturn:
         raise NotImplementedError
 
-    def setstate(self, state: Any) -> NoReturn:
+    def setstate(self, *args, **kwds) -> NoReturn:
         raise NotImplementedError
 
 
