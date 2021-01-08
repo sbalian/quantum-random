@@ -19,6 +19,9 @@ jedi = "0.17.2"
 pytest = "^6.2.1"
 mypy = "^0.790"
 pytest-mock = "^3.5.0"
+notebook = "^6.1.6"
+matplotlib = "^3.3.3"
+scipy = "^1.6.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
