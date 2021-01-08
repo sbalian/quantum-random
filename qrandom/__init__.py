@@ -61,4 +61,3 @@ paretovariate = _inst.paretovariate
 weibullvariate = _inst.weibullvariate
 getstate = _inst.getstate
 setstate = _inst.setstate
-getrandbits = _inst.getrandbits
