@@ -3,15 +3,15 @@
 
 import argparse
 
-import qrandom
+from qrandom import _anu_service
 
 
 def get_ints():
-    return qrandom._api.fetch()
+    return _anu_service.fetch()
 
 
 def get_hex():
-    return qrandom._api.make_request().json()["data"]
+    return _anu_service.make_request().json()["data"]
 
 
 def main():

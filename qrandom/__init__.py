@@ -8,7 +8,7 @@ import random as pyrandom
 import warnings
 from typing import NoReturn
 
-from . import _api
+from . import _anu_service
 
 
 class _QuantumRandom(pyrandom.Random):
@@ -19,7 +19,7 @@ class _QuantumRandom(pyrandom.Random):
         self._rand_ints = []
 
     def _refresh_rand_ints(self) -> None:
-        self._rand_ints = _api.fetch()
+        self._rand_ints = _anu_service.fetch()
 
     def _rand_int(self) -> int:
         if not self._rand_ints:

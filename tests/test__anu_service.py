@@ -2,7 +2,7 @@ import pytest
 import requests
 import responses
 import utils
-from qrandom import _api
+from qrandom import _anu_service
 
 
 @responses.activate
@@ -10,7 +10,7 @@ def test_extract_data_success():
 
     responses.add(
         responses.GET,
-        _api.URL,
+        _anu_service.URL,
         json={
             "type": "string",
             "length": 1024,
@@ -20,8 +20,8 @@ def test_extract_data_success():
         },
         status=200,
     )
-    response = requests.get(_api.URL)
-    numbers = _api.extract_data(response)
+    response = requests.get(_anu_service.URL)
+    numbers = _anu_service.extract_data(response)
     assert len(numbers) == 1024
     assert min(numbers) >= 0
     assert max(numbers) < 2 ** 64
@@ -29,7 +29,9 @@ def test_extract_data_success():
 
 @responses.activate
 def test_extract_data_fail():
-    responses.add(responses.GET, _api.URL, json={"success": False}, status=200)
-    response = requests.get(_api.URL)
+    responses.add(
+        responses.GET, _anu_service.URL, json={"success": False}, status=200
+    )
+    response = requests.get(_anu_service.URL)
     with pytest.raises(RuntimeError):
-        _api.extract_data(response)
+        _anu_service.extract_data(response)
