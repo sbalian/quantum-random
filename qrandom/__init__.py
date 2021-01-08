@@ -10,6 +10,30 @@ from typing import NoReturn
 
 from . import _anu_service
 
+__all__ = [
+    "seed",
+    "random",
+    "uniform",
+    "triangular",
+    "randint",
+    "choice",
+    "randrange",
+    "sample",
+    "shuffle",
+    "choices",
+    "normalvariate",
+    "lognormvariate",
+    "expovariate",
+    "vonmisesvariate",
+    "gammavariate",
+    "gauss",
+    "betavariate",
+    "paretovariate",
+    "weibullvariate",
+    "getstate",
+    "setstate",
+]
+
 
 class _QuantumRandom(pyrandom.Random):
     def __init__(self):
