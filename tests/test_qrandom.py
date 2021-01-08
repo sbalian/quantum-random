@@ -3,14 +3,6 @@ import qrandom
 import utils
 
 
-def test_qrandom():
-    population = [1, 100, 3, 4, 12]
-    numbers = qrandom.sample(population, 2)
-    assert len(numbers) == 2
-    assert len(set(numbers)) == len(numbers)
-    assert set(numbers).issubset(set(population))
-
-
 @pytest.fixture
 def quantum_random():
     return qrandom._QuantumRandom()
@@ -50,3 +42,15 @@ def test_random_short(mocker, quantum_random):
         assert max(numbers_) < 1
     assert len(numbers[0]) == 10
     assert len(numbers[1]) == 1200
+
+
+def test_qrandom(mocker):
+    mocker.patch(
+        "qrandom._anu_service.fetch",
+        return_value=utils.read_samples()[0],
+    )
+    population = [1, 100, 3, 4, 12]
+    numbers = qrandom.sample(population, 2)
+    assert len(numbers) == 2
+    assert len(set(numbers)) == len(numbers)
+    assert set(numbers).issubset(set(population))
