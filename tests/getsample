@@ -1,38 +1,11 @@
 #!/usr/bin/env python
 
 
-import argparse
-
-from qrandom import _anu_service
-
-
-def get_ints():
-    return _anu_service.fetch()
-
-
-def get_hex():
-    return _anu_service.make_request().json()["data"]
+import qrandom
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Get samples for testing (hits the real API).",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument(
-        "--type",
-        type=str,
-        choices=["hex", "int"],
-        help="type generated",
-        default="int",
-    )
-    args = parser.parse_args()
-
-    if args.type == "int":
-        generator = get_ints
-    else:
-        generator = get_hex
-    print(",".join(map(str, generator())))
+    print(",".join(map(str, qrandom._get_qrand_int64())))
 
 
 if __name__ == "__main__":

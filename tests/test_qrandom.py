@@ -1,7 +1,14 @@
 import pytest
 import qrandom
-import utils
 from scipy import stats
+
+
+def _read_samples():
+    with open("tests/data/samples/ints.txt") as f:
+        return [
+            [int(x) for x in line.split(",")]
+            for line in f.read().strip().split("\n")
+        ]
 
 
 @pytest.fixture
@@ -31,8 +38,8 @@ def test_seed(quantum_random):
 
 def test_random(mocker, quantum_random):
     mocker.patch(
-        "qrandom._anu_service.fetch",
-        side_effect=utils.read_samples(),
+        "qrandom._get_qrand_int64",
+        side_effect=_read_samples(),
     )
     numbers = [
         [quantum_random.random() for _ in range(10)],
@@ -47,8 +54,8 @@ def test_random(mocker, quantum_random):
 
 def test_qrandom(mocker):
     mocker.patch(
-        "qrandom._anu_service.fetch",
-        return_value=utils.read_samples()[0],
+        "qrandom._get_qrand_int64",
+        return_value=_read_samples()[0],
     )
     population = [1, 100, 3, 4, 12]
     numbers = qrandom.sample(population, 2)
@@ -59,8 +66,8 @@ def test_qrandom(mocker):
 
 def test_for_uniformity(mocker):
     mocker.patch(
-        "qrandom._anu_service.fetch",
-        side_effect=utils.read_samples(),
+        "qrandom._get_qrand_int64",
+        side_effect=_read_samples(),
     )
     numbers = [qrandom.random() for _ in range(10000)]
     assert stats.kstest(numbers, "uniform").statistic < 0.01

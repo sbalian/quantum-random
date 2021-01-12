@@ -6,9 +6,34 @@ Defines the QRN generator as a subclass of random.Random.
 
 import random as pyrandom
 import warnings
-from typing import NoReturn
+from typing import List, NoReturn
 
-from . import _anu_service
+import requests
+
+
+def _get_qrand_int64() -> List[int]:
+    """ANU API interface."""
+
+    response = requests.get(
+        "https://qrng.anu.edu.au/API/jsonI.php",
+        {
+            "length": 1024,
+            "type": "hex16",
+            "size": 8,
+        },
+    )
+
+    response.raise_for_status()
+    r_json = response.json()
+
+    if r_json["success"]:
+        return [int(number, 16) for number in r_json["data"]]
+    else:
+        raise RuntimeError(
+            "The 'success' field in the ANU response was False."
+        )
+        # The status code is 200 when this happens
+
 
 __all__ = [
     "seed",
@@ -43,7 +68,7 @@ class _QuantumRandom(pyrandom.Random):
         self._rand_ints = []
 
     def _refresh_rand_ints(self) -> None:
-        self._rand_ints = _anu_service.fetch()
+        self._rand_ints = _get_qrand_int64()
 
     def _rand_int(self) -> int:
         if not self._rand_ints:
