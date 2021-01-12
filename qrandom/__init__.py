@@ -12,8 +12,6 @@ import requests
 
 
 def _get_qrand_int64() -> List[int]:
-    """ANU API interface."""
-
     response = requests.get(
         "https://qrng.anu.edu.au/API/jsonI.php",
         {
