@@ -1,19 +1,52 @@
+import json
+
 import pytest
 import qrandom
 from scipy import stats
 
 
-def _read_samples():
-    with open("tests/data/samples/ints.txt") as f:
-        return [
-            [int(x) for x in line.split(",")]
-            for line in f.read().strip().split("\n")
-        ]
+def _read_mock_responses():
+    with open("tests/data/responses.json") as f:
+        return json.load(f)
 
 
 @pytest.fixture
-def quantum_random():
+def quantum_random(requests_mock):
+    mock_responses = []
+    for response in _read_mock_responses():
+        mock_responses.append(
+            {"json": {"data": response["data"], "success": True}}
+        )
+    mock_responses.append(
+        {
+            "status_code": 500,
+            "reason": "Exhausted mocks. Add more with tests/getresponses.",
+        }
+    )
+    requests_mock.get(qrandom._ANU_URL, mock_responses)
     return qrandom._QuantumRandom()
+
+
+def test__get_qrand_int64(requests_mock):
+    requests_mock.get(
+        qrandom._ANU_URL,
+        [
+            {
+                "json": {
+                    "data": _read_mock_responses()[0]["data"],
+                    "success": True,
+                }
+            },
+            {"json": {"success": False}},
+        ],
+    )
+    numbers = qrandom._get_qrand_int64()
+    assert len(numbers) == 1024
+    assert min(numbers) >= 0
+    assert max(numbers) < 2 ** 64
+
+    with pytest.raises(RuntimeError):
+        numbers = qrandom._get_qrand_int64()
 
 
 def test__notimplemented(quantum_random):
@@ -36,27 +69,14 @@ def test_seed(quantum_random):
         quantum_random.seed(42, 1)
 
 
-def test_random(mocker, quantum_random):
-    mocker.patch(
-        "qrandom._get_qrand_int64",
-        side_effect=_read_samples(),
-    )
-    numbers = [
-        [quantum_random.random() for _ in range(10)],
-        [quantum_random.random() for _ in range(1200)],
-    ]
-    for numbers_ in numbers:
-        assert min(numbers_) >= 0
-        assert max(numbers_) < 1
-    assert len(numbers[0]) == 10
-    assert len(numbers[1]) == 1200
+def test_random(quantum_random):
+    numbers = [quantum_random.random() for _ in range(10000)]
+    assert min(numbers) >= 0
+    assert max(numbers) < 1
+    assert len(numbers) == 10000
 
 
-def test_qrandom(mocker):
-    mocker.patch(
-        "qrandom._get_qrand_int64",
-        return_value=_read_samples()[0],
-    )
+def test_qrandom(quantum_random):
     population = [1, 100, 3, 4, 12]
     numbers = qrandom.sample(population, 2)
     assert len(numbers) == 2
@@ -64,10 +84,6 @@ def test_qrandom(mocker):
     assert set(numbers).issubset(set(population))
 
 
-def test_for_uniformity(mocker):
-    mocker.patch(
-        "qrandom._get_qrand_int64",
-        side_effect=_read_samples(),
-    )
+def test_for_uniformity(quantum_random):
     numbers = [qrandom.random() for _ in range(10000)]
     assert stats.kstest(numbers, "uniform").statistic < 0.01

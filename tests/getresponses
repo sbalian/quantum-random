@@ -1,0 +1,26 @@
+#!/usr/bin/env python
+
+import json
+
+import qrandom
+import requests
+
+
+def main():
+    json_responses = []
+    n = 10
+    for i in range(n):
+        print(f"Getting {i+1} of {n} ...")
+        response = requests.get(qrandom._ANU_URL, qrandom._ANU_PARAMS)
+        response.raise_for_status()
+        json_r = response.json()
+        json_responses.append(json_r)
+
+    path = "data/responses.json"
+    with open("data/responses.json", "w") as f:
+        json.dump(json_responses, f)
+    print(f"Wrote to {path} .")
+
+
+if __name__ == "__main__":
+    main()

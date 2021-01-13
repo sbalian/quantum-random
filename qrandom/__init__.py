@@ -10,29 +10,6 @@ from typing import List, NoReturn
 
 import requests
 
-
-def _get_qrand_int64() -> List[int]:
-    response = requests.get(
-        "https://qrng.anu.edu.au/API/jsonI.php",
-        {
-            "length": 1024,
-            "type": "hex16",
-            "size": 8,
-        },
-    )
-
-    response.raise_for_status()
-    r_json = response.json()
-
-    if r_json["success"]:
-        return [int(number, 16) for number in r_json["data"]]
-    else:
-        raise RuntimeError(
-            "The 'success' field in the ANU response was False."
-        )
-        # The status code is 200 when this happens
-
-
 __all__ = [
     "seed",
     "random",
@@ -56,6 +33,28 @@ __all__ = [
     "getstate",
     "setstate",
 ]
+
+
+_ANU_PARAMS = {
+    "length": 1024,
+    "type": "hex16",
+    "size": 8,
+}
+_ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
+
+
+def _get_qrand_int64() -> List[int]:
+    response = requests.get(_ANU_URL, _ANU_PARAMS)
+    response.raise_for_status()
+    r_json = response.json()
+
+    if r_json["success"]:
+        return [int(number, 16) for number in r_json["data"]]
+    else:
+        raise RuntimeError(
+            "The 'success' field in the ANU response was False."
+        )
+        # The status code is 200 when this happens
 
 
 class _QuantumRandom(pyrandom.Random):
