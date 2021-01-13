@@ -30,20 +30,22 @@ def quantum_random(requests_mock):
 def test__get_qrand_int64(requests_mock):
     requests_mock.get(
         qrandom._ANU_URL,
-        [
-            {
-                "json": {
-                    "data": _read_mock_responses()[0]["data"],
-                    "success": True,
-                }
-            },
-            {"json": {"success": False}},
-        ],
+        json={
+            "data": _read_mock_responses()[0]["data"],
+            "success": True,
+        },
     )
     numbers = qrandom._get_qrand_int64()
     assert len(numbers) == 1024
     assert min(numbers) >= 0
     assert max(numbers) < 2 ** 64
+
+    requests_mock.get(
+        qrandom._ANU_URL,
+        json={
+            "success": False,
+        },
+    )
 
     with pytest.raises(RuntimeError):
         numbers = qrandom._get_qrand_int64()
