@@ -6,7 +6,7 @@ Defines the QRN generator as a subclass of random.Random.
 
 import random as pyrandom
 import warnings
-from typing import List, NoReturn
+from typing import Dict, List, NoReturn, Union
 
 import requests
 
@@ -35,12 +35,12 @@ __all__ = [
 ]
 
 
-_ANU_PARAMS = {
+_ANU_PARAMS: Dict[str, Union[int, str]] = {
     "length": 1024,
     "type": "hex16",
     "size": 8,
 }
-_ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
+_ANU_URL: str = "https://qrng.anu.edu.au/API/jsonI.php"
 
 
 def _get_qrand_int64() -> List[int]:
