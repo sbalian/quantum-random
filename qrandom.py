@@ -1,7 +1,12 @@
 """ANU quantum random numbers.
 
-Defines the QRN generator as a subclass of random.Random.
+Implements a quantum random number generator as a subclass of random.Random.
+The quantum random numbers come from https://qrng.anu.edu.au/.
 
+You can use it just like the standard Python random module (it just replaces
+the default Mersenne Twister). But seeding is ignored and get/setstate() are
+not implemented because there is no state. Also, getrandbits() is not supplied
+so randrange() can not cover arbitrarily large ranges.
 """
 
 import random as pyrandom
@@ -58,22 +63,25 @@ def _get_qrand_int64() -> List[int]:
 
 
 class _QuantumRandom(pyrandom.Random):
+    """Quantum random number generator."""
+
     def __init__(self):
+        """Initialize an instance."""
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
             super().__init__()
         self._rand_int64 = []
 
     def random(self) -> float:
+        """Get the next quantum random number in the range [0.0, 1.0)."""
         if not self._rand_int64:
             self._rand_int64 = _get_qrand_int64()
         rand_int64 = self._rand_int64.pop()
         return rand_int64 / (2 ** 64)
 
     def seed(self, *args, **kwds) -> None:
-        warnings.warn(
-            "Method is ignored. There is no seed for the quantum vacuum."
-        )
+        "Method is ignored. There is no seed for the quantum vacuum."
+        warnings.warn(self.seed.__doc__)
 
     def _notimplemented(self, *args, **kwds) -> NoReturn:
         "Method should not be called for a quantum random number generator."
