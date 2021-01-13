@@ -81,6 +81,7 @@ class _QuantumRandom(pyrandom.Random):
 
     def seed(self, *args, **kwds) -> None:
         "Method is ignored. There is no seed for the quantum vacuum."
+        assert self.seed.__doc__ is not None
         warnings.warn(self.seed.__doc__)
 
     def _notimplemented(self, *args, **kwds) -> NoReturn:
