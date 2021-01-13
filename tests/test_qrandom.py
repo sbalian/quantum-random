@@ -72,6 +72,9 @@ def test_seed(quantum_random):
 
 
 def test_random(quantum_random):
+    number = quantum_random.random()
+    assert number >= 0
+    assert number < 1
     numbers = [quantum_random.random() for _ in range(10000)]
     assert min(numbers) >= 0
     assert max(numbers) < 1
