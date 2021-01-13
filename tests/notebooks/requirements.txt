@@ -1,0 +1,3 @@
+jedi==0.17.2
+notebook
+matplotlib
