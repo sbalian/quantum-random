@@ -62,18 +62,13 @@ class _QuantumRandom(pyrandom.Random):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
             super().__init__()
-        self._rand_ints = []
-
-    def _refresh_rand_ints(self) -> None:
-        self._rand_ints = _get_qrand_int64()
-
-    def _rand_int(self) -> int:
-        if not self._rand_ints:
-            self._refresh_rand_ints()
-        return self._rand_ints.pop()
+        self._rand_int64 = []
 
     def random(self) -> float:
-        return self._rand_int() / (2 ** 64)
+        if not self._rand_int64:
+            self._rand_int64 = _get_qrand_int64()
+        rand_int64 = self._rand_int64.pop()
+        return rand_int64 / (2 ** 64)
 
     def seed(self, *args, **kwds) -> None:
         warnings.warn(
