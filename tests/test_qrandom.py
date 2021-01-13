@@ -11,10 +11,13 @@ def _read_mock_responses():
         return json.load(f)
 
 
+MOCK_RESPONSES = _read_mock_responses()
+
+
 @pytest.fixture
 def quantum_random(requests_mock):
     mock_responses = []
-    for response in _read_mock_responses():
+    for response in MOCK_RESPONSES:
         mock_responses.append(
             {"json": {"data": response["data"], "success": True}}
         )
@@ -32,7 +35,7 @@ def test__get_qrand_int64(requests_mock):
     requests_mock.get(
         qrandom._ANU_URL,
         json={
-            "data": _read_mock_responses()[0]["data"],
+            "data": MOCK_RESPONSES[0]["data"],
             "success": True,
         },
     )
