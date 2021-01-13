@@ -3,7 +3,7 @@ name = "quantum-random"
 version = "0.1.0"
 description = ""
 authors = ["Seto Balian <seto.balian@gmail.com>"]
-packages = [{include = "qrandom"}]
+packages = [{include = "qrandom.py"}]
 
 
 [tool.poetry.dependencies]
