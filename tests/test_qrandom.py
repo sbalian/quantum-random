@@ -1,8 +1,9 @@
 import json
 
 import pytest
-import qrandom
 from scipy import stats
+
+import qrandom
 
 
 def _read_mock_responses():
