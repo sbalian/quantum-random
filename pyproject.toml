@@ -6,7 +6,7 @@ authors = ["Seto Balian <seto.balian@gmail.com>"]
 packages = [{include = "qrandom.py"}]
 readme = "README.md"
 license = "MIT"
-
+repository = "https://github.com/sbalian/quantum-random"
 
 [tool.poetry.dependencies]
 python = "^3.6"
