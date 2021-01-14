@@ -1,12 +1,15 @@
 """ANU quantum random numbers.
 
-Implements a quantum random number generator as a subclass of random.Random.
-The quantum random numbers come from https://qrng.anu.edu.au/.
+Implements a quantum random number generator as a subclass of random.Random
+as described on https://docs.python.org/. The numbers come from the
+ANU Quantum Random Number Generator at The Australian National University
+(https://qrng.anu.edu.au/).
 
-You can use it just like the standard Python random module (it just replaces
-the default Mersenne Twister). But seeding is ignored and get/setstate() are
-not implemented because there is no state. Also, getrandbits() is not supplied
-so randrange() can not cover arbitrarily large ranges.
+You can use it just like the standard random module (this module replaces the
+default Mersenne Twister). But seeding is ignored and getstate() and setstate()
+are not implemented because there is no state. Also, getrandbits() is not
+yet available so randrange() can not cover arbitrarily large ranges.
+
 """
 
 import random as pyrandom
@@ -49,6 +52,7 @@ _ANU_URL: str = "https://qrng.anu.edu.au/API/jsonI.php"
 
 
 def _get_qrand_int64() -> List[int]:
+    """Get quantum random int64s from the ANU API."""
     response = requests.get(_ANU_URL, _ANU_PARAMS)
     response.raise_for_status()
     r_json = response.json()
