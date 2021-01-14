@@ -22,7 +22,12 @@ Just import `qrandom` and use it like you'd use the
 -0.8370871276247828
 ```
 
-Only Python 3.6+ is supported.
+Only Python 3.6+ are supported.
+
+[This notebook][viz] shows the distribution obtained by calling the uniform
+random method for [0.0, 1.0) (`qrandom.random()`) and checks for uniformity
+using a Kolmogorov-Smirnov test.
 
 [anu]: https://qrng.anu.edu.au
 [pyrandom]: https://docs.python.org/3.9/library/random.html
+[viz]: ./tests/data/notebooks/UniformTest.ipynb
