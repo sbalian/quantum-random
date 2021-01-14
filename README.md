@@ -22,12 +22,15 @@ Just import `qrandom` and use it like you'd use the
 -0.8370871276247828
 ```
 
-Only Python 3.6+ are supported.
+Supports Python 3.6+. To run the tests locally, first install with
+[`poetry`][poetry], then run `tox`. You will need Python 3.6-3.9.
 
-[This notebook][viz] shows the distribution obtained by calling
-`qrandom.random()` (the uniform random method for [0.0, 1.0) ) 10,000 times
-and checks for uniformity using a Kolmogorov-Smirnov test.
+[This notebook][viz] shows the distribution in [0.0, 1.0) obtained
+by calling `qrandom.random()` 10,000 times and checks for uniformity
+using a Kolmogorov-Smirnov test.
+
 
 [anu]: https://qrng.anu.edu.au
 [pyrandom]: https://docs.python.org/3.9/library/random.html
 [viz]: ./tests/notebooks/UniformTest.ipynb
+[poetry]: https://python-poetry.org
