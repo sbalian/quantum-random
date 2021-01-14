@@ -30,4 +30,4 @@ using a Kolmogorov-Smirnov test.
 
 [anu]: https://qrng.anu.edu.au
 [pyrandom]: https://docs.python.org/3.9/library/random.html
-[viz]: ./tests/data/notebooks/UniformTest.ipynb
+[viz]: ./tests/notebooks/UniformTest.ipynb
