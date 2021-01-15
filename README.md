@@ -27,6 +27,8 @@ Just import `qrandom` and use it like you'd use the
 -0.8370871276247828
 ```
 
+The first call takes about a second (1024 randoms are fetched at a time).
+
 Supports Python 3.6+.
 
 To run the tests locally, you will need [poetry][poetry] and Python 3.6-3.9.
