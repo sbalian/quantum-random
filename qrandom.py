@@ -19,27 +19,27 @@ from typing import Dict, List, NoReturn, Union
 import requests
 
 __all__ = [
-    "seed",
-    "random",
-    "uniform",
-    "triangular",
-    "randint",
+    "betavariate",
     "choice",
-    "randrange",
-    "sample",
-    "shuffle",
     "choices",
-    "normalvariate",
-    "lognormvariate",
     "expovariate",
-    "vonmisesvariate",
     "gammavariate",
     "gauss",
-    "betavariate",
-    "paretovariate",
-    "weibullvariate",
     "getstate",
+    "lognormvariate",
+    "normalvariate",
+    "paretovariate",
+    "randint",
+    "random",
+    "randrange",
+    "sample",
+    "seed",
     "setstate",
+    "shuffle",
+    "triangular",
+    "uniform",
+    "vonmisesvariate",
+    "weibullvariate",
 ]
 
 
@@ -96,24 +96,24 @@ class _QuantumRandom(pyrandom.Random):
 
 
 _inst = _QuantumRandom()
-seed = _inst.seed
-random = _inst.random
-uniform = _inst.uniform
-triangular = _inst.triangular
-randint = _inst.randint
+betavariate = _inst.betavariate
 choice = _inst.choice
-randrange = _inst.randrange
-sample = _inst.sample
-shuffle = _inst.shuffle
 choices = _inst.choices
-normalvariate = _inst.normalvariate
-lognormvariate = _inst.lognormvariate
 expovariate = _inst.expovariate
-vonmisesvariate = _inst.vonmisesvariate
 gammavariate = _inst.gammavariate
 gauss = _inst.gauss
-betavariate = _inst.betavariate
-paretovariate = _inst.paretovariate
-weibullvariate = _inst.weibullvariate
 getstate = _inst.getstate
+lognormvariate = _inst.lognormvariate
+normalvariate = _inst.normalvariate
+paretovariate = _inst.paretovariate
+randint = _inst.randint
+random = _inst.random
+randrange = _inst.randrange
+sample = _inst.sample
+seed = _inst.seed
 setstate = _inst.setstate
+shuffle = _inst.shuffle
+triangular = _inst.triangular
+uniform = _inst.uniform
+vonmisesvariate = _inst.vonmisesvariate
+weibullvariate = _inst.weibullvariate
