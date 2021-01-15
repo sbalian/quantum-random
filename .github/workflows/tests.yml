@@ -1,4 +1,4 @@
-name: Install, lint and test
+name: Tests
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  python:
 
     runs-on: ubuntu-latest
     strategy:
@@ -25,10 +25,14 @@ jobs:
         curl -fsS -o get-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
         python get-poetry.py --preview -y
         rm get-poetry.py
-    - name: Install, lint and test
+    - name: Lint
       run: |
         source $HOME/.poetry/env
         poetry install
         poetry run black -l 79 .
         poetry run flake8 .
+        poetry run mypy qrandom.py
+    - name: Test
+      run: |
+        source $HOME/.poetry/env
         poetry run pytest
