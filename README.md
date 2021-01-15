@@ -1,5 +1,7 @@
 # Quantum random numbers in Python
 
+![Tests](https://github.com/sbalian/quantum-random/workflows/Tests/badge.svg)
+
 This package brings the [ANU quantum random numbers][anu] to Python.
 
 The default pseudo-random generator in Python is replaced by calls to the
