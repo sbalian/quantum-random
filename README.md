@@ -35,11 +35,8 @@ poetry shell
 tox
 ```
 
-[This notebook][viz] shows the distribution in [0.0, 1.0) obtained
-by calling `qrandom.random()` 10,000 times and checks for uniformity
-using a Kolmogorov-Smirnov test.
+See [here](./docs/uniform.md) for a visualisation and a Kolmogorov–Smirnov test.
 
 [anu]: https://qrng.anu.edu.au
 [pyrandom]: https://docs.python.org/3.9/library/random.html
-[viz]: ./tests/notebooks/UniformTest.ipynb
 [poetry]: https://python-poetry.org
