@@ -18,7 +18,7 @@ def main():
         json_responses.append(json_r)
 
     path = "data/responses.json"
-    with open("data/responses.json", "w") as f:
+    with open(path, "w") as f:
         json.dump(json_responses, f)
     print(f"Wrote to {path} .")
 
