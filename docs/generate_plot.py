@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
+import random
+
 import matplotlib.pyplot as plt
 from scipy import stats
 
 import qrandom
-import random
 
 
 def generate_data():
