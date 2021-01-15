@@ -24,6 +24,7 @@ jobs:
       run: |
         curl -fsS -o get-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
         python get-poetry.py --preview -y
+        rm get-poetry.py
     - name: Install, lint and test
       run: |
         source $HOME/.poetry/env
