@@ -57,7 +57,7 @@ def test__get_qrand_int64(requests_mock):
 
 def test__notimplemented(quantum_random):
     with pytest.raises(NotImplementedError):
-        quantum_random._notimplemented(10, 100, x=1000)
+        quantum_random._notimplemented()
 
 
 def test_get_state(quantum_random):
@@ -67,32 +67,31 @@ def test_get_state(quantum_random):
 
 def test_set_state(quantum_random):
     with pytest.raises(NotImplementedError):
-        quantum_random.setstate(None)
+        quantum_random.setstate()
 
 
 def test_seed(quantum_random):
     with pytest.warns(UserWarning):
-        quantum_random.seed(42, 1)
+        quantum_random.seed()
 
 
 def test_random(quantum_random):
+    assert not quantum_random._rand_int64
     number = quantum_random.random()
-    assert number >= 0
-    assert number < 1
+    assert len(quantum_random._rand_int64) == (1024 - 1)
+    assert number >= 0.0
+    assert number < 1.0
     numbers = [quantum_random.random() for _ in range(10000)]
-    assert min(numbers) >= 0
-    assert max(numbers) < 1
+    assert min(numbers) >= 0.0
+    assert max(numbers) < 1.0
     assert len(numbers) == 10000
-
-
-def test_qrandom(quantum_random):
-    population = [1, 100, 3, 4, 12]
-    numbers = qrandom.sample(population, 2)
-    assert len(numbers) == 2
-    assert len(set(numbers)) == len(numbers)
-    assert set(numbers).issubset(set(population))
+    assert len(quantum_random._rand_int64) == (10 * 1024 - 10000 - 1)
 
 
 def test_for_uniformity(quantum_random):
     numbers = [qrandom.random() for _ in range(10000)]
     assert stats.kstest(numbers, "uniform").statistic < 0.01
+
+
+def test___all__():
+    assert set(qrandom.__all__).issubset(set(dir(qrandom)))
