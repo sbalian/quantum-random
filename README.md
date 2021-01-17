@@ -37,10 +37,9 @@ the number of 1024-batches.
 
 To run the tests locally, you will need [poetry][poetry] and Python 3.6-3.9.
 
-```
+```bash
 poetry install
-poetry shell
-tox
+poetry run tox
 ```
 
 See [here](./docs/uniform.md) for a visualisation and a Kolmogorov–Smirnov test.
