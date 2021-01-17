@@ -66,7 +66,7 @@ def _get_qrand_int64() -> List[int]:
         # The status code is 200 when this happens
 
 
-class _QuantumRandom(pyrandom.Random):
+class QuantumRandom(pyrandom.Random):
     """Quantum random number generator."""
 
     def __init__(self):
@@ -100,7 +100,7 @@ class _QuantumRandom(pyrandom.Random):
     getstate = setstate = _notimplemented
 
 
-_inst = _QuantumRandom()
+_inst = QuantumRandom()
 betavariate = _inst.betavariate
 choice = _inst.choice
 choices = _inst.choices
