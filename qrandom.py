@@ -76,10 +76,15 @@ class _QuantumRandom(pyrandom.Random):
             super().__init__()
         self._rand_int64 = []
 
+    def fill(self, n: int = 1):
+        """Fill the generator with n batches of 1024 64-bit ints."""
+        for _ in range(n):
+            self._rand_int64.extend(_get_qrand_int64())
+
     def random(self) -> float:
         """Get the next quantum random number in the range [0.0, 1.0)."""
         if not self._rand_int64:
-            self._rand_int64 = _get_qrand_int64()
+            self.fill()
         rand_int64 = self._rand_int64.pop()
         return rand_int64 / (2 ** 64)
 

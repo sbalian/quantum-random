@@ -75,6 +75,14 @@ def test_seed(quantum_random):
         quantum_random.seed()
 
 
+def test_fill(quantum_random):
+    assert not quantum_random._rand_int64
+    quantum_random.fill()
+    assert len(quantum_random._rand_int64) == 1024
+    quantum_random.fill(2)
+    assert len(quantum_random._rand_int64) == 3 * 1024
+
+
 def test_random(quantum_random):
     assert not quantum_random._rand_int64
     number = quantum_random.random()
