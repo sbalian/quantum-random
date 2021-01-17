@@ -13,10 +13,13 @@ yet available so randrange() can not cover arbitrarily large ranges.
 """
 
 import random as pyrandom
+import sys
 import warnings
 from typing import Dict, List, NoReturn, Union
 
 import requests
+
+_PYTHON_MINOR_VERSION = sys.version_info.minor
 
 __all__ = [
     "betavariate",
@@ -41,7 +44,8 @@ __all__ = [
     "vonmisesvariate",
     "weibullvariate",
 ]
-
+if _PYTHON_MINOR_VERSION >= 9:
+    __all__.append("randbytes")
 
 _ANU_PARAMS: Dict[str, Union[int, str]] = {
     "length": 1024,
@@ -122,3 +126,6 @@ triangular = _inst.triangular
 uniform = _inst.uniform
 vonmisesvariate = _inst.vonmisesvariate
 weibullvariate = _inst.weibullvariate
+
+if _PYTHON_MINOR_VERSION >= 9:
+    randbytes = _inst.randbytes  # type: ignore
