@@ -19,7 +19,7 @@ from typing import Dict, List, NoReturn, Union
 
 import requests
 
-_PYTHON_MINOR_VERSION = sys.version_info.minor
+_PYTHON_VERSION = (sys.version_info.major, sys.version_info.minor)
 
 __all__ = [
     "betavariate",
@@ -44,7 +44,7 @@ __all__ = [
     "vonmisesvariate",
     "weibullvariate",
 ]
-if _PYTHON_MINOR_VERSION >= 9:
+if _PYTHON_VERSION > (3, 8):
     __all__.append("randbytes")
 
 _ANU_PARAMS: Dict[str, Union[int, str]] = {
@@ -127,5 +127,5 @@ uniform = _inst.uniform
 vonmisesvariate = _inst.vonmisesvariate
 weibullvariate = _inst.weibullvariate
 
-if _PYTHON_MINOR_VERSION >= 9:
+if _PYTHON_VERSION > (3, 8):
     randbytes = _inst.randbytes  # type: ignore
