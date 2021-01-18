@@ -43,6 +43,7 @@ __all__ = [
     "uniform",
     "vonmisesvariate",
     "weibullvariate",
+    "fill",
 ]
 if _PYTHON_VERSION > (3, 8):
     __all__.append("randbytes")
@@ -126,6 +127,7 @@ triangular = _inst.triangular
 uniform = _inst.uniform
 vonmisesvariate = _inst.vonmisesvariate
 weibullvariate = _inst.weibullvariate
+fill = _inst.fill
 
 if _PYTHON_VERSION > (3, 8):
     randbytes = _inst.randbytes  # type: ignore
