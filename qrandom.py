@@ -8,18 +8,17 @@ ANU Quantum Random Number Generator at The Australian National University
 You can use it just like the standard random module (this module replaces the
 default Mersenne Twister). But seeding is ignored and getstate() and setstate()
 are not implemented because there is no state. Also, getrandbits() is not
-yet available so randrange() can not cover arbitrarily large ranges.
+yet available so randrange() can not cover arbitrarily large ranges. Finally,
+because getrandbits() is not available, there is no randbytes() (new in
+Python 3.9).
 
 """
 
 import random as pyrandom
-import sys
 import warnings
 from typing import Dict, List, NoReturn, Union
 
 import requests
-
-_PYTHON_VERSION = (sys.version_info.major, sys.version_info.minor)
 
 __all__ = [
     "betavariate",
@@ -45,8 +44,6 @@ __all__ = [
     "weibullvariate",
     "fill",
 ]
-if _PYTHON_VERSION > (3, 8):
-    __all__.append("randbytes")
 
 _ANU_PARAMS: Dict[str, Union[int, str]] = {
     "length": 1024,
@@ -71,7 +68,7 @@ def _get_qrand_int64() -> List[int]:
         # The status code is 200 when this happens
 
 
-class QuantumRandom(pyrandom.Random):
+class _QuantumRandom(pyrandom.Random):
     """Quantum random number generator."""
 
     def __init__(self):
@@ -105,7 +102,7 @@ class QuantumRandom(pyrandom.Random):
     getstate = setstate = _notimplemented
 
 
-_inst = QuantumRandom()
+_inst = _QuantumRandom()
 betavariate = _inst.betavariate
 choice = _inst.choice
 choices = _inst.choices
@@ -128,6 +125,3 @@ uniform = _inst.uniform
 vonmisesvariate = _inst.vonmisesvariate
 weibullvariate = _inst.weibullvariate
 fill = _inst.fill
-
-if _PYTHON_VERSION > (3, 8):
-    randbytes = _inst.randbytes  # type: ignore
