@@ -13,7 +13,6 @@ maintainers = ["Seto Balian <seto.balian@gmail.com>"]
 python = "^3.6.2"
 requests = "^2.25.1"
 
-
 [tool.poetry.dev-dependencies]
 isort = "^5.7.0"
 flake8 = "^3.8.4"
@@ -32,6 +31,8 @@ black = "^22.3.0"
 line_length = 79
 known_first_party = "qrandom"
 
+[tool.black]
+line-length = 79
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
