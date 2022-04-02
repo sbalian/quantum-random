@@ -9,9 +9,9 @@ import qrandom
 
 def main():
     json_responses = []
-    n = 10
-    for i in range(n):
-        print(f"Getting {i+1} of {n} ...")
+    num_hits = 10
+    for hit in range(num_hits):
+        print(f"Getting {hit+1} of {num_hits} ...")
         response = requests.get(qrandom._ANU_URL, qrandom._ANU_PARAMS)
         response.raise_for_status()
         json_r = response.json()
