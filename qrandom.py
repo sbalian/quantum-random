@@ -54,7 +54,7 @@ _ANU_URL: str = "https://qrng.anu.edu.au/API/jsonI.php"
 
 
 def _get_qrand_int64() -> List[int]:
-    """Get quantum random int64s from the ANU API."""
+    """Gets quantum random int64s from the ANU API."""
     response = requests.get(_ANU_URL, _ANU_PARAMS)
     response.raise_for_status()
     r_json = response.json()
@@ -72,19 +72,19 @@ class _QuantumRandom(pyrandom.Random):
     """Quantum random number generator."""
 
     def __init__(self):
-        """Initialize an instance."""
+        """Initializes an instance of _QuantumRandom."""
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
             super().__init__()
         self._rand_int64 = []
 
     def fill(self, n: int = 1):
-        """Fill the generator with n batches of 1024 64-bit ints."""
+        """Fills the generator with n batches of 1024 64-bit ints."""
         for _ in range(n):
             self._rand_int64.extend(_get_qrand_int64())
 
     def random(self) -> float:
-        """Get the next quantum random number in the range [0.0, 1.0)."""
+        """Gets the next quantum random number in the range [0.0, 1.0)."""
         if not self._rand_int64:
             self.fill()
         rand_int64 = self._rand_int64.pop()
