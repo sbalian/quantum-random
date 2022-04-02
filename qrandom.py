@@ -98,8 +98,13 @@ class _QuantumRandom(pyrandom.Random):
         return rand_int64 / (2**64)
 
     def seed(self, *args, **kwds) -> None:
-        """Method is ignored. There is no seed for the quantum vacuum."""
-        assert self.seed.__doc__ is not None
+        """Method is ignored. There is no seed for the quantum vacuum.
+
+        Raises RuntimeError if docstring for seed does not exist.
+
+        """
+        if self.seed.__doc__ is None:
+            raise RuntimeError("Docstring for seed must exist.")
         warnings.warn(self.seed.__doc__)
         return
 
