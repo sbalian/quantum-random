@@ -28,6 +28,7 @@ def plot(data):
     plt.title(python_title)
     plt.tight_layout()
     plt.savefig("random.png", dpi=120, bbox_inches="tight")
+    return
 
 
 def kstest(data):
@@ -37,12 +38,14 @@ def kstest(data):
 
     print(quantum_title, stats.kstest(numbers, "uniform"))
     print(python_title, stats.kstest(py_numbers, "uniform"))
+    return
 
 
 def main():
     data = generate_data()
     plot(data)
     kstest(data)
+    return
 
 
 if __name__ == "__main__":

@@ -70,6 +70,7 @@ def _get_qrand_int64() -> List[int]:
             "The 'success' field in the ANU response was False."
         )
         # The status code is 200 when this happens
+    return
 
 
 class _QuantumRandom(pyrandom.Random):
@@ -81,11 +82,13 @@ class _QuantumRandom(pyrandom.Random):
             warnings.simplefilter("ignore", category=UserWarning)
             super().__init__()
         self._rand_int64 = []
+        return
 
     def fill(self, n: int = 1):
         """Fills the generator with n batches of 1024 64-bit ints."""
         for _ in range(n):
             self._rand_int64.extend(_get_qrand_int64())
+        return
 
     def random(self) -> float:
         """Gets the next quantum random number in the range [0.0, 1.0)."""
@@ -98,10 +101,12 @@ class _QuantumRandom(pyrandom.Random):
         """Method is ignored. There is no seed for the quantum vacuum."""
         assert self.seed.__doc__ is not None
         warnings.warn(self.seed.__doc__)
+        return
 
     def _notimplemented(self, *args, **kwds) -> NoReturn:
         """Method should not be called for a quantum random number generator."""
         raise NotImplementedError("Quantum source does not have state.")
+        return
 
     getstate = setstate = _notimplemented
 

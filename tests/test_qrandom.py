@@ -54,25 +54,31 @@ def test__get_qrand_int64(requests_mock):
     with pytest.raises(RuntimeError):
         numbers = qrandom._get_qrand_int64()
 
+    return
+
 
 def test__notimplemented(quantum_random):
     with pytest.raises(NotImplementedError):
         quantum_random._notimplemented()
+    return
 
 
 def test_get_state(quantum_random):
     with pytest.raises(NotImplementedError):
         quantum_random.getstate()
+    return
 
 
 def test_set_state(quantum_random):
     with pytest.raises(NotImplementedError):
         quantum_random.setstate()
+    return
 
 
 def test_seed(quantum_random):
     with pytest.warns(UserWarning):
         quantum_random.seed()
+    return
 
 
 def test_fill(quantum_random):
@@ -81,6 +87,7 @@ def test_fill(quantum_random):
     assert len(quantum_random._rand_int64) == 1024
     quantum_random.fill(2)
     assert len(quantum_random._rand_int64) == 3 * 1024
+    return
 
 
 def test_random(quantum_random):
@@ -94,12 +101,15 @@ def test_random(quantum_random):
     assert max(numbers) < 1.0
     assert len(numbers) == 10000
     assert len(quantum_random._rand_int64) == (10 * 1024 - 10000 - 1)
+    return
 
 
 def test_for_uniformity(quantum_random):
     numbers = [qrandom.random() for _ in range(10000)]
     assert stats.kstest(numbers, "uniform").statistic < 0.01
+    return
 
 
 def test___all__():
     assert set(qrandom.__all__).issubset(set(dir(qrandom)))
+    return

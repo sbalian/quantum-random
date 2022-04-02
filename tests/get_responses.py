@@ -22,6 +22,8 @@ def main():
         json.dump(json_responses, f)
     print(f"Wrote to {path} .")
 
+    return
+
 
 if __name__ == "__main__":
     main()
