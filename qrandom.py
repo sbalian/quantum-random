@@ -54,7 +54,11 @@ _ANU_URL: str = "https://qrng.anu.edu.au/API/jsonI.php"
 
 
 def _get_qrand_int64() -> List[int]:
-    """Gets quantum random int64s from the ANU API."""
+    """Gets quantum random int64s from the ANU API.
+
+    Raises RuntimeError if the ANU API call is not successful.
+
+    """
     response = requests.get(_ANU_URL, _ANU_PARAMS)
     response.raise_for_status()
     r_json = response.json()
