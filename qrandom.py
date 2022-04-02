@@ -109,7 +109,7 @@ class _QuantumRandom(pyrandom.Random):
         return
 
     def _notimplemented(self, *args, **kwds) -> NoReturn:
-        """Method should not be called for a quantum random number generator."""
+        """Method shouldn't be called for a quantum random number generator."""
         raise NotImplementedError("Quantum source does not have state.")
         return
 
