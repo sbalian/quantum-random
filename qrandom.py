@@ -88,7 +88,7 @@ class _QuantumRandom(pyrandom.Random):
         if not self._rand_int64:
             self.fill()
         rand_int64 = self._rand_int64.pop()
-        return rand_int64 / (2 ** 64)
+        return rand_int64 / (2**64)
 
     def seed(self, *args, **kwds) -> None:
         "Method is ignored. There is no seed for the quantum vacuum."

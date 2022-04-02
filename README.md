@@ -2,7 +2,8 @@
 
 ![Tests](https://github.com/sbalian/quantum-random/workflows/Tests/badge.svg)
 
-This package brings the [ANU quantum random numbers][anu] to Python 3.6+.
+This package brings the [ANU quantum random numbers][anu] to Python 3.6.2
+and above.
 
 The default pseudo-random generator in Python is replaced by calls to the
 ANU API that serves real quantum random numbers.
@@ -50,7 +51,7 @@ is called because there is no state. For the same reason, `getstate()` and
 
 ## Tests
 
-To run the tests locally, you will need [poetry][poetry] and Python 3.6-3.9.
+To run the tests locally, you will need [poetry][poetry] and Python 3.6.2-3.9.
 
 ```bash
 poetry install

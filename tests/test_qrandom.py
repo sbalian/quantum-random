@@ -42,7 +42,7 @@ def test__get_qrand_int64(requests_mock):
     numbers = qrandom._get_qrand_int64()
     assert len(numbers) == 1024
     assert min(numbers) >= 0
-    assert max(numbers) < 2 ** 64
+    assert max(numbers) < 2**64
 
     requests_mock.get(
         qrandom._ANU_URL,
