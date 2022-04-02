@@ -52,6 +52,8 @@ is called because there is no state. For the same reason, `getstate()` and
 ## Tests
 
 To run the tests locally, you will need [poetry][poetry] and Python 3.6.2-3.9.
+One way of having multiple Python versions is to use [pyenv][pyenv] and list
+the versions in `.python-version`.
 
 ```bash
 poetry install
@@ -67,3 +69,4 @@ See [LICENCE](./LICENSE).
 [anu]: https://qrng.anu.edu.au
 [pyrandom]: https://docs.python.org/3.9/library/random.html
 [poetry]: https://python-poetry.org
+[pyenv]: https://github.com/pyenv/pyenv
