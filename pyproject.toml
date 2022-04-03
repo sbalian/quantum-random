@@ -13,6 +13,9 @@ maintainers = ["Seto Balian <seto.balian@gmail.com>"]
 python = ">=3.7,<3.11"
 requests = "^2.25.1"
 
+numpy = { version = "^1.17", optional = true }
+randomgen = { version = "^1.21.2", optional = true }
+
 [tool.poetry.dev-dependencies]
 isort = "^5.7.0"
 flake8 = "^3.8.4"
@@ -24,6 +27,9 @@ tox = "^3.21.1"
 black = "^22.3.0"
 matplotlib = "^3.5.1"
 scipy = "<1.8"
+
+[tool.poetry.extras]
+numpy = ["numpy", "randomgen"]
 
 [tool.isort]
 line_length = 79
