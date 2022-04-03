@@ -1,9 +1,13 @@
 import json
+import sys
 
 import pytest
 from scipy import stats
 
 import qrandom
+
+if (sys.version_info.major, sys.version_info.minor) != (3, 10):
+    import qrandom.numpy
 
 
 def _read_mock_responses():
@@ -163,3 +167,18 @@ def test_random_returns_uniform_distribution(quantum_random):
 def test_all_is_subset_of_everything_in_module():
     assert set(qrandom.__all__).issubset(set(dir(qrandom)))
     return
+
+
+if (sys.version_info.major, sys.version_info.minor) != (3, 10):
+
+    def test_numpy_support(requests_mock):
+        requests_mock.get(
+            qrandom._ANU_URL,
+            json={
+                "data": MOCK_RESPONSES[0]["data"],
+                "success": True,
+            },
+        )
+        numbers = qrandom.numpy.quantum_rng().random((3, 3))
+        assert ((numbers >= 0.0) & (numbers < 1.0)).all()
+        return
