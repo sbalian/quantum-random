@@ -31,6 +31,9 @@ Just import `qrandom` and use it like you'd use the
 -0.8370871276247828
 ```
 
+Alternatively, you can `import QuantumRandom from qrandom` and use the class
+directly (just like `random.Random`).
+
 Under the hood, batches of quantum numbers are fetched from the API as needed
 and each batch contains 1024 numbers. If you wish to pre-fetch more, use
 `qrandom.fill(n)`, where `n` is the number of batches.
