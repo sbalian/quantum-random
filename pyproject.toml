@@ -3,18 +3,31 @@ name = "quantum-random"
 version = "1.0.1"
 description = "Quantum random numbers"
 authors = ["Seto Balian <seto.balian@gmail.com>"]
-packages = [{include = "qrandom"}]
+packages = [{ include = "qrandom" }]
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/sbalian/quantum-random"
 maintainers = ["Seto Balian <seto.balian@gmail.com>"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development",
+    "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Unix",
+    "Operating System :: MacOS",
+    "License :: OSI Approved :: MIT License",
+]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<3.11"
 requests = "^2.25.1"
 
-numpy = { version = "^1.17", optional = true , python = ">=3.7,<3.10" }
-randomgen = { version = "^1.21.2", optional = true , python = ">=3.7,<3.10" }
+numpy = { version = "^1.17", optional = true, python = ">=3.7,<3.10" }
+randomgen = { version = "^1.21.2", optional = true, python = ">=3.7,<3.10" }
 
 [tool.poetry.dev-dependencies]
 isort = "^5.7.0"
