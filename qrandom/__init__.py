@@ -20,6 +20,8 @@ from typing import Dict, List, NoReturn, Union
 
 import requests
 
+__version__ = "1.1.1"
+
 __all__ = [
     "betavariate",
     "choice",
@@ -45,21 +47,24 @@ __all__ = [
     "fill",
 ]
 
-_ANU_PARAMS: Dict[str, Union[int, str]] = {
-    "length": 1024,
-    "type": "hex16",
-    "size": 8,
-}
-_ANU_URL: str = "https://qrng.anu.edu.au/API/jsonI.php"
+_ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
 
 
-def _get_qrand_int64() -> List[int]:
+def _get_qrand_int64(size: int = 1024) -> List[int]:
     """Gets quantum random int64s from the ANU API.
 
-    Raises RuntimeError if the ANU API call is not successful.
+    size is the number of int64s fetched (1024 by default).
+
+    Raises RuntimeError if the ANU API call is not successful. This includes
+    the case of size > 1024.
 
     """
-    response = requests.get(_ANU_URL, _ANU_PARAMS)
+    params: Dict[str, Union[int, str]] = {
+        "length": size,
+        "type": "hex16",
+        "size": 8,
+    }
+    response = requests.get(_ANU_URL, params)
     response.raise_for_status()
     r_json = response.json()
 
@@ -73,11 +78,11 @@ def _get_qrand_int64() -> List[int]:
     return
 
 
-class _QuantumRandom(pyrandom.Random):
+class QuantumRandom(pyrandom.Random):
     """Quantum random number generator."""
 
     def __init__(self):
-        """Initializes an instance of _QuantumRandom."""
+        """Initializes an instance of QuantumRandom."""
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
             super().__init__()
@@ -90,12 +95,14 @@ class _QuantumRandom(pyrandom.Random):
             self._rand_int64.extend(_get_qrand_int64())
         return
 
-    def random(self) -> float:
-        """Gets the next quantum random number in the range [0.0, 1.0)."""
+    def _get_rand_int64(self) -> int:
         if not self._rand_int64:
             self.fill()
-        rand_int64 = self._rand_int64.pop()
-        return rand_int64 / (2**64)
+        return self._rand_int64.pop()
+
+    def random(self) -> float:
+        """Gets the next quantum random number in the range [0.0, 1.0)."""
+        return self._get_rand_int64() / (2**64)
 
     def seed(self, *args, **kwds) -> None:
         """Method is ignored. There is no seed for the quantum vacuum.
@@ -116,7 +123,7 @@ class _QuantumRandom(pyrandom.Random):
     getstate = setstate = _notimplemented
 
 
-_inst = _QuantumRandom()
+_inst = QuantumRandom()
 betavariate = _inst.betavariate
 choice = _inst.choice
 choices = _inst.choices

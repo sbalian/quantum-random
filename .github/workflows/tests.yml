@@ -27,6 +27,7 @@ jobs:
         rm get-poetry.py
         source $HOME/.poetry/env
         poetry install
+        poetry install -E numpy
     - name: Build
       run: |
         source $HOME/.poetry/env
@@ -37,7 +38,7 @@ jobs:
         poetry run isort . --check-only
         poetry run black --check .
         poetry run flake8 .
-        poetry run mypy qrandom.py
+        poetry run mypy qrandom
     - name: Test
       run: |
         source $HOME/.poetry/env

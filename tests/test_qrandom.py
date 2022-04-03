@@ -1,9 +1,13 @@
 import json
+import sys
 
 import pytest
 from scipy import stats
 
 import qrandom
+
+if (sys.version_info.major, sys.version_info.minor) != (3, 10):
+    import qrandom.numpy
 
 
 def _read_mock_responses():
@@ -28,7 +32,7 @@ def quantum_random(requests_mock):
         }
     )
     requests_mock.get(qrandom._ANU_URL, mock_responses)
-    return qrandom._QuantumRandom()
+    return qrandom.QuantumRandom()
 
 
 def test_get_qrand_int64_returns_1024_nums(requests_mock):
@@ -111,16 +115,22 @@ def test_rand_int64_initially_empty(quantum_random):
     return
 
 
-def test_rand_int64_has_1024_nums_after_call_to_fill(quantum_random):
+def test_fill_gets_1024_nums(quantum_random):
     quantum_random.fill()
     assert len(quantum_random._rand_int64) == 1024
     return
 
 
-def test_rand_int64_has_2048_nums_after_2_calls_to_fill(quantum_random):
+def test_fill_gets_2048_nums_after_two_calls(quantum_random):
     quantum_random.fill(2)
     assert len(quantum_random._rand_int64) == 2048
     return
+
+
+def test_get_rand_int64(quantum_random):
+    for call in range(1024 * 5):
+        quantum_random._get_rand_int64()
+        assert len(quantum_random._rand_int64) == (1024 - call - 1) % 1024
 
 
 def test_rand_int64_has_1023_nums_after_call_to_random(quantum_random):
@@ -157,3 +167,18 @@ def test_random_returns_uniform_distribution(quantum_random):
 def test_all_is_subset_of_everything_in_module():
     assert set(qrandom.__all__).issubset(set(dir(qrandom)))
     return
+
+
+if (sys.version_info.major, sys.version_info.minor) != (3, 10):
+
+    def test_numpy_support(requests_mock):
+        requests_mock.get(
+            qrandom._ANU_URL,
+            json={
+                "data": MOCK_RESPONSES[0]["data"],
+                "success": True,
+            },
+        )
+        numbers = qrandom.numpy.quantum_rng().random((3, 3))
+        assert ((numbers >= 0.0) & (numbers < 1.0)).all()
+        return

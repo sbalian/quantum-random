@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+from typing import Dict, Union
 
 import requests
 
@@ -12,7 +13,12 @@ def main():
     num_hits = 10
     for hit in range(num_hits):
         print(f"Getting {hit+1} of {num_hits} ...")
-        response = requests.get(qrandom._ANU_URL, qrandom._ANU_PARAMS)
+        params: Dict[str, Union[int, str]] = {
+            "length": 1024,
+            "type": "hex16",
+            "size": 8,
+        }
+        response = requests.get(qrandom._ANU_URL, params)
         response.raise_for_status()
         json_r = response.json()
         json_responses.append(json_r)
