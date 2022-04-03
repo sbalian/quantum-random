@@ -45,7 +45,7 @@ __all__ = [
     "fill",
 ]
 
-ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
+_ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
 
 
 def _get_qrand_int64(size: int = 1024) -> List[int]:
@@ -61,7 +61,7 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
         "type": "hex16",
         "size": 8,
     }
-    response = requests.get(ANU_URL, params)
+    response = requests.get(_ANU_URL, params)
     response.raise_for_status()
     r_json = response.json()
 

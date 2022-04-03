@@ -18,7 +18,7 @@ def main():
             "type": "hex16",
             "size": 8,
         }
-        response = requests.get(qrandom.ANU_URL, params)
+        response = requests.get(qrandom._ANU_URL, params)
         response.raise_for_status()
         json_r = response.json()
         json_responses.append(json_r)
