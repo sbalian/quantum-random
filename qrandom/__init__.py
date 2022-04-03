@@ -20,6 +20,8 @@ from typing import Dict, List, NoReturn, Union
 
 import requests
 
+__version__ = "1.0.2"
+
 __all__ = [
     "betavariate",
     "choice",
