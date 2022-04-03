@@ -28,7 +28,7 @@ def quantum_random(requests_mock):
         }
     )
     requests_mock.get(qrandom._ANU_URL, mock_responses)
-    return qrandom._QuantumRandom()
+    return qrandom.QuantumRandom()
 
 
 def test_get_qrand_int64_returns_1024_nums(requests_mock):

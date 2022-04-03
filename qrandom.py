@@ -75,11 +75,11 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
     return
 
 
-class _QuantumRandom(pyrandom.Random):
+class QuantumRandom(pyrandom.Random):
     """Quantum random number generator."""
 
     def __init__(self):
-        """Initializes an instance of _QuantumRandom."""
+        """Initializes an instance of QuantumRandom."""
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
             super().__init__()
@@ -118,7 +118,7 @@ class _QuantumRandom(pyrandom.Random):
     getstate = setstate = _notimplemented
 
 
-_inst = _QuantumRandom()
+_inst = QuantumRandom()
 betavariate = _inst.betavariate
 choice = _inst.choice
 choices = _inst.choices
