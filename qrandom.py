@@ -48,14 +48,16 @@ __all__ = [
 ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
 
 
-def _get_qrand_int64() -> List[int]:
+def _get_qrand_int64(size: int = 1024) -> List[int]:
     """Gets quantum random int64s from the ANU API.
+
+    size is the number of int64s fetched (1024 by default).
 
     Raises RuntimeError if the ANU API call is not successful.
 
     """
     params: Dict[str, Union[int, str]] = {
-        "length": 1024,
+        "length": size,
         "type": "hex16",
         "size": 8,
     }
