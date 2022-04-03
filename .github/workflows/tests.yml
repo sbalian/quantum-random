@@ -37,7 +37,7 @@ jobs:
         poetry run isort . --check-only
         poetry run black --check .
         poetry run flake8 .
-        poetry run mypy qrandom.py
+        poetry run mypy qrandom
     - name: Test
       run: |
         source $HOME/.poetry/env
