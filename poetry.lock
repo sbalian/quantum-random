@@ -258,7 +258,7 @@ python-versions = "*"
 name = "numpy"
 version = "1.21.5"
 description = "NumPy is the fundamental package for array computing with Python."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7,<3.11"
 
@@ -401,6 +401,17 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 
 [package.dependencies]
 six = ">=1.5"
+
+[[package]]
+name = "randomgen"
+version = "1.21.2"
+description = "Random generator supporting multiple PRNGs"
+category = "main"
+optional = true
+python-versions = ">=3.6"
+
+[package.dependencies]
+numpy = ">=1.14"
 
 [[package]]
 name = "requests"
@@ -560,20 +571,23 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 
 [[package]]
 name = "zipp"
-version = "3.7.0"
+version = "3.8.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 
 [package.extras]
-docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
-testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
+docs = ["sphinx", "jaraco.packaging (>=9)", "rst.linker (>=1.9)"]
+testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)"]
+
+[extras]
+numpy = ["numpy", "randomgen"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<3.11"
-content-hash = "f686b302a9fb9a80085c13fe2ce6f85023d4ec9eff789736dd813820b706bc8e"
+content-hash = "a5119542568ac35368cdc82c9e809ec4fb7c40086f8f6a244d7507e94337006a"
 
 [metadata.files]
 atomicwrites = [
@@ -883,6 +897,29 @@ python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
     {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
 ]
+randomgen = [
+    {file = "randomgen-1.21.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:a3f10ff5fe64dfc747b746c56745eca2085be5c59464c692f526faf9fd0ef580"},
+    {file = "randomgen-1.21.2-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:fb9cd8f1f8bf54f5d252494bbe618faee2eb54c7d877b14296e840110d5710ea"},
+    {file = "randomgen-1.21.2-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:1fdae87f774783b1f6e2b9ab6d30f3f99ce5e1523b36065ca6b3ffd0511d4895"},
+    {file = "randomgen-1.21.2-cp36-cp36m-win32.whl", hash = "sha256:178f73b887d0f190ca88d6b794723c04c6b1af071b77eb177b8575bc976b945f"},
+    {file = "randomgen-1.21.2-cp36-cp36m-win_amd64.whl", hash = "sha256:1a556114cd7df826a9a06d161839b8fe1141c6eb5c3c334e24d266734e13307c"},
+    {file = "randomgen-1.21.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:990219f18764123211eb263fefa576dc0174ebc0d34972e15c8b17204f7859fa"},
+    {file = "randomgen-1.21.2-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a56125fdb442015142ff8b6ff57a50c567fae4109d9d9dbe84d30d4a71b06734"},
+    {file = "randomgen-1.21.2-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:cf939ed4bc011818a8f370381e1bdbc5c5d1611e2966c881703b102ebe7c47a8"},
+    {file = "randomgen-1.21.2-cp37-cp37m-win32.whl", hash = "sha256:dc524ab4b6e838d9d2addf299ed200b13174b8b0656cccf81c64784d9d2f444f"},
+    {file = "randomgen-1.21.2-cp37-cp37m-win_amd64.whl", hash = "sha256:16c3ae26473f8375a310f6966b1dc5e249b5c3c345986ed835669f8ce2fa1066"},
+    {file = "randomgen-1.21.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:002977d40ecfe6ba30f0868388db82f07a364cd47e5f3d1f68044eaa80421ce6"},
+    {file = "randomgen-1.21.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:398573ad7d1924ba69026404f7041c9698ccace1e3860b60c1cf4cec2453ed9e"},
+    {file = "randomgen-1.21.2-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:2d530251aa225519a4cd5ccb8a2a53f26ad3a54822bd93c101a51836306e135a"},
+    {file = "randomgen-1.21.2-cp38-cp38-win32.whl", hash = "sha256:ebc29e6b9b177455647852fa45dac757c3dcd9e45104180f2f9f2ad4db2d372c"},
+    {file = "randomgen-1.21.2-cp38-cp38-win_amd64.whl", hash = "sha256:a170cb3b8a8f4b8caf52f7010de00eb5802621fc086781497327c98293b98f60"},
+    {file = "randomgen-1.21.2-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:cc58f97a500985d48c900bf7be29a187d8754ebe9791dcd859485b9c0675928b"},
+    {file = "randomgen-1.21.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:137b84b6d0e41e89f3271d83cc30c08ad07c24468d1660d682dbe61e9d4d38de"},
+    {file = "randomgen-1.21.2-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:428c07d9ebbd1dd08d4188b1ff830bd86f0fc62246df099e6e9e5d9706563f53"},
+    {file = "randomgen-1.21.2-cp39-cp39-win32.whl", hash = "sha256:8bccf1e21eca0219d14f6c9e7df8bf764153f1331b43ef3e6cd41b072af9c05d"},
+    {file = "randomgen-1.21.2-cp39-cp39-win_amd64.whl", hash = "sha256:9b7e05611fb04edd1a458d0dea795cbd7b1c27e896f911ff1311bb42bd794de0"},
+    {file = "randomgen-1.21.2.tar.gz", hash = "sha256:66d80306123ed54f3f68ac3bd0c02909a4adcadb878b3aaf9e3bb8142d8dbf2f"},
+]
 requests = [
     {file = "requests-2.27.1-py2.py3-none-any.whl", hash = "sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d"},
     {file = "requests-2.27.1.tar.gz", hash = "sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61"},
@@ -987,6 +1024,6 @@ virtualenv = [
     {file = "virtualenv-20.14.0.tar.gz", hash = "sha256:8e5b402037287126e81ccde9432b95a8be5b19d36584f64957060a3488c11ca8"},
 ]
 zipp = [
-    {file = "zipp-3.7.0-py3-none-any.whl", hash = "sha256:b47250dd24f92b7dd6a0a8fc5244da14608f3ca90a5efcd37a3b1642fac9a375"},
-    {file = "zipp-3.7.0.tar.gz", hash = "sha256:9f50f446828eb9d45b267433fd3e9da8d801f614129124863f9c51ebceafb87d"},
+    {file = "zipp-3.8.0-py3-none-any.whl", hash = "sha256:c4f6e5bbf48e74f7a38e7cc5b0480ff42b0ae5178957d564d18932525d5cf099"},
+    {file = "zipp-3.8.0.tar.gz", hash = "sha256:56bf8aadb83c24db6c4b577e13de374ccfb67da2078beba1d037c17980bf43ad"},
 ]
