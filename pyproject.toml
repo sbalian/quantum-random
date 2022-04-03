@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "quantum-random"
-version = "1.1.0"
+version = "1.1.1"
 description = "Quantum random numbers"
 authors = ["Seto Balian <seto.balian@gmail.com>"]
 packages = [{ include = "qrandom" }]
