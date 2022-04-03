@@ -2,7 +2,7 @@
 
 ![Tests](https://github.com/sbalian/quantum-random/workflows/Tests/badge.svg)
 
-This package brings the [ANU quantum random numbers][anu] to Python 3.6+.
+This package brings the [ANU quantum random numbers][anu] to Python 3.7 to 3.10.
 
 The default pseudo-random generator in Python is replaced by calls to the
 ANU API that serves real quantum random numbers.
@@ -50,7 +50,9 @@ is called because there is no state. For the same reason, `getstate()` and
 
 ## Tests
 
-To run the tests locally, you will need [poetry][poetry] and Python 3.6-3.9.
+To run the tests locally, you will need [poetry][poetry] and Python 3.7-3.10.
+One way of having multiple Python versions is to use [pyenv][pyenv] and list
+the versions in `.python-version`.
 
 ```bash
 poetry install
@@ -66,3 +68,4 @@ See [LICENCE](./LICENSE).
 [anu]: https://qrng.anu.edu.au
 [pyrandom]: https://docs.python.org/3.9/library/random.html
 [poetry]: https://python-poetry.org
+[pyenv]: https://github.com/pyenv/pyenv

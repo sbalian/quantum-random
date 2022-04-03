@@ -1,2 +1,0 @@
-# extra requirements for running generate_plot.py
-matplotlib
