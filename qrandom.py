@@ -53,7 +53,8 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
 
     size is the number of int64s fetched (1024 by default).
 
-    Raises RuntimeError if the ANU API call is not successful.
+    Raises RuntimeError if the ANU API call is not successful. This includes
+    the case of size > 1024.
 
     """
     params: Dict[str, Union[int, str]] = {
