@@ -93,12 +93,14 @@ class QuantumRandom(pyrandom.Random):
             self._rand_int64.extend(_get_qrand_int64())
         return
 
-    def random(self) -> float:
-        """Gets the next quantum random number in the range [0.0, 1.0)."""
+    def _get_rand_int64(self) -> int:
         if not self._rand_int64:
             self.fill()
-        rand_int64 = self._rand_int64.pop()
-        return rand_int64 / (2**64)
+        return self._rand_int64.pop()
+
+    def random(self) -> float:
+        """Gets the next quantum random number in the range [0.0, 1.0)."""
+        return self._get_rand_int64() / (2**64)
 
     def seed(self, *args, **kwds) -> None:
         """Method is ignored. There is no seed for the quantum vacuum.

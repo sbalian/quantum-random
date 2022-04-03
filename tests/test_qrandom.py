@@ -111,16 +111,22 @@ def test_rand_int64_initially_empty(quantum_random):
     return
 
 
-def test_rand_int64_has_1024_nums_after_call_to_fill(quantum_random):
+def test_fill_gets_1024_nums(quantum_random):
     quantum_random.fill()
     assert len(quantum_random._rand_int64) == 1024
     return
 
 
-def test_rand_int64_has_2048_nums_after_2_calls_to_fill(quantum_random):
+def test_fill_gets_2048_nums_after_two_calls(quantum_random):
     quantum_random.fill(2)
     assert len(quantum_random._rand_int64) == 2048
     return
+
+
+def test_get_rand_int64(quantum_random):
+    for call in range(1024 * 5):
+        quantum_random._get_rand_int64()
+        assert len(quantum_random._rand_int64) == (1024 - call - 1) % 1024
 
 
 def test_rand_int64_has_1023_nums_after_call_to_random(quantum_random):
