@@ -27,13 +27,13 @@ def quantum_random(requests_mock):
             "reason": "Exhausted mocks. Add more with tests/getresponses.",
         }
     )
-    requests_mock.get(qrandom._ANU_URL, mock_responses)
+    requests_mock.get(qrandom.ANU_URL, mock_responses)
     return qrandom._QuantumRandom()
 
 
 def test_get_qrand_int64_returns_1024_nums(requests_mock):
     requests_mock.get(
-        qrandom._ANU_URL,
+        qrandom.ANU_URL,
         json={
             "data": MOCK_RESPONSES[0]["data"],
             "success": True,
@@ -46,7 +46,7 @@ def test_get_qrand_int64_returns_1024_nums(requests_mock):
 
 def test_get_qrand_int64_returns_0_or_more(requests_mock):
     requests_mock.get(
-        qrandom._ANU_URL,
+        qrandom.ANU_URL,
         json={
             "data": MOCK_RESPONSES[0]["data"],
             "success": True,
@@ -59,7 +59,7 @@ def test_get_qrand_int64_returns_0_or_more(requests_mock):
 
 def test_get_qrand_int64_returns_less_than_2_to_64(requests_mock):
     requests_mock.get(
-        qrandom._ANU_URL,
+        qrandom.ANU_URL,
         json={
             "data": MOCK_RESPONSES[0]["data"],
             "success": True,
@@ -72,7 +72,7 @@ def test_get_qrand_int64_returns_less_than_2_to_64(requests_mock):
 
 def test_get_qrand_int64_raises_on_api_fail(requests_mock):
     requests_mock.get(
-        qrandom._ANU_URL,
+        qrandom.ANU_URL,
         json={
             "success": False,
         },

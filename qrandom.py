@@ -45,12 +45,7 @@ __all__ = [
     "fill",
 ]
 
-_ANU_PARAMS: Dict[str, Union[int, str]] = {
-    "length": 1024,
-    "type": "hex16",
-    "size": 8,
-}
-_ANU_URL: str = "https://qrng.anu.edu.au/API/jsonI.php"
+ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
 
 
 def _get_qrand_int64() -> List[int]:
@@ -59,7 +54,12 @@ def _get_qrand_int64() -> List[int]:
     Raises RuntimeError if the ANU API call is not successful.
 
     """
-    response = requests.get(_ANU_URL, _ANU_PARAMS)
+    params: Dict[str, Union[int, str]] = {
+        "length": 1024,
+        "type": "hex16",
+        "size": 8,
+    }
+    response = requests.get(ANU_URL, params)
     response.raise_for_status()
     r_json = response.json()
 
