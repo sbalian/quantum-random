@@ -28,6 +28,7 @@ requests = "^2.25.1"
 
 numpy = { version = "^1.17", optional = true, python = ">=3.7,<3.10" }
 randomgen = { version = "^1.21.2", optional = true, python = ">=3.7,<3.10" }
+xdg = "^5.1.1"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.7.0"
@@ -43,6 +44,9 @@ scipy = "<1.8"
 
 [tool.poetry.extras]
 numpy = ["numpy", "randomgen"]
+
+[tool.poetry.scripts]
+qrandom-init = 'qrandom.cli:init'
 
 [tool.isort]
 line_length = 79
