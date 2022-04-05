@@ -15,7 +15,7 @@ def init():
         f"""\
 This utility will help you set the API key for qrandom.
 Where would you like to store the key?
-Type in the path and press enter, or just press enter to
+Type in a directory path and press enter, or just press enter to
 keep the default path [{DEFAULT_DIR}]:\
 """
     )
@@ -31,8 +31,11 @@ keep the default path [{DEFAULT_DIR}]:\
             sys.exit(1)
         config_path = config_dir / "qrandom.ini"
     if config_path.exists():
-        print(f"The file {config_path} exists. Would you like to overwrite?")
-        print("[Y/n]")
+        print(
+            f"""\
+The file {config_path} exists. Would you like to overwrite? [Y/n]:\
+"""
+        )
         if input().strip().lower() not in ["y", "yes"]:
             print("Aborted.")
             sys.exit(1)
@@ -45,5 +48,9 @@ keep the default path [{DEFAULT_DIR}]:\
         config.write(f)
     print(f"Wrote to {config_path}.")
     if config_dir != DEFAULT_DIR:
-        print("Since you did not write to the default path, do not forget to ")
-        print(f"set QRANDOM_CONFIG_DIR to {config_dir}.")
+        print(
+            f"""
+Since you did not write to the default path, do not forget to
+set QRANDOM_CONFIG_DIR to {config_dir}.\
+"""
+        )
