@@ -47,7 +47,7 @@ __all__ = [
     "fill",
 ]
 
-_ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
+_ANU_URL = "https://api.quantumnumbers.anu.edu.au"
 
 
 def _get_qrand_int64(size: int = 1024) -> List[int]:
