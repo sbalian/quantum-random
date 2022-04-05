@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import configparser
 import os
 import pathlib
