@@ -23,6 +23,9 @@ keep the default path [{DEFAULT_DIR}]:\
         config_path = config_dir / "qrandom.ini"
     else:
         config_dir = pathlib.Path(user_input_dir).expanduser().resolve()
+        if config_dir.exists() and config_dir.is_file():
+            print(f"{config_dir} must be a directory.")
+            sys.exit(1)
         os.makedirs(config_dir, exist_ok=True)
         if config_dir.is_file():
             print(f"{config_dir} must be a directory.")
