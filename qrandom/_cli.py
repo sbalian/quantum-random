@@ -5,7 +5,7 @@ import sys
 
 import xdg
 
-DEFAULT_DIR = xdg.xdg_config_home()
+DEFAULT_DIR = xdg.xdg_config_home() / "qrandom"
 
 
 def init():

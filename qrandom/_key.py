@@ -64,7 +64,7 @@ def get_api_key() -> str:
         try:
             config_dir = get_custom_dir()
         except CustomConfigDirNotFoundError:
-            config_dir = xdg.xdg_config_home()
+            config_dir = xdg.xdg_config_home() / "qrandom"
     config_path = config_dir / "qrandom.ini"
     if not config_path.exists():
         raise FileNotFoundError(

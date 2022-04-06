@@ -31,7 +31,8 @@ You can pass your key to `qrandom` in three ways:
 
 1. By setting the environment variable `QRANDOM_API_KEY`.
 2. By running `qrandom-init` to save your key in an INI config file that is
-stored in your default home config directory (as specified by XDG).
+stored in a subdirectory of your default home config directory (as specified
+by XDG, e.g., `/home/<your-username>/.config/qrandom/`).
 3. By running `qrandom-init` to save your key in an INI file in a directory
 of your choice set by `QRANDOM_CONFIG_DIR`.
 
