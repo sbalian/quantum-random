@@ -57,8 +57,8 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
 
     size is the number of int64s fetched (1024 by default).
 
-    Raises RuntimeError if the ANU API call is not successful. This includes
-    the case of size > 1024.
+    Raises RuntimeError or HTTPError if the ANU API call is not successful.
+    This includes the case of size > 1024.
 
     """
     params: Dict[str, Union[int, str]] = {
@@ -70,15 +70,12 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
     response = requests.get(_ANU_URL, params, headers=headers)
     response.raise_for_status()
     r_json = response.json()
-
-    if r_json["success"]:
-        return [int(number, 16) for number in r_json["data"]]
-    else:
+    if not r_json["success"]:
         raise RuntimeError(
-            "The 'success' field in the ANU response was False."
+            "The 'success' field in the ANU response was False even "
+            "though the status code was 2xx."
         )
-        # The status code is 200 when this happens
-    return
+    return [int(number, 16) for number in r_json["data"]]
 
 
 class QuantumRandom(pyrandom.Random):
