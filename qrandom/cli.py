@@ -43,3 +43,4 @@ def init():
             "Since you did not write to the default path, do not forget to "
             f"set QRANDOM_CONFIG_DIR to {config_dir} when using qrandom."
         )
+    return
