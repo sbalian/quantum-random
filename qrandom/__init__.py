@@ -52,10 +52,16 @@ __all__ = [
 _ANU_URL = "https://api.quantumnumbers.anu.edu.au"
 
 
-def _get_qrand_int64(size: int = 1024) -> List[int]:
+def _get_qrand_int64(
+    size: int = 1024, raw: bool = False
+) -> Union[Dict[str, Union[bool, str, Dict[str, List[str]]]], List[int]]:
     """Gets quantum random int64s from the ANU API.
 
     size is the number of int64s fetched (1024 by default).
+
+    raw = False (default) outputs a list of integers in base 10. Otherwise,
+    the output is the raw JSON from the API (with the results nested and
+    as hex strings).
 
     Raises HTTPError if the ANU API call is not successful.
     This includes the case of size > 1024.
@@ -81,7 +87,10 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
             "The 'success' field in the ANU response was False even "
             f"though the status code was {response.status_code}."
         )
-    return [int(number, 16) for number in r_json["data"]]
+    if raw:
+        return r_json
+    else:
+        return [int(number, 16) for number in r_json["data"]]
 
 
 class QuantumRandom(pyrandom.Random):
