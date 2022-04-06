@@ -57,7 +57,7 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
 
     size is the number of int64s fetched (1024 by default).
 
-    Raises RuntimeError or HTTPError if the ANU API call is not successful.
+    Raises HTTPError if the ANU API call is not successful.
     This includes the case of size > 1024.
 
     """
@@ -68,12 +68,18 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
     }
     headers: Dict[str, str] = {"x-api-key": _key.get_api_key()}
     response = requests.get(_ANU_URL, params, headers=headers)
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+    except requests.HTTPError as http_error:
+        print("JSON response received:")
+        print(response.json())
+        raise http_error
     r_json = response.json()
     if not r_json["success"]:
-        raise RuntimeError(
+        # This used to happen with the old API so keeping it here just in case.
+        raise requests.HTTPError(
             "The 'success' field in the ANU response was False even "
-            "though the status code was 2xx."
+            f"though the status code was {response.status_code}."
         )
     return [int(number, 16) for number in r_json["data"]]
 
