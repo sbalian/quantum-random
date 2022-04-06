@@ -46,7 +46,7 @@ scipy = "<1.8"
 numpy = ["numpy", "randomgen"]
 
 [tool.poetry.scripts]
-qrandom-init = 'qrandom.cli:init'
+qrandom-init = 'qrandom._cli:init'
 
 [tool.isort]
 line_length = 79
