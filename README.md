@@ -22,6 +22,22 @@ pip install quantum-random[numpy]
 Note that the NumPy integration is not well-tested and is not available
 for Python 3.10.
 
+## Setup: passing your API key
+
+ANU now requires you to use an API key. You can get a free (trial) or paid key
+from [here][anupricing].
+
+You can pass your key to `qrandom` in three ways:
+
+1. By setting the environment variable `QRANDOM_API_KEY`.
+2. By running `qrandom-init` to save your key in an INI config file that is
+stored in your default home config directory (as specified by XDG).
+3. By running `qrandom-init` to save your key in an INI file in a directory
+of your choice set by `QRANDOM_CONFIG_DIR`.
+
+`qrandom` will look for the key in the order above. The `qrandom-init` utility
+is interactive and comes installed with `qrandom`.
+
 ## Usage
 
 Just import `qrandom` and use it like you'd use the
@@ -92,7 +108,8 @@ NumPy support is provided using [RandomGen][randomgen].
 
 See [LICENCE](./LICENSE).
 
-[anu]: https://qrng.anu.edu.au
+[anu]: https://quantumnumbers.anu.edu.au
+[anupricing]: https://quantumnumbers.anu.edu.au/pricing
 [pyrandom]: https://docs.python.org/3.9/library/random.html
 [poetry]: https://python-poetry.org
 [pyenv]: https://github.com/pyenv/pyenv
