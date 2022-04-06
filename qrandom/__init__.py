@@ -3,7 +3,7 @@
 Implements a quantum random number generator as a subclass of random.Random
 as described on https://docs.python.org/. The numbers come from the
 ANU Quantum Random Number Generator at The Australian National University
-(https://qrng.anu.edu.au/).
+(https://quantumnumbers.anu.edu.au/).
 
 You can use it just like the standard random module (this module replaces the
 default Mersenne Twister). But seeding is ignored and getstate() and setstate()
