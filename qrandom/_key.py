@@ -7,7 +7,7 @@ import xdg
 INIT_MSG = "initialise qrandom.ini by running qrandom-init"
 
 
-class ApiKeyNotFoundError(Exception):
+class ApiKeyNotFoundInEnvError(Exception):
     pass
 
 
@@ -19,7 +19,7 @@ def get_from_env() -> str:
     try:
         return os.environ["QRANDOM_API_KEY"]
     except KeyError:
-        raise ApiKeyNotFoundError
+        raise ApiKeyNotFoundInEnvError
 
 
 def get_custom_dir() -> pathlib.Path:
@@ -59,10 +59,11 @@ def get_from_file(config_dir: pathlib.Path) -> str:
 def get_api_key() -> str:
     try:
         return get_from_env()
-    except ApiKeyNotFoundError:
-        config_dir = get_custom_dir()
-    except CustomConfigDirNotFoundError:
-        config_dir = xdg.xdg_config_home()
+    except ApiKeyNotFoundInEnvError:
+        try:
+            config_dir = get_custom_dir()
+        except CustomConfigDirNotFoundError:
+            config_dir = xdg.xdg_config_home()
     config_path = config_dir / "qrandom.ini"
     if not config_path.exists():
         raise FileNotFoundError(
