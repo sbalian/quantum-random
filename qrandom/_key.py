@@ -37,6 +37,7 @@ def get_custom_dir() -> pathlib.Path:
             raise IOError(
                 f"{config_dir} must be a directory. {INIT_MSG.capitalize()}."
             )
+        return config_dir
     except KeyError:
         raise CustomConfigDirNotFoundError
 
