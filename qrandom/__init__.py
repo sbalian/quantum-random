@@ -14,15 +14,13 @@ Python 3.9).
 
 """
 
-import configparser
-import os
-import pathlib
 import random as pyrandom
 import warnings
 from typing import Dict, List, NoReturn, Union
 
 import requests
-import xdg
+
+from . import _key
 
 __version__ = "1.1.1"
 
@@ -54,61 +52,6 @@ __all__ = [
 _ANU_URL = "https://api.quantumnumbers.anu.edu.au"
 
 
-def _get_api_key() -> str:
-    init_msg = "initialise qrandom.ini by running qrandom-init"
-    # 1 QRANDOM_API_KEY env var
-    try:
-        return os.environ["QRANDOM_API_KEY"]
-    except KeyError:
-        # 2 qrandom.ini in directory defined by QRANDOM_CONFIG_DIR env var
-        try:
-            config_dir = (
-                pathlib.Path(os.environ["QRANDOM_CONFIG_DIR"])
-                .expanduser()
-                .resolve()
-            )
-            if not config_dir.exists():
-                raise IOError(
-                    f"{config_dir} does not exist. "
-                    f"{init_msg.capitalize()}."
-                )
-            if config_dir.is_file():
-                raise IOError(
-                    f"{config_dir} must be a directory. "
-                    f"{init_msg.capitalize()}."
-                )
-            config_path = config_dir / "qrandom.ini"
-            if not config_path.exists():
-                raise FileNotFoundError(
-                    f"{config_path} does not exist. "
-                    f"{init_msg.capitalize()}."
-                )
-            if config_path.is_dir():
-                raise IsADirectoryError(
-                    f"{config_path} cannot be a directory."
-                    f"{init_msg.capitalize()}."
-                )
-        # 3 qrandom.ini in default directory (<xdg-home>/qrandom.ini)
-        except KeyError:
-            config_path = xdg.xdg_config_home() / "qrandom.ini"
-            if not config_path.exists():
-                raise FileNotFoundError(
-                    f"{config_path} does not exist. "
-                    "Set the environment variable QRANDOM_API_KEY or "
-                    f"{init_msg}. "
-                    "You may also set QRANDOM_CONFIG_DIR to change the "
-                    "default directory containing qrandom.ini."
-                )
-            if config_path.is_dir():
-                raise IsADirectoryError(
-                    f"{config_path} cannot be a directory."
-                    f"{init_msg.capitalize()}."
-                )
-        config = configparser.ConfigParser()
-        config.read(config_path)
-        return config["default"]["key"]
-
-
 def _get_qrand_int64(size: int = 1024) -> List[int]:
     """Gets quantum random int64s from the ANU API.
 
@@ -123,7 +66,7 @@ def _get_qrand_int64(size: int = 1024) -> List[int]:
         "type": "hex16",
         "size": 4,
     }
-    headers: Dict[str, str] = {"x-api-key": _get_api_key()}
+    headers: Dict[str, str] = {"x-api-key": _key.get_api_key()}
     response = requests.get(_ANU_URL, params, headers=headers)
     response.raise_for_status()
     r_json = response.json()
