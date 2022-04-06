@@ -17,6 +17,7 @@ def init():
     user_input_dir = input().strip()
     if user_input_dir in ["", DEFAULT_DIR]:
         config_dir = DEFAULT_DIR
+        os.makedirs(config_dir, exist_ok=True)
         config_path = config_dir / "qrandom.ini"
     else:
         config_dir = pathlib.Path(user_input_dir).expanduser().resolve()
