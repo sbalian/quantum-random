@@ -42,4 +42,4 @@ jobs:
     - name: Test
       run: |
         source $HOME/.poetry/env
-        poetry run pytest
+        QRANDOM_API_KEY=key poetry run pytest

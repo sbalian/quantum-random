@@ -3,7 +3,7 @@
 Implements a quantum random number generator as a subclass of random.Random
 as described on https://docs.python.org/. The numbers come from the
 ANU Quantum Random Number Generator at The Australian National University
-(https://qrng.anu.edu.au/).
+(https://quantumnumbers.anu.edu.au/).
 
 You can use it just like the standard random module (this module replaces the
 default Mersenne Twister). But seeding is ignored and getstate() and setstate()
@@ -20,7 +20,9 @@ from typing import Dict, List, NoReturn, Union
 
 import requests
 
-__version__ = "1.1.1"
+from . import _key
+
+__version__ = "1.2.2"
 
 __all__ = [
     "betavariate",
@@ -47,35 +49,48 @@ __all__ = [
     "fill",
 ]
 
-_ANU_URL = "https://qrng.anu.edu.au/API/jsonI.php"
+_ANU_URL = "https://api.quantumnumbers.anu.edu.au"
 
 
-def _get_qrand_int64(size: int = 1024) -> List[int]:
+def _get_qrand_int64(
+    size: int = 1024, raw: bool = False
+) -> Union[Dict[str, Union[bool, str, Dict[str, List[str]]]], List[int]]:
     """Gets quantum random int64s from the ANU API.
 
     size is the number of int64s fetched (1024 by default).
 
-    Raises RuntimeError if the ANU API call is not successful. This includes
-    the case of size > 1024.
+    raw = False (default) outputs a list of integers in base 10. Otherwise,
+    the output is the raw JSON from the API (with the results nested and
+    as hex strings).
+
+    Raises HTTPError if the ANU API call is not successful.
+    This includes the case of size > 1024.
 
     """
     params: Dict[str, Union[int, str]] = {
         "length": size,
         "type": "hex16",
-        "size": 8,
+        "size": 4,
     }
-    response = requests.get(_ANU_URL, params)
-    response.raise_for_status()
+    headers: Dict[str, str] = {"x-api-key": _key.get_api_key()}
+    response = requests.get(_ANU_URL, params, headers=headers)
+    try:
+        response.raise_for_status()
+    except requests.HTTPError as http_error:
+        print("JSON response received:")
+        print(response.json())
+        raise http_error
     r_json = response.json()
-
-    if r_json["success"]:
-        return [int(number, 16) for number in r_json["data"]]
-    else:
-        raise RuntimeError(
-            "The 'success' field in the ANU response was False."
+    if not r_json["success"]:
+        # This used to happen with the old API so keeping it here just in case.
+        raise requests.HTTPError(
+            "The 'success' field in the ANU response was False even "
+            f"though the status code was {response.status_code}."
         )
-        # The status code is 200 when this happens
-    return
+    if raw:
+        return r_json
+    else:
+        return [int(number, 16) for number in r_json["data"]]
 
 
 class QuantumRandom(pyrandom.Random):

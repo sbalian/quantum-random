@@ -1,5 +1,7 @@
 """Adds numpy support to qrandom."""
 
+from typing import Any
+
 import numpy.random
 import randomgen  # type: ignore
 
@@ -10,7 +12,7 @@ class ANUQRNG(QuantumRandom):
     def __init__(self):
         super().__init__()
 
-    def random_raw(self, voidp) -> int:
+    def random_raw(self, voidp: Any) -> int:
         return self._get_rand_int64()
 
 

@@ -1,9 +1,4 @@
-#!/usr/bin/env python
-
 import json
-from typing import Dict, Union
-
-import requests
 
 import qrandom
 
@@ -13,15 +8,7 @@ def main():
     num_hits = 10
     for hit in range(num_hits):
         print(f"Getting {hit+1} of {num_hits} ...")
-        params: Dict[str, Union[int, str]] = {
-            "length": 1024,
-            "type": "hex16",
-            "size": 8,
-        }
-        response = requests.get(qrandom._ANU_URL, params)
-        response.raise_for_status()
-        json_r = response.json()
-        json_responses.append(json_r)
+        json_responses.append(qrandom._get_qrand_int64(size=1024, raw=True))
 
     path = "data/responses.json"
     with open(path, "w") as f:

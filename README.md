@@ -22,6 +22,23 @@ pip install quantum-random[numpy]
 Note that the NumPy integration is not well-tested and is not available
 for Python 3.10.
 
+## Setup: passing your API key
+
+ANU now requires you to use an API key. You can get a free (trial) or paid key
+from [here][anupricing].
+
+You can pass your key to `qrandom` in three ways:
+
+1. By setting the environment variable `QRANDOM_API_KEY`.
+2. By running `qrandom-init` to save your key in an INI config file that is
+stored in a subdirectory of your default home config directory (as specified
+by XDG, e.g., `/home/<your-username>/.config/qrandom/`).
+3. By running `qrandom-init` to save your key in an INI file in a directory
+of your choice set by `QRANDOM_CONFIG_DIR`.
+
+`qrandom` will look for the key in the order above. The `qrandom-init` utility
+is interactive and comes installed with `qrandom`.
+
 ## Usage
 
 Just import `qrandom` and use it like you'd use the
@@ -64,7 +81,8 @@ array([[0.37220278, 0.24337193, 0.67534826],
 
 To run the tests locally, you will need [poetry][poetry] and Python 3.7-3.10.
 One way of having multiple Python versions is to use [pyenv][pyenv] and list
-the versions in `.python-version`.
+the versions in `.python-version`. First, make sure you have set up your key.
+Then,
 
 ```bash
 poetry install
@@ -92,7 +110,8 @@ NumPy support is provided using [RandomGen][randomgen].
 
 See [LICENCE](./LICENSE).
 
-[anu]: https://qrng.anu.edu.au
+[anu]: https://quantumnumbers.anu.edu.au
+[anupricing]: https://quantumnumbers.anu.edu.au/pricing
 [pyrandom]: https://docs.python.org/3.9/library/random.html
 [poetry]: https://python-poetry.org
 [pyenv]: https://github.com/pyenv/pyenv
