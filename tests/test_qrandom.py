@@ -2,6 +2,7 @@ import json
 import sys
 
 import pytest
+import requests
 from scipy import stats
 
 import qrandom
@@ -81,7 +82,7 @@ def test_get_qrand_int64_raises_on_api_fail(requests_mock):
             "success": False,
         },
     )
-    with pytest.raises(RuntimeError):
+    with pytest.raises(requests.HTTPError):
         qrandom._get_qrand_int64()
     return
 
