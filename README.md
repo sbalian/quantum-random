@@ -81,7 +81,8 @@ array([[0.37220278, 0.24337193, 0.67534826],
 
 To run the tests locally, you will need [poetry][poetry] and Python 3.7-3.10.
 One way of having multiple Python versions is to use [pyenv][pyenv] and list
-the versions in `.python-version`.
+the versions in `.python-version`. First, make sure you have set up your key.
+Then,
 
 ```bash
 poetry install
