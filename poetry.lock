@@ -598,7 +598,7 @@ numpy = ["numpy", "randomgen"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<3.11"
-content-hash = "df429d59eca4ce68dd50d949f01c630961d5375f3838629f006bf873f5db98bf"
+content-hash = "445a8f804417a9b913216dd243ea257f36c774ae8af8e6662d4bf0d80b747b60"
 
 [metadata.files]
 atomicwrites = [
