@@ -2,7 +2,7 @@
 
 from typing import Any
 
-import numpy.random
+import numpy.random  # type: ignore
 import randomgen  # type: ignore
 
 from . import QuantumRandom

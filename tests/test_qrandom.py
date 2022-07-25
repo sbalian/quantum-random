@@ -3,11 +3,12 @@ import sys
 
 import pytest
 import requests
-from scipy import stats
 
 import qrandom
 
-if (sys.version_info.major, sys.version_info.minor) != (3, 10):
+if (sys.version_info.major, sys.version_info.minor) in [(3, 8), (3, 9)]:
+    from scipy import stats
+
     import qrandom.numpy
 
 
@@ -159,18 +160,17 @@ def test_random_returns_correct_num_of_nums_for_many_calls(quantum_random):
     return
 
 
-def test_random_returns_uniform_distribution(quantum_random):
-    numbers = [qrandom.random() for _ in range(10000)]
-    assert stats.kstest(numbers, "uniform").statistic < 0.01
-    return
-
-
 def test_all_is_subset_of_everything_in_module():
     assert set(qrandom.__all__).issubset(set(dir(qrandom)))
     return
 
 
-if (sys.version_info.major, sys.version_info.minor) != (3, 10):
+if (sys.version_info.major, sys.version_info.minor) in [(3, 8), (3, 9)]:
+
+    def test_random_returns_uniform_distribution(quantum_random):
+        numbers = [qrandom.random() for _ in range(10000)]
+        assert stats.kstest(numbers, "uniform").statistic < 0.01
+        return
 
     def test_numpy_support(requests_mock):
         requests_mock.get(
