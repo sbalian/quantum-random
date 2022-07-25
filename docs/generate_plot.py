@@ -1,7 +1,16 @@
 import random
+import sys
 
-import matplotlib.pyplot as plt
-from scipy import stats
+try:
+    import matplotlib.pyplot as plt
+    from scipy import stats
+except ModuleNotFoundError:
+    print(
+        "To run this script, install with `poetry install -E analysis`."
+        "Only Python 3.8 and 3.9 are supported."
+    )
+    sys.exit(1)
+
 
 import qrandom
 
