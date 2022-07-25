@@ -19,8 +19,8 @@ Optionally, for [NumPy][numpy] support,
 pip install quantum-random[numpy]
 ```
 
-Note that the NumPy integration is not well-tested and is not available
-for Python 3.10.
+Note that the NumPy integration is not well-tested and is only available
+for Python 3.8 and 3.9.
 
 ## Setup: passing your API key
 
