@@ -1,18 +1,21 @@
 import random
+from typing import List, Tuple
 
 import matplotlib.pyplot as plt
 from scipy import stats
 
 import qrandom
 
+DataType = Tuple[Tuple[List[float], str], Tuple[List[float], str]]
 
-def generate_data():
+
+def generate_data() -> DataType:
     numbers = [qrandom.random() for _ in range(10000)]
     py_numbers = [random.random() for _ in range(10000)]
     return (numbers, "Quantum random"), (py_numbers, "Python pseudo-random")
 
 
-def plot(data):
+def plot(data: DataType) -> None:
     quantum, python = data
     numbers, quantum_title = quantum
     py_numbers, python_title = python
@@ -29,7 +32,7 @@ def plot(data):
     return
 
 
-def kstest(data):
+def kstest(data: DataType) -> None:
     quantum, python = data
     numbers, quantum_title = quantum
     py_numbers, python_title = python
@@ -39,7 +42,7 @@ def kstest(data):
     return
 
 
-def main():
+def main() -> None:
     data = generate_data()
     plot(data)
     kstest(data)
