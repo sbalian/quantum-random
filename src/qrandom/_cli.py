@@ -8,7 +8,7 @@ import xdg
 DEFAULT_DIR = xdg.xdg_config_home() / "qrandom"
 
 
-def init():
+def init() -> None:
     print("This utility will help you set the API key for qrandom.")
     print("You can get a key from https://quantumnumbers.anu.edu.au/.")
     print("Where would you like to store the key?")
