@@ -88,7 +88,8 @@ poetry install
 poetry run tox
 ```
 
-See [here](./docs/uniform.md) for a visualisation and a Kolmogorov–Smirnov test.
+See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
+test.
 
 ## Notes on implementation
 
