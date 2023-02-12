@@ -2,8 +2,8 @@
 
 from typing import Any
 
-import numpy.random  # type: ignore
-import randomgen  # type: ignore
+import numpy.random
+import randomgen
 
 from . import QuantumRandom
 
