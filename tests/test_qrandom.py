@@ -1,5 +1,6 @@
 import json
 import sys
+from typing import Any, Dict, List
 
 import pytest
 import requests
@@ -22,7 +23,7 @@ MOCK_RESPONSES = _read_mock_responses()
 
 @pytest.fixture
 def quantum_random(requests_mock):
-    mock_responses = []
+    mock_responses: List[Dict[str, Any]] = []
     for response in MOCK_RESPONSES:
         mock_responses.append(
             {"json": {"data": response["data"], "success": True}}
