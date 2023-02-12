@@ -39,7 +39,6 @@ version_scheme = "post-release"
 
 [project.optional-dependencies]
 numpy = ["numpy", "randomgen"]
-analysis = ["scipy", "matplotlib"]
 
 [tool.black]
 line-length = 79
