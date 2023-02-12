@@ -60,7 +60,9 @@ def test_get_qrand_int64_returns_0_or_more(requests_mock):
         },
     )
     numbers = qrandom._api.get_qrand_int64()
-    assert min(numbers) >= 0
+    min_numbers = min(numbers)
+    assert isinstance(min_numbers, int)
+    assert min_numbers >= 0
     return
 
 
@@ -73,7 +75,9 @@ def test_get_qrand_int64_returns_less_than_2_to_64(requests_mock):
         },
     )
     numbers = qrandom._api.get_qrand_int64()
-    assert max(numbers) < 2**64
+    max_numbers = max(numbers)
+    assert isinstance(max_numbers, int)
+    assert max_numbers < 2**64
     return
 
 
