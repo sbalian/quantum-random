@@ -1,16 +1,12 @@
 import json
-import sys
 from typing import Any, Dict, List
 
 import pytest
 import requests
+from scipy import stats
 
 import qrandom
-
-if (sys.version_info.major, sys.version_info.minor) in [(3, 8), (3, 9)]:
-    from scipy import stats
-
-    import qrandom.numpy
+import qrandom.numpy
 
 
 def _read_mock_responses():
@@ -170,21 +166,20 @@ def test_all_is_subset_of_everything_in_module():
     return
 
 
-if (sys.version_info.major, sys.version_info.minor) in [(3, 8), (3, 9)]:
+def test_random_returns_uniform_distribution():
+    numbers = [qrandom.random() for _ in range(10000)]
+    assert stats.kstest(numbers, "uniform").statistic < 0.01
+    return
 
-    def test_random_returns_uniform_distribution(quantum_random):
-        numbers = [qrandom.random() for _ in range(10000)]
-        assert stats.kstest(numbers, "uniform").statistic < 0.01
-        return
 
-    def test_numpy_support(requests_mock):
-        requests_mock.get(
-            qrandom._api.ANU_URL,
-            json={
-                "data": MOCK_RESPONSES[0]["data"],
-                "success": True,
-            },
-        )
-        numbers = qrandom.numpy.quantum_rng().random((3, 3))
-        assert ((numbers >= 0.0) & (numbers < 1.0)).all()
-        return
+def test_numpy_support(requests_mock):
+    requests_mock.get(
+        qrandom._api.ANU_URL,
+        json={
+            "data": MOCK_RESPONSES[0]["data"],
+            "success": True,
+        },
+    )
+    numbers = qrandom.numpy.quantum_rng().random((3, 3))
+    assert ((numbers >= 0.0) & (numbers < 1.0)).all()
+    return
