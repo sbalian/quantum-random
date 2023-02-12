@@ -1,8 +1,4 @@
 *.pyc
-dist/
-.mypy_cache/
-.pytest_cache/
-__pycache__/
 .tox/
-.python-version
-TODO
+dist/
+*.egg-info/
