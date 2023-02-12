@@ -8,7 +8,9 @@ def main():
     num_hits = 10
     for hit in range(num_hits):
         print(f"Getting {hit+1} of {num_hits} ...")
-        json_responses.append(qrandom._get_qrand_int64(size=1024, raw=True))
+        json_responses.append(
+            qrandom._api.get_qrand_int64(size=1024, raw=True)
+        )
 
     path = "data/responses.json"
     with open(path, "w") as f:

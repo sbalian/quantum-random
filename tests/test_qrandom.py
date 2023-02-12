@@ -33,58 +33,58 @@ def quantum_random(requests_mock):
             "reason": "Exhausted mocks. Add more with tests/getresponses.",
         }
     )
-    requests_mock.get(qrandom._ANU_URL, mock_responses)
+    requests_mock.get(qrandom._api.ANU_URL, mock_responses)
     return qrandom.QuantumRandom()
 
 
 def test_get_qrand_int64_returns_1024_nums(requests_mock):
     requests_mock.get(
-        qrandom._ANU_URL,
+        qrandom._api.ANU_URL,
         json={
             "data": MOCK_RESPONSES[0]["data"],
             "success": True,
         },
     )
-    numbers = qrandom._get_qrand_int64()
+    numbers = qrandom._api.get_qrand_int64()
     assert len(numbers) == 1024
     return
 
 
 def test_get_qrand_int64_returns_0_or_more(requests_mock):
     requests_mock.get(
-        qrandom._ANU_URL,
+        qrandom._api.ANU_URL,
         json={
             "data": MOCK_RESPONSES[0]["data"],
             "success": True,
         },
     )
-    numbers = qrandom._get_qrand_int64()
+    numbers = qrandom._api.get_qrand_int64()
     assert min(numbers) >= 0
     return
 
 
 def test_get_qrand_int64_returns_less_than_2_to_64(requests_mock):
     requests_mock.get(
-        qrandom._ANU_URL,
+        qrandom._api.ANU_URL,
         json={
             "data": MOCK_RESPONSES[0]["data"],
             "success": True,
         },
     )
-    numbers = qrandom._get_qrand_int64()
+    numbers = qrandom._api.get_qrand_int64()
     assert max(numbers) < 2**64
     return
 
 
 def test_get_qrand_int64_raises_on_api_fail(requests_mock):
     requests_mock.get(
-        qrandom._ANU_URL,
+        qrandom._api.ANU_URL,
         json={
             "success": False,
         },
     )
     with pytest.raises(requests.HTTPError):
-        qrandom._get_qrand_int64()
+        qrandom._api.get_qrand_int64()
     return
 
 
@@ -174,7 +174,7 @@ if (sys.version_info.major, sys.version_info.minor) in [(3, 8), (3, 9)]:
 
     def test_numpy_support(requests_mock):
         requests_mock.get(
-            qrandom._ANU_URL,
+            qrandom._api.ANU_URL,
             json={
                 "data": MOCK_RESPONSES[0]["data"],
                 "success": True,
