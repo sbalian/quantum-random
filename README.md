@@ -26,9 +26,9 @@ Import `qrandom` and use it like the standard random module. For example:
 Alternatively, you can use the class `qrandom.QuantumRandom`. It has the same
 interface as `random.Random`.
 
-Batches of quantum numbers are fetched as needed from the API.
-Each batch contains 1024 numbers. Use `qrandom.fill(n)` to pre-fetch more
-(`n` is the number of batches).
+Batches of quantum numbers are fetched from the API as needed.
+Each batch contains 1024 numbers. Use `qrandom.fill(n)` to pre-fetch `n`
+batches.
 
 There is also a [NumPy][numpy] interface:
 
@@ -48,31 +48,31 @@ array([[0.37220278, 0.24337193, 0.67534826],
 The minimum supported Python version is 3.7. Install with `pip`:
 
 ```bash
-pip install quantum-random
+python -m pip install -U quantum-random
 ```
 
 With NumPy support included:
 
 ```bash
-pip install quantum-random[numpy]
+python -m pip install -U quantum-random[numpy]
 ```
 
 ## First-time setup: passing your API key
 
-ANU now requires you to use an API key. You can get a free (trial) or paid key
+ANU requires you to use an API key. You can get a free trial or paid key
 from [here][anupricing].
 
 You can pass your key to `qrandom` in three ways:
 
 1. By setting the environment variable `QRANDOM_API_KEY`.
-2. By running `qrandom-init` to save your key in an INI config file that is
-stored in a subdirectory of your default home config directory (as specified
-by XDG, e.g., `/home/<your-username>/.config/qrandom/`).
+2. By running `qrandom-init` to save your key in an INI file
+stored in a subdirectory of your home config directory as specified
+by XDG, e.g., `/home/<your-username>/.config/qrandom/`.
 3. By running `qrandom-init` to save your key in an INI file in a directory
 of your choice set by `QRANDOM_CONFIG_DIR`.
 
-`qrandom` will look for the key in the order above. The `qrandom-init` utility
-is interactive and comes installed with `qrandom`.
+`qrandom` will look for the key in the order above. The `qrandom-init`
+command line utility is installed as part of the package.
 
 ## Tests
 
@@ -81,8 +81,7 @@ To run the tests locally, you will need [tox][tox] and Pythons 3.7 to 3.11
 [pyenv][pyenv] or [Homebrew][brew]). Then:
 
 ```bash
-poetry install
-poetry run tox
+tox
 ```
 
 See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
