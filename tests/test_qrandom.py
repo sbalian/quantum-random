@@ -166,7 +166,7 @@ def test_all_is_subset_of_everything_in_module():
     return
 
 
-def test_random_returns_uniform_distribution():
+def test_random_returns_uniform_distribution(quantum_random):
     numbers = [qrandom.random() for _ in range(10000)]
     assert stats.kstest(numbers, "uniform").statistic < 0.01
     return
