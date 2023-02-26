@@ -33,6 +33,7 @@ jobs:
         pip install tox
     - name: Lint
       run: |
+        mkdir .mypy_cache
         tox -e flake8,black,isort,mypy
     - name: Test
       run: |
