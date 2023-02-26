@@ -13,6 +13,7 @@ def get_qrand_hex(
     """Gets hexadecimal random numbers from the ANU API.
 
     The output is the raw JSON from the API.
+
     """
     params: Dict[str, Union[int, str]] = {
         "length": batch_size,

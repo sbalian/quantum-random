@@ -13,6 +13,7 @@ class QuantumRandom(pyrandom.Random):
 
         batch_size is the number of ANU random numbers fetched and cached
         per API call (default is maximum allowed: 1024).
+
         """
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
@@ -27,6 +28,7 @@ class QuantumRandom(pyrandom.Random):
         """Fills the generator with n batches of 64-bit ints.
 
         The batch size is set during initialization.
+
         """
         for _ in range(n):
             self._rand_int64.extend(
