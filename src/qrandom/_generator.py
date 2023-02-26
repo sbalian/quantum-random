@@ -29,7 +29,9 @@ class QuantumRandom(pyrandom.Random):
         The batch size is set during initialization.
         """
         for _ in range(n):
-            self._rand_int64.extend(_api.get_qrand_int64(size=self.batch_size))
+            self._rand_int64.extend(
+                _api.get_qrand_int64(batch_size=self.batch_size)
+            )
         return
 
     def _get_rand_int64(self) -> int:

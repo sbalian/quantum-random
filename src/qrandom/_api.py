@@ -7,23 +7,15 @@ from qrandom import _key
 ANU_URL = "https://api.quantumnumbers.anu.edu.au"
 
 
-def get_qrand_int64(
-    size: int = 1024, raw: bool = False
-) -> Union[Dict[str, Union[bool, str, Dict[str, List[str]]]], List[int]]:
-    """Gets quantum random int64s from the ANU API.
+def get_qrand_hex(
+    batch_size: int = 1024,
+) -> Dict[str, Union[bool, str, Dict[str, List[str]]]]:
+    """Gets hexadecimal random numbers from the ANU API.
 
-    size is the number of int64s fetched (1024 by default).
-
-    raw = False (default) outputs a list of integers in base 10. Otherwise,
-    the output is the raw JSON from the API (with the results nested and
-    as hex strings).
-
-    Raises HTTPError if the ANU API call is not successful.
-    This includes the case of size > 1024.
-
+    The output is the raw JSON from the API.
     """
     params: Dict[str, Union[int, str]] = {
-        "length": size,
+        "length": batch_size,
         "type": "hex16",
         "size": 4,
     }
@@ -42,7 +34,17 @@ def get_qrand_int64(
             "The 'success' field in the ANU response was False even "
             f"though the status code was {response.status_code}."
         )
-    if raw:
-        return r_json
-    else:
-        return [int(number, 16) for number in r_json["data"]]
+    return r_json
+
+
+def get_qrand_int64(batch_size: int = 1024) -> List[int]:
+    """Gets random int64s from the ANU API.
+
+    batch_size is the number of int64s fetched (1024 by default).
+
+    Raises HTTPError if the ANU API call is not successful.
+    This includes the case of batch_size > 1024.
+
+    """
+    r_json = get_qrand_hex(batch_size=batch_size)
+    return [int(number, 16) for number in r_json["data"]]
