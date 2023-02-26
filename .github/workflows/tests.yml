@@ -12,35 +12,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        python: ['3.7', '3.8', '3.9', '3.10', '3.11']
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.python }}
     - name: Install
       run: |
-        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py > get-poetry.py
-        python get-poetry.py -y
-        rm get-poetry.py
-        source $HOME/.poetry/env
-        poetry install
-        poetry install -E numpy
-        poetry install -E analysis
+        pip install .
+        pip install '.[numpy]'
     - name: Build
       run: |
-        source $HOME/.poetry/env
-        poetry build
+        pip install build
+        python -m build
+    - name: Install tox
+      run: |
+        pip install tox
     - name: Lint
       run: |
-        source $HOME/.poetry/env
-        poetry run isort . --check-only
-        poetry run black --check .
-        poetry run flake8 .
-        poetry run mypy qrandom
+        tox -e flake8,black,isort,mypy
     - name: Test
       run: |
-        source $HOME/.poetry/env
-        QRANDOM_API_KEY=key poetry run pytest
+        tox -e py
