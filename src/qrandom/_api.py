@@ -8,7 +8,7 @@ from qrandom import _key
 ANU_URL = "https://api.quantumnumbers.anu.edu.au"
 
 
-class SuccessfulResponse(TypedDict):
+class Response(TypedDict):
     success: bool
     type: str
     length: str
@@ -17,7 +17,7 @@ class SuccessfulResponse(TypedDict):
 
 def get_qrand_hex(
     batch_size: int = 1024,
-) -> SuccessfulResponse:
+) -> Response:
     """Gets hexadecimal random numbers from the ANU API.
 
     The output is the raw JSON from the API.
