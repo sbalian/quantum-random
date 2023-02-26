@@ -1,6 +1,6 @@
 import random as pyrandom
 import warnings
-from typing import NoReturn
+from typing import List, NoReturn
 
 from qrandom import _api
 
@@ -8,18 +8,28 @@ from qrandom import _api
 class QuantumRandom(pyrandom.Random):
     """Quantum random number generator."""
 
-    def __init__(self):
-        """Initializes an instance of QuantumRandom."""
+    def __init__(self, batch_size: int = 1024):
+        """Initializes an instance of QuantumRandom.
+
+        batch_size is the number of ANU random numbers fetched and cached
+        per API call (default is maximum allowed: 1024).
+        """
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
             super().__init__()
-        self._rand_int64 = []
+        self._rand_int64: List[int] = []
+        if not (0 < batch_size <= 1024):
+            raise ValueError("batch_size must be > 0 and up to 1024")
+        self.batch_size = batch_size
         return
 
     def fill(self, n: int = 1):
-        """Fills the generator with n batches of 1024 64-bit ints."""
+        """Fills the generator with n batches of 64-bit ints.
+
+        The batch size is set during initialization.
+        """
         for _ in range(n):
-            self._rand_int64.extend(_api.get_qrand_int64())
+            self._rand_int64.extend(_api.get_qrand_int64(size=self.batch_size))
         return
 
     def _get_rand_int64(self) -> int:
