@@ -19,6 +19,7 @@ from qrandom._generator import QuantumRandom
 __version__ = "1.2.4"
 
 __all__ = [
+    "QuantumRandom",
     "betavariate",
     "choice",
     "choices",
