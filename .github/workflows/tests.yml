@@ -27,10 +27,7 @@ jobs:
     - name: Install tox
       run: |
         pip install tox
-    - name: Lint
+    - name: Run tox
       run: |
         mkdir .mypy_cache
-        tox -e flake8,black,isort,mypy
-    - name: Test
-      run: |
-        tox -e py
+        tox -e py,flake8,black,isort,mypy
