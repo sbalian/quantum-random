@@ -24,7 +24,7 @@ from qrandom import _api
         resolve_path=True,
         path_type=pathlib.Path,
     ),
-    default=pathlib.Path("../tests/data/"),
+    default=pathlib.Path("./data"),
     help="Output directory.",
     show_default=True,
 )
@@ -41,8 +41,10 @@ def main(num_hits, output_directory):
     key = _api.find_api_key()
     client = _api.Client(key)
 
+    click.echo("Fetching data ...")
     with click.progressbar(range(num_hits)) as bar:
         responses = [client.fetch_hex_raw() for _ in bar]
+    click.echo("Writing responses ...")
     with open(pathlib.Path(output_path), "w") as f:
         json.dump(responses, f)
     click.echo(f"Wrote responses to {output_path} .")
