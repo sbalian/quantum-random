@@ -13,8 +13,9 @@ def find_api_key() -> str:
 
     1. Return QRANDOM_API_KEY if defined.
     2. Get the config file directory from QRANDOM_CONFIG_DIR (defaulting to
-       XDG home config directory if QRANDOM_CONFIG_DIR is not defined).
-    3. Return the key from the config file.
+       XDG home config directory if QRANDOM_CONFIG_DIR is not defined). Raise
+       if the directory is not found.
+    3. Return the key from the config file. Raise if the file is not found.
 
     """
     api_key = os.getenv("QRANDOM_API_KEY")
