@@ -1,16 +1,15 @@
-"""ANU quantum random numbers.
+"""ANU Quantum Random Numbers.
 
 Implements a quantum random number generator as a subclass of random.Random
-as described on https://docs.python.org/. The numbers come from the
-ANU Quantum Random Number Generator at The Australian National University
-(https://quantumnumbers.anu.edu.au/).
+as described on https://docs.python.org/3/library/random.html. The numbers
+come from the ANU Quantum Random Number Generator at The Australian National
+University (https://quantumnumbers.anu.edu.au/).
 
-You can use it just like the standard random module (this module replaces the
-default Mersenne Twister). But seeding is ignored and getstate() and setstate()
-are not implemented because there is no state. Also, getrandbits() is not
-yet available so randrange() can not cover arbitrarily large ranges. Finally,
-because getrandbits() is not available, there is no randbytes() (new in
-Python 3.9).
+You can use this module just like the standard random module. The module
+replaces the default Mersenne Twister generator. Seeding is ignored
+and getstate() and setstate() are not implemented because there is no state.
+Also, getrandbits() is not available so randrange() can't cover arbitrarily
+large ranges. There is no randbytes() because getrandbits() is not available.
 
 """
 

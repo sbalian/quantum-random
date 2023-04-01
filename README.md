@@ -8,7 +8,7 @@ the ANU API.
 
 ## Usage
 
-Import `qrandom` and use it like the standard random module. For example:
+Import `qrandom` and use it like the standard `random` module. For example:
 
 ```python
 >>> import qrandom
@@ -25,10 +25,6 @@ Import `qrandom` and use it like the standard random module. For example:
 
 Alternatively, you can use the class `qrandom.QuantumRandom`. It has the same
 interface as `random.Random`.
-
-Batches of quantum numbers are fetched from the API as needed.
-Each batch contains 1024 numbers. Use `qrandom.fill(n)` to pre-fetch `n`
-batches.
 
 There is also a [NumPy][numpy] interface:
 
@@ -51,7 +47,7 @@ The minimum supported Python version is 3.7. Install with `pip`:
 python -m pip install -U quantum-random
 ```
 
-With NumPy support included:
+If you want NumPy support:
 
 ```bash
 python -m pip install -U quantum-random[numpy]
@@ -74,6 +70,12 @@ of your choice set by `QRANDOM_CONFIG_DIR`.
 `qrandom` will look for the key in the order above. The `qrandom-init`
 command line utility is installed as part of the package.
 
+## Pre-fetching batches
+
+Batches of quantum numbers are fetched from the API as needed.
+Each batch contains 1024 numbers. Use `qrandom.fill(n)` to fetch `n` batches
+if you need to pre-fetch at the start of your computation.
+
 ## Tests
 
 To run the tests locally, you will need [tox][tox] and Pythons 3.7 to 3.11
@@ -91,16 +93,16 @@ test.
 
 The `qrandom` module exposes a class derived from `random.Random` with a
 `random()` method that outputs quantum floats in the range [0, 1)
-(converted from 64-bit ints). Overriding `random.Random.random`
+(converted from 64-bit integers). Overriding `random.Random.random`
 is sufficient to make the `qrandom` module behave mostly like the
 `random` module as described in the [Python docs][pyrandom]. The exceptions
-are `getrandbits()` and `randbytes()` that are not available in
+are `getrandbits()` and `randbytes()`: these are not available in
 `qrandom`. Because `getrandbits()` is not available, `randrange()` cannot
 produce arbitrarily long sequences. Finally, the user is warned when `seed()`
-is called because a quantum generator has no state. For the same reason,
+is called because the quantum generator has no state. For the same reason,
 `getstate()` and `setstate()` are not implemented.
 
-NumPy is supported through [RandomGen][randomgen].
+NumPy is supported using [RandomGen][randomgen].
 
 ## License
 
