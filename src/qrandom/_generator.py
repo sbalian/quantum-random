@@ -9,7 +9,7 @@ class QuantumRandom(pyrandom.Random):
     """Quantum random number generator."""
 
     def __init__(self, batch_size: int = 1024):
-        """Initializes an instance of QuantumRandom.
+        """Initialises an instance of QuantumRandom.
 
         batch_size is the number of ANU random numbers fetched and cached
         per API call (default is maximum allowed: 1024).
@@ -21,19 +21,19 @@ class QuantumRandom(pyrandom.Random):
         self._rand_int64: List[int] = []
         if not (0 < batch_size <= 1024):
             raise ValueError("batch_size must be > 0 and up to 1024")
-        self.batch_size = batch_size
+        self.api_client = _api.Client(
+            _api.find_api_key(), batch_size=batch_size
+        )
         return
 
     def fill(self, n: int = 1):
         """Fills the generator with n batches of 64-bit ints.
 
-        The batch size is set during initialization.
+        The batch size is set during initialisation.
 
         """
         for _ in range(n):
-            self._rand_int64.extend(
-                _api.get_qrand_int64(batch_size=self.batch_size)
-            )
+            self._rand_int64.extend(self.api_client.fetch_int64())
         return
 
     def _get_rand_int64(self) -> int:

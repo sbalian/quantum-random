@@ -59,4 +59,4 @@ check_untyped_defs = true
 enable_error_code = ["ignore-without-code"]
 show_error_codes = true
 warn_unused_ignores = true
-exclude = ["__pycache__", ".git", ".tox", "build"]
+exclude = ["__pycache__", ".git", ".tox", "build", ".venv", "dist"]
