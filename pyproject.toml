@@ -10,7 +10,7 @@ keywords = ["quantum", "random", "statistics"]
 readme = "README.md"
 requires-python = ">=3.7"
 license = {file = "LICENSE"}
-dependencies = ["requests", "xdg", "typing-extensions"]
+dependencies = ["requests", "xdg", "typing-extensions", "click"]
 dynamic = ["version"]
 maintainers = [{ name = "Seto Balian", email = "seto.balian@gmail.com" }]
 classifiers = [
