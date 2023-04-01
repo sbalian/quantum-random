@@ -28,7 +28,7 @@ from qrandom import _api
     help="Output directory.",
     show_default=True,
 )
-def main(num_hits, output_directory):
+def main(num_hits, output_directory) -> None:
     """Write a JSON file of responses from the ANU API for testing purposes."""
 
     output_path = output_directory / "responses.json"
@@ -48,6 +48,8 @@ def main(num_hits, output_directory):
     with open(pathlib.Path(output_path), "w") as f:
         json.dump(responses, f)
     click.echo(f"Wrote responses to {output_path} .")
+
+    return
 
 
 if __name__ == "__main__":
