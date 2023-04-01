@@ -108,7 +108,7 @@ class Client:
         """
         return self.fetch_hex_raw()["data"]
 
-    def fetch_int64(self, batch_size: int = 1024) -> List[int]:
+    def fetch_int64(self) -> List[int]:
         """Gets random int64s from the ANU API.
 
         Calls Client.fetch_hex(batch_size) and converts the hex numbers to
