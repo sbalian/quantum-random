@@ -15,8 +15,6 @@ large ranges. There is no randbytes() because getrandbits() is not available.
 
 from ._generator import QuantumRandom
 
-__version__ = "1.2.4"
-
 __all__ = [
     "QuantumRandom",
     "betavariate",

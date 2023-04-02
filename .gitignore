@@ -3,3 +3,4 @@
 dist/
 *.egg-info/
 TODO
+src/qrandom/version.py

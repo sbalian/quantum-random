@@ -36,6 +36,7 @@ qrandom-init = "qrandom._cli:main"
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
+write_to = "src/qrandom/version.py"
 
 [project.optional-dependencies]
 numpy = ["numpy", "randomgen"]
