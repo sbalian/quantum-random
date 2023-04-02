@@ -9,8 +9,8 @@ from qrandom import QuantumRandom
 
 
 class ANUQRNG(QuantumRandom):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, batch_size: int = 1024):
+        super().__init__(batch_size=batch_size)
 
     def random_raw(self, voidp: Any) -> int:
         return self._get_rand_int64()
