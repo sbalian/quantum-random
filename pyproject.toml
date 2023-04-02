@@ -32,7 +32,7 @@ homepage = "https://github.com/sbalian/quantum-random"
 repository = "https://github.com/sbalian/quantum-random.git"
 
 [project.scripts]
-qrandom-init = "qrandom._cli:init"
+qrandom-init = "qrandom._cli:main"
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
