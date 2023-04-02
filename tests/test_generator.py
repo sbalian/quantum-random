@@ -69,7 +69,7 @@ def test_random_returns_in_correct_range(
         assert number < 1.0
 
 
-def test_quantum_random_constructs_correctly_by_default(mocked_environment):
+def test_quantum_random_constructs_correctly_by_default():
     quantum_random = _generator.QuantumRandom()
     assert not quantum_random._rand_int64
     assert quantum_random._api_client.headers == {"x-api-key": "key"}
@@ -80,9 +80,7 @@ def test_quantum_random_constructs_correctly_by_default(mocked_environment):
     }
 
 
-def test_quantum_random_raises_for_batch_size_out_of_bounds(
-    mocked_environment,
-):
+def test_quantum_random_raises_for_batch_size_out_of_bounds():
     with pytest.raises(ValueError) as exc_info:
         _generator.QuantumRandom(batch_size=-1)
     assert exc_info.value.args[0] == "batch_size must be > 0 and up to 1024"

@@ -113,17 +113,19 @@ def test_fetch_int64_returns_in_correct_range(
         assert 0 <= number < 2**64
 
 
-def test_find_api_key_directly_from_env(mocker):
-    mocker.patch.dict(
-        os.environ,
-        {"QRANDOM_API_KEY": "key-from-env"},
-    )
-    assert _api.find_api_key() == "key-from-env"
+def test_find_api_key_directly_from_env():
+    assert _api.find_api_key() == "key"
 
 
 def test_find_api_key_from_default_config_dir(mocker, tmp_path):
     config_dir = tmp_path / "qrandom"
     config_dir.mkdir()
+    environ = {
+        name: value
+        for name, value in os.environ.items()
+        if name != "QRANDOM_API_KEY"
+    }
+    mocker.patch.dict(os.environ, environ, clear=True)
     with open(config_dir / "qrandom.ini", "w") as f:
         f.write("[default]\nkey = key-from-file\n")
     mocker.patch("xdg.xdg_config_home", return_value=tmp_path)
@@ -133,21 +135,27 @@ def test_find_api_key_from_default_config_dir(mocker, tmp_path):
 def test_find_api_key_from_set_config_dir(mocker, tmp_path):
     config_dir = tmp_path / "qrandom"
     config_dir.mkdir()
+    environ = {
+        name: value
+        for name, value in os.environ.items()
+        if name != "QRANDOM_API_KEY"
+    }
+    environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
+    mocker.patch.dict(os.environ, environ, clear=True)
     with open(config_dir / "qrandom.ini", "w") as f:
         f.write("[default]\nkey = key-from-file\n")
-    mocker.patch.dict(
-        os.environ,
-        {"QRANDOM_CONFIG_DIR": str(config_dir)},
-    )
     assert _api.find_api_key() == "key-from-file"
 
 
 def test_find_api_key_raises_if_config_dir_does_not_exist(mocker, tmp_path):
     config_dir = tmp_path / "qrandom"
-    mocker.patch.dict(
-        os.environ,
-        {"QRANDOM_CONFIG_DIR": str(config_dir)},
-    )
+    environ = {
+        name: value
+        for name, value in os.environ.items()
+        if name != "QRANDOM_API_KEY"
+    }
+    environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
+    mocker.patch.dict(os.environ, environ, clear=True)
     with pytest.raises(FileNotFoundError) as exc_info:
         _api.find_api_key()
     assert (
@@ -159,10 +167,13 @@ def test_find_api_key_raises_if_config_dir_is_file(mocker, tmp_path):
     config_dir = tmp_path / "qrandom"
     with open(config_dir, "w") as f:
         f.write("xyz")
-    mocker.patch.dict(
-        os.environ,
-        {"QRANDOM_CONFIG_DIR": str(config_dir)},
-    )
+    environ = {
+        name: value
+        for name, value in os.environ.items()
+        if name != "QRANDOM_API_KEY"
+    }
+    environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
+    mocker.patch.dict(os.environ, environ, clear=True)
     with pytest.raises(NotADirectoryError) as exc_info:
         _api.find_api_key()
     assert (
@@ -174,10 +185,13 @@ def test_find_api_key_raises_if_config_dir_is_file(mocker, tmp_path):
 def test_find_api_key_raises_if_config_file_does_not_exist(mocker, tmp_path):
     config_dir = tmp_path / "qrandom"
     config_dir.mkdir()
-    mocker.patch.dict(
-        os.environ,
-        {"QRANDOM_CONFIG_DIR": str(config_dir)},
-    )
+    environ = {
+        name: value
+        for name, value in os.environ.items()
+        if name != "QRANDOM_API_KEY"
+    }
+    environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
+    mocker.patch.dict(os.environ, environ, clear=True)
     with pytest.raises(FileNotFoundError) as exc_info:
         _api.find_api_key()
     assert (

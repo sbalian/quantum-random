@@ -1,7 +1,7 @@
 from qrandom import numpy
 
 
-def test_numpy_support(mocked_environment, mocker, test_responses):
+def test_numpy_support(mocker, test_responses):
     mocker.patch(
         "qrandom._api.Client.fetch_hex_raw",
         side_effect=test_responses,

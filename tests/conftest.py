@@ -1,5 +1,4 @@
 import json
-import os
 
 import pytest
 import responses
@@ -77,22 +76,12 @@ def api_client_with_mocked_fetch_hex_raw(mocker, test_responses):
 
 
 @pytest.fixture
-def mocked_environment(mocker):
-    mocker.patch.dict(
-        os.environ,
-        {"QRANDOM_API_KEY": "key"},
-    )
-
-
-@pytest.fixture
-def quantum_random_with_no_api_calls(mocked_environment):
+def quantum_random_with_no_api_calls():
     return _generator.QuantumRandom()
 
 
 @pytest.fixture
-def quantum_random_with_mocked_fetch_hex_raw(
-    mocked_environment, mocker, test_responses
-):
+def quantum_random_with_mocked_fetch_hex_raw(mocker, test_responses):
     mocker.patch(
         "qrandom._api.Client.fetch_hex_raw",
         return_value=test_responses[0],
@@ -101,9 +90,7 @@ def quantum_random_with_mocked_fetch_hex_raw(
 
 
 @pytest.fixture
-def quantum_random_with_mocked_fetch_hex_raw_twice(
-    mocked_environment, mocker, test_responses
-):
+def quantum_random_with_mocked_fetch_hex_raw_twice(mocker, test_responses):
     mocker.patch(
         "qrandom._api.Client.fetch_hex_raw",
         side_effect=[test_responses[0], test_responses[1]],
@@ -113,7 +100,7 @@ def quantum_random_with_mocked_fetch_hex_raw_twice(
 
 @pytest.fixture
 def quantum_random_with_mocked_fetch_hex_raw_five_times(
-    mocked_environment, mocker, test_responses
+    mocker, test_responses
 ):
     mocker.patch(
         "qrandom._api.Client.fetch_hex_raw",
@@ -124,7 +111,7 @@ def quantum_random_with_mocked_fetch_hex_raw_five_times(
 
 @pytest.fixture
 def quantum_random_with_mocked_fetch_hex_raw_for_all_data(
-    mocked_environment, mocker, test_responses
+    mocker, test_responses
 ):
     mocker.patch(
         "qrandom._api.Client.fetch_hex_raw",
