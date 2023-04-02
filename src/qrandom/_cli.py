@@ -45,7 +45,7 @@ def main() -> None:
     config["default"]["key"] = api_key
     with open(config_path, "w") as f:
         config.write(f)
-    print(f"Stored API key in {config_path}.")
+    click.echo(f"Stored API key in {config_path}.")
     if config_dir != default_config_dir:
         click.echo(
             "Since you did not write to the default path, "

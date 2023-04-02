@@ -24,7 +24,7 @@ from qrandom import _api
         resolve_path=True,
         path_type=pathlib.Path,
     ),
-    default=pathlib.Path("./data"),
+    default=pathlib.Path("."),
     help="Output directory.",
     show_default=True,
 )

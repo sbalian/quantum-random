@@ -1,9 +1,0 @@
-isort
-flake8
-pytest
-requests-mock
-tox
-black
-mypy
-ipython
-scipy

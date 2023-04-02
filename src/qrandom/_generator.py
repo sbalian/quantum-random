@@ -2,7 +2,7 @@ import random as pyrandom
 import warnings
 from typing import List, NoReturn
 
-from qrandom import _api
+from . import _api
 
 
 class QuantumRandom(pyrandom.Random):
@@ -21,7 +21,7 @@ class QuantumRandom(pyrandom.Random):
         self._rand_int64: List[int] = []
         if not (0 < batch_size <= 1024):
             raise ValueError("batch_size must be > 0 and up to 1024")
-        self.api_client = _api.Client(
+        self._api_client = _api.Client(
             _api.find_api_key(), batch_size=batch_size
         )
         return
@@ -33,7 +33,7 @@ class QuantumRandom(pyrandom.Random):
 
         """
         for _ in range(n):
-            self._rand_int64.extend(self.api_client.fetch_int64())
+            self._rand_int64.extend(self._api_client.fetch_int64())
         return
 
     def _get_rand_int64(self) -> int:
@@ -52,13 +52,12 @@ class QuantumRandom(pyrandom.Random):
 
         """
         if self.seed.__doc__ is None:
-            raise RuntimeError("Docstring for seed must exist.")
+            raise RuntimeError("docstring for seed must exist")
         warnings.warn(self.seed.__doc__)
         return
 
     def _notimplemented(self, *args, **kwds) -> NoReturn:
         """Method shouldn't be called for a quantum random number generator."""
-        raise NotImplementedError("Quantum source does not have state.")
-        return
+        raise NotImplementedError("quantum source does not have state")
 
     getstate = setstate = _notimplemented

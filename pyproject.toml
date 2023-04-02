@@ -51,6 +51,7 @@ known_first_party = ["qrandom"]
 [tool.pytest.ini_options]
 addopts = "--verbose"
 testpaths = "tests"
+norecursedirs = ["tests/data"]
 
 [tool.mypy]
 ignore_missing_imports = true

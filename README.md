@@ -53,10 +53,10 @@ If you want NumPy support:
 python -m pip install -U quantum-random[numpy]
 ```
 
-## First-time setup: passing your API key
+## First-time setup: setting your API key
 
-ANU requires you to use an API key. You can get a free trial or paid key
-from [here][anupricing].
+ANU requires you to use an API key. You can get a free trial or pay for a key
+[here][anupricing].
 
 You can pass your key to `qrandom` in three ways:
 
@@ -79,8 +79,8 @@ if you need to pre-fetch at the start of your computation.
 ## Tests
 
 To run the tests locally, you will need [tox][tox] and Pythons 3.7 to 3.11
-(i.e., multiple versions of Python installed and seen by tox using, e.g.,
-[pyenv][pyenv] or [Homebrew][brew]). Then:
+(i.e., multiple versions of Python installed, e.g., with [pyenv][pyenv] or
+[Homebrew][brew]). Then:
 
 ```bash
 tox

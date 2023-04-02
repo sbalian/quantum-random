@@ -24,7 +24,9 @@ def find_api_key() -> str:
 
     config_dir = (
         pathlib.Path(
-            os.getenv("QRANDOM_CONFIG_DIR", xdg.xdg_config_home() / "qrandom")
+            os.getenv(
+                "QRANDOM_CONFIG_DIR", str(xdg.xdg_config_home() / "qrandom")
+            )
         )
         .expanduser()
         .resolve()

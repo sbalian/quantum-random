@@ -13,7 +13,7 @@ large ranges. There is no randbytes() because getrandbits() is not available.
 
 """
 
-from qrandom._generator import QuantumRandom
+from ._generator import QuantumRandom
 
 __version__ = "1.2.4"
 
