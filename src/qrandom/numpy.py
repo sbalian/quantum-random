@@ -18,7 +18,7 @@ class _ANUQRNG(_generator.QuantumRandom):
 
 
 def quantum_rng(batch_size: int = 1024):
-    """Constructs a new Generator with a quantum BitGenerator (ANUQRNG).
+    """Constructs a new Generator with a quantum BitGenerator.
 
     batch_size is the number of ANU random numbers fetched and cached
     per API call (default is maximum allowed: 1024).

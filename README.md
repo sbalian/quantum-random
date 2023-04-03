@@ -39,6 +39,11 @@ array([[0.37220278, 0.24337193, 0.67534826],
        [0.35894084, 0.72219929, 0.55388594]])
 ```
 
+NumPy is supported using [RandomGen][randomgen]. Note that the NumPy
+integration is not fully tested. Also, there are currently no RandomGen wheels
+available for Python 3.11, and RandomGen fails to compile for Python 3.11 on
+the latest macOS image in the CI.
+
 ## Installation
 
 The minimum supported Python version is 3.7. Install with `pip`:
@@ -78,6 +83,10 @@ if you need to pre-fetch at the start of your computation.
 
 ## Tests
 
+The CI tests run for Python 3.7 - 3.11 on the latest Windows,
+macOS and Ubuntu images, except for Python 3.11 on macOS, as RandomGen fails
+to compile for this configuration.
+
 To run the tests locally, you will need [tox][tox] and Pythons 3.7 to 3.11
 (i.e., multiple versions of Python installed, e.g., with [pyenv][pyenv] or
 [Homebrew][brew]). Then:
@@ -101,8 +110,6 @@ are `getrandbits()` and `randbytes()`: these are not available in
 produce arbitrarily long sequences. Finally, the user is warned when `seed()`
 is called because the quantum generator has no state. For the same reason,
 `getstate()` and `setstate()` are not implemented.
-
-NumPy is supported using [RandomGen][randomgen].
 
 ## License
 
