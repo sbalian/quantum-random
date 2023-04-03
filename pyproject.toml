@@ -60,5 +60,5 @@ follow_imports = "silent"
 check_untyped_defs = true
 enable_error_code = ["ignore-without-code"]
 show_error_codes = true
-warn_unused_ignores = true
+warn_unused_ignores = false
 exclude = ["__pycache__", ".git", ".tox", "build", ".venv", "dist"]
