@@ -25,8 +25,8 @@ jobs:
         python -m pip install tox
         tox -e py,mypy
 
-  test-no-numpy:
-    runs-on: macos-latest
+  test-311-mac-os:
+    runs-on: macos-11
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -38,7 +38,7 @@ jobs:
         mkdir .mypy_cache
         python -m pip install --upgrade pip
         python -m pip install tox
-        tox -e no-numpy,no-numpy-mypy
+        tox -e py,mypy
 
   lint:
     runs-on: ubuntu-latest
