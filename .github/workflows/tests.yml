@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
         exclude:
           - os: macos-latest
             python-version: '3.11'
@@ -18,7 +18,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python }}
+        python-version: ${{ matrix.python-version }}
     - name: Run tests
       run: |
         mkdir .mypy_cache
