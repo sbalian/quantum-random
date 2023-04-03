@@ -12,7 +12,6 @@ jobs:
         exclude:
           - os: macos-latest
             python-version: '3.11'
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -25,6 +24,21 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install tox
         tox -e py,mypy
+
+  test-no-numpy:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Run tests
+      run: |
+        mkdir .mypy_cache
+        python -m pip install --upgrade pip
+        python -m pip install tox
+        tox -e no-numpy,no-numpy-mypy
 
   lint:
     runs-on: ubuntu-latest

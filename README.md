@@ -26,7 +26,7 @@ Import `qrandom` and use it like the standard `random` module. For example:
 Alternatively, you can use the class `qrandom.QuantumRandom`. It has the same
 interface as `random.Random`.
 
-There is also a [NumPy][numpy] interface:
+There is also a [NumPy][numpy] interface, although it is not fully tested:
 
 ```python
 >>> from qrandom.numpy import quantum_rng
@@ -39,10 +39,9 @@ array([[0.37220278, 0.24337193, 0.67534826],
        [0.35894084, 0.72219929, 0.55388594]])
 ```
 
-NumPy is supported using [RandomGen][randomgen]. Note that the NumPy
-integration is not fully tested. Also, there are currently no RandomGen wheels
-available for Python 3.11, and RandomGen fails to compile for Python 3.11 on
-the latest macOS image in the CI.
+NumPy is supported using [RandomGen][randomgen]. Note that there are currently
+no RandomGen wheels available for Python 3.11, and RandomGen fails to compile
+for Python 3.11 on the latest macOS image in the CI.
 
 ## Installation
 
@@ -84,8 +83,8 @@ if you need to pre-fetch at the start of your computation.
 ## Tests
 
 The CI tests run for Python 3.7 - 3.11 on the latest Windows,
-macOS and Ubuntu images, except for Python 3.11 on macOS, as RandomGen fails
-to compile for this configuration.
+macOS and Ubuntu images. For Python 3.11 on macOS, the tests run with no
+numpy support as RandomGen fails to compile.
 
 To run the tests locally, you will need [tox][tox] and Pythons 3.7 to 3.11
 (i.e., multiple versions of Python installed, e.g., with [pyenv][pyenv] or
