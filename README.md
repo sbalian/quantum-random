@@ -40,8 +40,7 @@ array([[0.37220278, 0.24337193, 0.67534826],
 ```
 
 NumPy is supported using [RandomGen][randomgen]. Note that there are currently
-no RandomGen wheels available for Python 3.11, and RandomGen fails to compile
-for Python 3.11 on the latest macOS image in the CI.
+no RandomGen wheels available for Python 3.11.
 
 ## Installation
 
@@ -82,17 +81,10 @@ if you need to pre-fetch at the start of your computation.
 
 ## Tests
 
-The CI tests run for Python 3.7 - 3.11 on the latest Windows,
-macOS and Ubuntu images. For Python 3.11 on macOS, the tests run with no
-numpy support as RandomGen fails to compile.
-
-To run the tests locally, you will need [tox][tox] and Pythons 3.7 to 3.11
-(i.e., multiple versions of Python installed, e.g., with [pyenv][pyenv] or
-[Homebrew][brew]). Then:
-
-```bash
-tox
-```
+The tests run for Python 3.7 - 3.11 on the latest Windows,
+macOS and Ubuntu runner images. For Python 3.11 on macOS, the tests run
+only with no NumPy support as RandomGen fails to compile. Use [tox][tox] to run
+the tests locally.
 
 See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
 test.
@@ -118,7 +110,5 @@ See [LICENCE](./LICENSE).
 [anupricing]: https://quantumnumbers.anu.edu.au/pricing
 [pyrandom]: https://docs.python.org/3/library/random.html
 [tox]: https://tox.wiki/en/latest/
-[pyenv]: https://github.com/pyenv/pyenv
 [numpy]: https://numpy.org
 [randomgen]: https://github.com/bashtage/randomgen
-[brew]: https://brew.sh/
