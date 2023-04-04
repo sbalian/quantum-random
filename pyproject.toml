@@ -1,13 +1,18 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "quantum-random"
-version = "1.2.4"
+authors = [{ name = "Seto Balian", email = "seto.balian@gmail.com" }]
 description = "Quantum random numbers"
-authors = ["Seto Balian <seto.balian@gmail.com>"]
-packages = [{ include = "qrandom" }]
+keywords = ["quantum", "random", "statistics"]
 readme = "README.md"
-license = "MIT"
-repository = "https://github.com/sbalian/quantum-random"
-maintainers = ["Seto Balian <seto.balian@gmail.com>"]
+requires-python = ">=3.7"
+license = {file = "LICENSE"}
+dependencies = ["requests", "xdg", "typing-extensions", "click"]
+dynamic = ["version"]
+maintainers = [{ name = "Seto Balian", email = "seto.balian@gmail.com" }]
 classifiers = [
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
@@ -22,42 +27,38 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.7,<3.11"
-requests = "^2.25.1"
+[project.urls]
+homepage = "https://github.com/sbalian/quantum-random"
+repository = "https://github.com/sbalian/quantum-random.git"
 
-numpy = { version = "^1.22", optional = true, python = ">=3.8,<3.10" }
-randomgen = { version = "^1.21.2", optional = true, python = ">=3.8,<3.10" }
-matplotlib = { version = "^3.5.1", optional = true, python = ">=3.8,<3.10" }
-scipy = { version = "<1.8", optional = true, python = ">=3.8,<3.10" }
+[project.scripts]
+qrandom-init = "qrandom._cli:main"
 
-xdg = "^5.1.1"
-types-requests = "^2.28.3"
+[tool.setuptools_scm]
+version_scheme = "post-release"
+write_to = "src/qrandom/version.py"
 
-[tool.poetry.dev-dependencies]
-isort = "^5.7.0"
-flake8 = "^3.8.4"
-pytest = "^6.2.1"
-pytest-mock = "^3.5.1"
-requests-mock = "^1.8.0"
-tox = "^3.21.1"
-black = "^22.3.0"
-mypy = "^0.971"
-
-[tool.poetry.extras]
+[project.optional-dependencies]
 numpy = ["numpy", "randomgen"]
-analysis = ["scipy", "matplotlib"]
-
-[tool.poetry.scripts]
-qrandom-init = 'qrandom._cli:init'
-
-[tool.isort]
-line_length = 79
-known_first_party = "qrandom"
 
 [tool.black]
 line-length = 79
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.isort]
+profile = "black"
+line_length = 79
+known_first_party = ["qrandom"]
+
+[tool.pytest.ini_options]
+addopts = "--verbose"
+testpaths = "tests"
+norecursedirs = ["tests/data"]
+
+[tool.mypy]
+ignore_missing_imports = true
+follow_imports = "silent"
+check_untyped_defs = true
+enable_error_code = ["ignore-without-code"]
+show_error_codes = true
+warn_unused_ignores = false
+exclude = ["__pycache__", ".git", ".tox", "build", ".venv", "dist"]

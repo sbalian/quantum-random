@@ -1,8 +1,6 @@
 *.pyc
-dist/
-.mypy_cache/
-.pytest_cache/
-__pycache__/
 .tox/
-.python-version
+dist/
+*.egg-info/
 TODO
+src/qrandom/version.py

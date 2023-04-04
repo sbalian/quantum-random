@@ -7,11 +7,12 @@ Calling `qrandom.random()` 10,000 times, and comparing it to `random.random()`:
 The [Kolmogorov–Smirnov statistics][kstest] with the reference distribution
 `scipy.uniform` gives the following results.
 
-| Trial | Quantum statistic | Quantum p-value | Standard statistic | Standard p-value |
-| ----- | ----------------- | --------------- | ------------------ | ---------------- |
-| 1     | 0.01              | 0.2             | 0.005              | 0.9              |
-| 2     | 0.007             | 0.7             | 0.005              | 1.0              |
-| 3     | 0.006             | 0.9             | 0.008              | 0.6              |
+| Trial | Quantum statistic | Quantum p-value | Std. statistic | Std. p-value |
+| ----- | ----------------- | --------------- | ---------------| -------------|
+| 1     | 0.01              | 0.2             | 0.005          | 0.9          |
+| 2     | 0.007             | 0.7             | 0.005          | 1.0          |
+| 3     | 0.006             | 0.9             | 0.008          | 0.6          |
+| 4     | 0.01              | 0.3             | 0.008          | 0.5          |
 
 Each trial is a different run of [`scipy.stats.kstest`][scipy-kstest] with
 10,000 numbers. The plot shows the numbers for the last trial.
