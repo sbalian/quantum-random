@@ -51,13 +51,13 @@ no RandomGen wheels available for Python 3.11.
 The minimum supported Python version is 3.7. Install with `pip`:
 
 ```bash
-python -m pip install -U quantum-random
+pip install -U quantum-random
 ```
 
 If you want NumPy support:
 
 ```bash
-python -m pip install -U quantum-random[numpy]
+pip install -U 'quantum-random[numpy]'
 ```
 
 ## First-time setup: setting your API key
