@@ -7,13 +7,13 @@ from qrandom import _api
 
 
 def test_client_url(anu_url):
-    client = _api.Client("key")
+    client = _api.Client()
     assert client.url == anu_url
 
 
 def test_client_constructs_correctly_by_default():
-    client = _api.Client("key")
-    assert client.headers == {"x-api-key": "key"}
+    client = _api.Client()
+    assert client.key is None
     assert client.params == {
         "length": 1024,
         "type": "hex16",
@@ -22,10 +22,20 @@ def test_client_constructs_correctly_by_default():
 
 
 def test_client_constructs_correctly_passing_batch_size():
-    client = _api.Client("key", batch_size=10)
-    assert client.headers == {"x-api-key": "key"}
+    client = _api.Client(batch_size=10)
+    assert client.key is None
     assert client.params == {
         "length": 10,
+        "type": "hex16",
+        "size": 4,
+    }
+
+
+def test_client_constructs_correctly_passing_key():
+    client = _api.Client(key="key")
+    assert client.key == "key"
+    assert client.params == {
+        "length": 1024,
         "type": "hex16",
         "size": 4,
     }
@@ -56,7 +66,19 @@ def test_fetch_hex_raw_returns_correctly_with_set_batch_size(
     assert len(r_json["data"]) == 1023
 
 
-def test_fetch_hex_raw_raises(api_client_with_failed_api_call):
+def test_fetch_hex_raw_raises_when_api_key_not_found():
+    client = _api.Client()
+    with pytest.raises(RuntimeError) as exc_info:
+        client.fetch_hex_raw()
+    assert (
+        exc_info.value.args[0]
+        == "API key not set (set QRANDOM_API_KEY or run qrandom-init)"
+    )
+
+
+def test_fetch_hex_raw_raises_on_failed_api_call(
+    api_client_with_failed_api_call,
+):
     with pytest.raises(requests.HTTPError) as exc_info:
         api_client_with_failed_api_call.fetch_hex_raw()
     assert (
@@ -65,7 +87,7 @@ def test_fetch_hex_raw_raises(api_client_with_failed_api_call):
     )
 
 
-def test_fetch_hex_raw_raises_with_no_extra_json(
+def test_fetch_hex_raw_raises_on_failed_api_call_with_no_extra_json(
     api_client_with_failed_api_call_and_no_json_response,
 ):
     with pytest.raises(requests.HTTPError) as exc_info:
@@ -76,7 +98,7 @@ def test_fetch_hex_raw_raises_with_no_extra_json(
     )
 
 
-def test_fetch_hex_raw_raises_with_failed_api_call_with_200_status(
+def test_fetch_hex_raw_raises_on_failed_api_call_with_200_status(
     api_client_with_failed_api_call_with_200_status,
 ):
     with pytest.raises(requests.HTTPError) as exc_info:
@@ -147,42 +169,9 @@ def test_find_api_key_from_set_config_dir(mocker, tmp_path):
     assert _api.find_api_key() == "key-from-file"
 
 
-def test_find_api_key_raises_if_config_dir_does_not_exist(mocker, tmp_path):
-    config_dir = tmp_path / "qrandom"
-    environ = {
-        name: value
-        for name, value in os.environ.items()
-        if name != "QRANDOM_API_KEY"
-    }
-    environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
-    mocker.patch.dict(os.environ, environ, clear=True)
-    with pytest.raises(FileNotFoundError) as exc_info:
-        _api.find_api_key()
-    assert (
-        exc_info.value.args[0] == f"{config_dir} not found, run qrandom-init"
-    )
-
-
-def test_find_api_key_raises_if_config_dir_is_file(mocker, tmp_path):
-    config_dir = tmp_path / "qrandom"
-    with open(config_dir, "w") as f:
-        f.write("xyz")
-    environ = {
-        name: value
-        for name, value in os.environ.items()
-        if name != "QRANDOM_API_KEY"
-    }
-    environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
-    mocker.patch.dict(os.environ, environ, clear=True)
-    with pytest.raises(NotADirectoryError) as exc_info:
-        _api.find_api_key()
-    assert (
-        exc_info.value.args[0]
-        == f"{config_dir} is not a directory, run qrandom-init"
-    )
-
-
-def test_find_api_key_raises_if_config_file_does_not_exist(mocker, tmp_path):
+def test_find_api_key_returns_none_if_config_doesnt_exist_and_env_var_not_set(
+    mocker, tmp_path
+):
     config_dir = tmp_path / "qrandom"
     config_dir.mkdir()
     environ = {
@@ -192,9 +181,4 @@ def test_find_api_key_raises_if_config_file_does_not_exist(mocker, tmp_path):
     }
     environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
     mocker.patch.dict(os.environ, environ, clear=True)
-    with pytest.raises(FileNotFoundError) as exc_info:
-        _api.find_api_key()
-    assert (
-        exc_info.value.args[0]
-        == f"{config_dir / 'qrandom.ini'} not found, run qrandom-init"
-    )
+    assert _api.find_api_key() is None

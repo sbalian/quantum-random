@@ -72,7 +72,7 @@ def test_random_returns_in_correct_range(
 def test_quantum_random_constructs_correctly_by_default():
     quantum_random = _generator.QuantumRandom()
     assert not quantum_random._rand_int64
-    assert quantum_random._api_client.headers == {"x-api-key": "key"}
+    assert quantum_random._api_client.key == "key"
     assert quantum_random._api_client.params == {
         "length": 1024,
         "type": "hex16",

@@ -1,28 +1,28 @@
 import configparser
 import os
 import pathlib
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Union
 
 import requests
 import xdg
 from typing_extensions import TypedDict
 
 
-def find_api_key() -> str:
-    """Find the ANU API key.
+def find_api_key() -> Union[str, None]:
+    """Return the ANU API key if found, otherwise, return None.
 
     1. Return QRANDOM_API_KEY if defined.
-    2. Get the config file directory from QRANDOM_CONFIG_DIR (defaulting to
-       XDG home config directory if QRANDOM_CONFIG_DIR is not defined). Raise
-       if the directory is not found.
-    3. Return the key from the config file. Raise if the file is not found.
+    2. Get the config file as $QRANDOM_CONFIG_DIR/qrandom.ini (defaulting
+       to the XDG home config directory if QRANDOM_CONFIG_DIR is not defined).
+    3. Read the key from the config file if the file exists, otherwise, return
+       None.
 
     """
     api_key = os.getenv("QRANDOM_API_KEY")
     if api_key is not None:
         return api_key
 
-    config_dir = (
+    config_path = (
         pathlib.Path(
             os.getenv(
                 "QRANDOM_CONFIG_DIR", str(xdg.xdg_config_home() / "qrandom")
@@ -30,21 +30,14 @@ def find_api_key() -> str:
         )
         .expanduser()
         .resolve()
-    )
+    ) / "qrandom.ini"
 
-    if not config_dir.exists():
-        raise FileNotFoundError(f"{config_dir} not found, run qrandom-init")
-    if not config_dir.is_dir():
-        raise NotADirectoryError(
-            f"{config_dir} is not a directory, run qrandom-init"
-        )
-    config_path = config_dir / "qrandom.ini"
-    if not config_path.exists():
-        raise FileNotFoundError(f"{config_path} not found, run qrandom-init")
-
-    config = configparser.ConfigParser()
-    config.read(config_path)
-    return config["default"]["key"]
+    if config_path.exists():
+        config = configparser.ConfigParser()
+        config.read(config_path)
+        return config["default"]["key"]
+    else:
+        return None
 
 
 class Response(TypedDict):
@@ -57,14 +50,16 @@ class Response(TypedDict):
 class Client:
     url = "https://api.quantumnumbers.anu.edu.au"
 
-    def __init__(self, key: str, batch_size: int = 1024) -> None:
+    def __init__(
+        self, key: Optional[str] = None, batch_size: int = 1024
+    ) -> None:
         """ANU API client.
 
         The API key can be obtained from https://quantumnumbers.anu.edu.au/pricing.
         batch_size is the number of numbers fetched (1024 by default).
 
         """  # noqa: E501
-        self.headers: Dict[str, str] = {"x-api-key": key}
+        self.key = key
         self.params: Dict[str, Union[int, str]] = {
             "length": batch_size,
             "type": "hex16",
@@ -80,8 +75,12 @@ class Client:
         batch_size > 1024.
 
         """
+        if self.key is None:
+            raise RuntimeError(
+                "API key not set (set QRANDOM_API_KEY or run qrandom-init)"
+            )
         response = requests.get(
-            self.url, params=self.params, headers=self.headers
+            self.url, params=self.params, headers={"x-api-key": self.key}
         )
         try:
             response.raise_for_status()
