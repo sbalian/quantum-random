@@ -1,6 +1,10 @@
 # Quantum random numbers in Python
 
 ![Tests](https://github.com/sbalian/quantum-random/workflows/Tests/badge.svg)
+[![Version](https://img.shields.io/pypi/v/quantum-random)](https://pypi.org/project/quantum-random/)
+![Python Versions](https://img.shields.io/pypi/pyversions/quantum-random)
+[![Download Stats](https://img.shields.io/pypi/dm/quantum-random)](https://pypistats.org/packages/quantum-random)
+![License](https://img.shields.io/github/license/sbalian/quantum-random)
 
 Use the [Python random module][pyrandom] with real quantum random numbers from
 [ANU][anu]. The default pseudo-random generator is replaced by calls to
