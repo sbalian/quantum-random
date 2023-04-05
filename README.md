@@ -68,14 +68,17 @@ ANU requires you to use an API key. You can get a free trial or pay for a key
 You can pass your key to `qrandom` in three ways:
 
 1. By setting the environment variable `QRANDOM_API_KEY`.
-2. By running `qrandom-init` to save your key in an INI file
-stored in a subdirectory of your home config directory as specified
-by XDG, e.g., `/home/<your-username>/.config/qrandom/`.
-3. By running `qrandom-init` to save your key in an INI file in a directory
-of your choice set by `QRANDOM_CONFIG_DIR`.
+2. By running the included command line utility `qrandom-init` to save your
+key in `qrandom.ini` in a subdirectory of your home config directory
+as specified by XDG, e.g., `/home/<your-username>/.config/qrandom/`.
+3. By running `qrandom-init` to save your key in `qrandom.ini` in a directory
+of your choice, and then specifying this directory by setting
+`QRANDOM_CONFIG_DIR`.
 
-`qrandom` will look for the key in the order above. The `qrandom-init`
-command line utility is installed as part of the package.
+If `QRANDOM_API_KEY` is set, its value is used as the API key and the
+config file is not read. Otherwise, `qrandom` will look for the key
+in the config directory. The config directory defaults to the XDG home config
+and can be changed by setting `QRANDOM_CONFIG_DIR`.
 
 ## Pre-fetching batches
 
