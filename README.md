@@ -1,6 +1,5 @@
 # Quantum random numbers in Python
 
-![Tests](https://github.com/sbalian/quantum-random/workflows/Tests/badge.svg)
 [![Version](https://img.shields.io/pypi/v/quantum-random)](https://pypi.org/project/quantum-random/)
 ![Python Versions](https://img.shields.io/pypi/pyversions/quantum-random)
 [![Download Stats](https://img.shields.io/pypi/dm/quantum-random)](https://pypistats.org/packages/quantum-random)
