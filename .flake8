@@ -1,8 +1,0 @@
-[flake8]
-ignore = E203 W503
-exclude =
-    .tox
-    dist
-    build
-    .eggs
-    .venv
