@@ -23,9 +23,9 @@ jobs:
         uses: snok/install-poetry@v1
       - name: Install the package (no lock file)
         run: rm poetry.lock && poetry install -E numpy
-      - name: pytest
+      - name: Run pytest
         run: QRANDOM_API_KEY=key poetry run pytest
-      - name: mypy
+      - name: Run mypy
         run: poetry run mypy --install-types --non-interactive .
 
   lint:
@@ -41,9 +41,9 @@ jobs:
         uses: snok/install-poetry@v1
       - name: Install the package
         run: poetry install -E numpy
-      - name: black
+      - name: Run black
         run: poetry run black --check .
-      - name: isort
+      - name: Run isort
         run: poetry run isort --check .
-      - name: flake8
+      - name: Run flake8
         run: poetry run flake8
