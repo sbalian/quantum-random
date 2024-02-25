@@ -13,6 +13,8 @@ large ranges. There is no randbytes() because getrandbits() is not available.
 
 """
 
+import sys
+
 from ._generator import QuantumRandom
 
 __all__ = [
@@ -44,6 +46,11 @@ __all__ = [
 
 _inst = QuantumRandom()
 betavariate = _inst.betavariate
+
+if (sys.version_info.major, sys.version_info.minor) >= (3, 12):
+    binomialvariate = _inst.binomialvariate  # type: ignore[attr-defined]
+    __all__.append("binomialvariate")
+
 choice = _inst.choice
 choices = _inst.choices
 expovariate = _inst.expovariate
