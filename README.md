@@ -47,7 +47,7 @@ no RandomGen wheels available for Python 3.11.
 
 ## Installation
 
-The minimum supported Python version is 3.7. Install with `pip`:
+The minimum supported Python version is 3.8. Install with `pip`:
 
 ```bash
 pip install -U quantum-random
@@ -87,7 +87,7 @@ if you need to pre-fetch at the start of your computation.
 
 ## Tests
 
-The tests run for Python 3.7 - 3.11 on the latest Windows,
+The tests run for Python 3.8 - 3.12 on the latest Windows,
 macOS and Ubuntu runner images. For Python 3.11 on macOS, the tests run
 only with no NumPy support as RandomGen fails to compile. Use [tox][tox] to run
 the tests locally.
