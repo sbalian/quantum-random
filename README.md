@@ -48,7 +48,7 @@ NumPy is supported using [RandomGen][randomgen].
 
 ## Installation
 
-The minimum supported Python version is 3.8. Install with `pip`:
+The minimum supported Python version is 3.9. Install with `pip`:
 
 ```bash
 pip install -U quantum-random
@@ -88,7 +88,7 @@ if you need to pre-fetch at the start of your computation.
 
 ## Tests
 
-The tests run for Python 3.8 - 3.12 on the latest Windows,
+The tests run for Python 3.9 - 3.12 on the latest Windows,
 macOS and Ubuntu runner images. Use [tox][tox] to run the tests locally.
 
 See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
