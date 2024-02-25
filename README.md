@@ -1,5 +1,7 @@
 # Quantum random numbers in Python
 
+[![Tests](https://img.shields.io/github/actions/workflow/status/sbalian/quantum-random/tests.yml?label=tests
+)](https://github.com/sbalian/quantum-random/actions/workflows/tests.yml)
 [![Version](https://img.shields.io/pypi/v/quantum-random)](https://pypi.org/project/quantum-random/)
 ![Python Versions](https://img.shields.io/pypi/pyversions/quantum-random)
 [![Download Stats](https://img.shields.io/pypi/dm/quantum-random)](https://pypistats.org/packages/quantum-random)
@@ -42,12 +44,11 @@ array([[0.37220278, 0.24337193, 0.67534826],
        [0.35894084, 0.72219929, 0.55388594]])
 ```
 
-NumPy is supported using [RandomGen][randomgen]. Note that there are currently
-no RandomGen wheels available for Python 3.11.
+NumPy is supported using [RandomGen][randomgen].
 
 ## Installation
 
-The minimum supported Python version is 3.7. Install with `pip`:
+The minimum supported Python version is 3.9. Install with `pip`:
 
 ```bash
 pip install -U quantum-random
@@ -87,10 +88,8 @@ if you need to pre-fetch at the start of your computation.
 
 ## Tests
 
-The tests run for Python 3.7 - 3.11 on the latest Windows,
-macOS and Ubuntu runner images. For Python 3.11 on macOS, the tests run
-only with no NumPy support as RandomGen fails to compile. Use [tox][tox] to run
-the tests locally.
+The tests run for Python 3.9 - 3.12 on the latest Windows,
+macOS and Ubuntu runner images. Use [tox][tox] to run the tests locally.
 
 See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
 test.

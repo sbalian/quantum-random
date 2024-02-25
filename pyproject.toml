@@ -1,18 +1,14 @@
-[build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
-
-[project]
+[tool.poetry]
 name = "quantum-random"
-authors = [{ name = "Seto Balian", email = "seto.balian@gmail.com" }]
+version = "1.3.2"
 description = "Quantum random numbers"
-keywords = ["quantum", "random", "statistics"]
+license = "MIT"
+authors = ["Seto Balian <seto.balian@gmail.com>"]
+maintainers = ["Seto Balian <seto.balian@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.7"
-license = {file = "LICENSE"}
-dependencies = ["requests", "xdg", "typing-extensions", "click"]
-dynamic = ["version"]
-maintainers = [{ name = "Seto Balian", email = "seto.balian@gmail.com" }]
+homepage = "https://github.com/sbalian/quantum-random/"
+repository = "https://github.com/sbalian/quantum-random/"
+keywords = ["quantum", "random", "statistics"]
 classifiers = [
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
@@ -26,20 +22,43 @@ classifiers = [
     "Operating System :: MacOS",
     "License :: OSI Approved :: MIT License",
 ]
+packages = [
+    { include = "qrandom", from = "src" },
+]
 
-[project.urls]
-homepage = "https://github.com/sbalian/quantum-random"
-repository = "https://github.com/sbalian/quantum-random.git"
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.31.0"
+xdg = "^6.0.0"
+click = "^8.1.7"
+numpy = {version = "^1.26.4", optional = true}
+randomgen = {version = "^1.26.1", optional = true}
 
-[project.scripts]
+[tool.poetry.extras]
+numpy = ["numpy", "randomgen"]
+
+[tool.poetry.scripts]
 qrandom-init = "qrandom._cli:main"
 
-[tool.setuptools_scm]
-version_scheme = "post-release"
-write_to = "src/qrandom/version.py"
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.2"
+pytest-mock = "^3.12.0"
+responses = "^0.25.0"
+mypy = "^1.8.0"
+flake8 = "^7.0.0"
+isort = "^5.13.2"
+black = "^24.2.0"
 
-[project.optional-dependencies]
-numpy = ["numpy", "randomgen"]
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = "--verbose"
+testpaths = "tests"
+
+[tool.mypy]
+ignore_missing_imports = true
 
 [tool.black]
 line-length = 79
@@ -48,17 +67,3 @@ line-length = 79
 profile = "black"
 line_length = 79
 known_first_party = ["qrandom"]
-
-[tool.pytest.ini_options]
-addopts = "--verbose"
-testpaths = "tests"
-norecursedirs = ["tests/data"]
-
-[tool.mypy]
-ignore_missing_imports = true
-follow_imports = "silent"
-check_untyped_defs = true
-enable_error_code = ["ignore-without-code"]
-show_error_codes = true
-warn_unused_ignores = false
-exclude = ["__pycache__", ".git", ".tox", "build", ".venv", "dist"]

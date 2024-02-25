@@ -1,11 +1,10 @@
 import configparser
 import os
 import pathlib
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, TypedDict, Union
 
 import requests
 import xdg
-from typing_extensions import TypedDict
 
 
 def find_api_key() -> Union[str, None]:
