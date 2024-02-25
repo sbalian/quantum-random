@@ -42,8 +42,7 @@ array([[0.37220278, 0.24337193, 0.67534826],
        [0.35894084, 0.72219929, 0.55388594]])
 ```
 
-NumPy is supported using [RandomGen][randomgen]. Note that there are currently
-no RandomGen wheels available for Python 3.11.
+NumPy is supported using [RandomGen][randomgen].
 
 ## Installation
 
@@ -88,9 +87,7 @@ if you need to pre-fetch at the start of your computation.
 ## Tests
 
 The tests run for Python 3.8 - 3.12 on the latest Windows,
-macOS and Ubuntu runner images. For Python 3.11 on macOS, the tests run
-only with no NumPy support as RandomGen fails to compile. Use [tox][tox] to run
-the tests locally.
+macOS and Ubuntu runner images. Use [tox][tox] to run the tests locally.
 
 See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
 test.
