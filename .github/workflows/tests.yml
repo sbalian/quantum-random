@@ -13,7 +13,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
