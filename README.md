@@ -89,7 +89,7 @@ if you need to pre-fetch at the start of your computation.
 ## Tests
 
 The tests run for Python 3.9 - 3.12 on the latest Windows,
-macOS and Ubuntu runner images. Use [tox][tox] to run the tests locally.
+macOS and Ubuntu runner images.
 
 See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
 test.
@@ -114,6 +114,5 @@ See [LICENCE](./LICENSE).
 [anu]: https://quantumnumbers.anu.edu.au
 [anupricing]: https://quantumnumbers.anu.edu.au/pricing
 [pyrandom]: https://docs.python.org/3/library/random.html
-[tox]: https://tox.wiki/en/latest/
 [numpy]: https://numpy.org
 [randomgen]: https://github.com/bashtage/randomgen
