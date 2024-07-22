@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "quantum-random"
-version = "1.4.0"
+version = "1.4.1"
 description = "Quantum random numbers"
 license = "MIT"
 authors = ["Seto Balian <seto.balian@gmail.com>"]
