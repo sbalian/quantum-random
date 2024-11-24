@@ -5,7 +5,7 @@ from typing import Any
 import randomgen
 from numpy import random as numpy_random
 
-from . import _generator
+from qrandom import _generator
 
 
 class _ANUQRNG(_generator.QuantumRandom):

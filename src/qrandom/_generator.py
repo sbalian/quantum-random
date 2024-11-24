@@ -2,7 +2,7 @@ import random as pyrandom
 import warnings
 from typing import List, NoReturn
 
-from . import _api
+from qrandom import _api
 
 
 class QuantumRandom(pyrandom.Random):

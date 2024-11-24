@@ -15,7 +15,7 @@ large ranges. There is no randbytes() because getrandbits() is not available.
 
 import sys
 
-from ._generator import QuantumRandom
+from qrandom._generator import QuantumRandom
 
 __all__ = [
     "QuantumRandom",
