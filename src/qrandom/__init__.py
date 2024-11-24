@@ -48,7 +48,7 @@ _inst = QuantumRandom()
 betavariate = _inst.betavariate
 
 if (sys.version_info.major, sys.version_info.minor) >= (3, 12):
-    binomialvariate = _inst.binomialvariate  # pyright: ignore[reportAttributeAccessIssue]
+    binomialvariate = _inst.binomialvariate
     __all__.append("binomialvariate")
 
 choice = _inst.choice
