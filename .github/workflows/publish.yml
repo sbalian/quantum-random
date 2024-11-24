@@ -7,8 +7,8 @@ on:
 
 jobs:
   release:
-  permissions:
-    id-token: write
+    permissions:
+      id-token: write
     name: Release
     runs-on: ubuntu-latest
     steps:
