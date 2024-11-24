@@ -43,14 +43,11 @@ __all__ = [
     "fill",
 ]
 
-
 _inst = QuantumRandom()
 betavariate = _inst.betavariate
-
 if (sys.version_info.major, sys.version_info.minor) >= (3, 12):
     binomialvariate = _inst.binomialvariate
     __all__.append("binomialvariate")
-
 choice = _inst.choice
 choices = _inst.choices
 expovariate = _inst.expovariate
@@ -71,4 +68,5 @@ triangular = _inst.triangular
 uniform = _inst.uniform
 vonmisesvariate = _inst.vonmisesvariate
 weibullvariate = _inst.weibullvariate
+
 fill = _inst.fill
