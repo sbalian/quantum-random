@@ -34,7 +34,15 @@ def find_api_key() -> str:
     if config_path.exists():
         config = configparser.ConfigParser()
         config.read(config_path)
-        return config["default"]["key"]
+        try:
+            return config["default"]["key"]
+        except KeyError as e:
+            raise _exceptions.APIKeyNotFoundError(
+                f"KeyError: '{e}' not found in config file. "
+                "Format is an INI file with contents:\n"
+                "[default]\n"
+                "key=<your-api-key>"
+            )
     else:
         raise _exceptions.APIKeyNotFoundError(
             "API key not set (set QRANDOM_API_KEY or run qrandom-init)"
