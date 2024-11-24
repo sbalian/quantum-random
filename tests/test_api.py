@@ -143,9 +143,7 @@ def test_find_api_key_from_default_config_dir(mocker, tmp_path):
     config_dir = tmp_path / "qrandom"
     config_dir.mkdir()
     environ = {
-        name: value
-        for name, value in os.environ.items()
-        if name != "QRANDOM_API_KEY"
+        name: value for name, value in os.environ.items() if name != "QRANDOM_API_KEY"
     }
     mocker.patch.dict(os.environ, environ, clear=True)
     with open(config_dir / "qrandom.ini", "w") as f:
@@ -158,9 +156,7 @@ def test_find_api_key_from_set_config_dir(mocker, tmp_path):
     config_dir = tmp_path / "qrandom"
     config_dir.mkdir()
     environ = {
-        name: value
-        for name, value in os.environ.items()
-        if name != "QRANDOM_API_KEY"
+        name: value for name, value in os.environ.items() if name != "QRANDOM_API_KEY"
     }
     environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
     mocker.patch.dict(os.environ, environ, clear=True)
@@ -175,9 +171,7 @@ def test_find_api_key_returns_none_if_config_doesnt_exist_and_env_var_not_set(
     config_dir = tmp_path / "qrandom"
     config_dir.mkdir()
     environ = {
-        name: value
-        for name, value in os.environ.items()
-        if name != "QRANDOM_API_KEY"
+        name: value for name, value in os.environ.items() if name != "QRANDOM_API_KEY"
     }
     environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
     mocker.patch.dict(os.environ, environ, clear=True)
