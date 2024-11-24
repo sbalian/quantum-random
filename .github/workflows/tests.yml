@@ -4,6 +4,7 @@ on: push
 
 jobs:
   test:
+    name: Tests and type checks
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -29,6 +30,7 @@ jobs:
         run: uv run mypy --install-types --non-interactive .
 
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -46,4 +48,4 @@ jobs:
       - name: Run isort
         run: uv run isort --check .
       - name: Run flake8
-        run: uv run flake8
+        run: uv run flake8 --extend-exclude .venv
