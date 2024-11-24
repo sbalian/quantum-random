@@ -7,20 +7,16 @@ on:
 
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
         with:
-          python-version: '3.10'
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+          version: "0.5.4"
       - name: Build
-        run: poetry build
+        run: uv build
       - name: Publish
-        env:
-          POETRY_HTTP_BASIC_PYPI_USERNAME: __token__
-          POETRY_HTTP_BASIC_PYPI_PASSWORD: ${{ secrets.POETRY_HTTP_BASIC_PYPI_PASSWORD }}
-        run: poetry publish
+        run: uv publish
