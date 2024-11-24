@@ -1,13 +1,15 @@
-[tool.poetry]
+[project]
 name = "quantum-random"
-version = "1.4.1"
+version = "1.4.2"
 description = "Quantum random numbers"
-license = "MIT"
-authors = ["Seto Balian <seto.balian@gmail.com>"]
-maintainers = ["Seto Balian <seto.balian@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/sbalian/quantum-random/"
-repository = "https://github.com/sbalian/quantum-random/"
+license = {text = "MIT License"}
+authors = [
+    { name = "Seto Balian", email = "seto.balian@gmail.com" }
+]
+maintainers = [
+    { name = "Seto Balian", email = "seto.balian@gmail.com" }
+]
 keywords = ["quantum", "random", "statistics"]
 classifiers = [
     "Intended Audience :: Science/Research",
@@ -22,36 +24,43 @@ classifiers = [
     "Operating System :: MacOS",
     "License :: OSI Approved :: MIT License",
 ]
-packages = [
-    { include = "qrandom", from = "src" },
+requires-python = ">=3.9"
+dependencies = [
+    "click>=8.1.7",
+    "requests>=2.32.3",
+    "xdg>=6.0.0",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-requests = "^2.31.0"
-xdg = "^6.0.0"
-click = "^8.1.7"
-numpy = {version = "^1.26.4", optional = true}
-randomgen = {version = "^1.26.1", optional = true}
+[project.optional-dependencies]
+numpy = [
+    "numpy>=2.0.2",
+    "randomgen>=2.1.1",
+]
 
-[tool.poetry.extras]
-numpy = ["numpy", "randomgen"]
+[dependency-groups]
+dev = [
+    "pytest-mock>=3.14.0",
+    "pytest>=8.3.3",
+    "responses>=0.25.3",
+    "mypy>=1.13.0",
+    "flake8>=7.1.1",
+    "isort>=5.13.2",
+    "black>=24.10.0",
+]
 
-[tool.poetry.scripts]
+[project.scripts]
 qrandom-init = "qrandom._cli:main"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.0.2"
-pytest-mock = "^3.12.0"
-responses = "^0.25.0"
-mypy = "^1.8.0"
-flake8 = "^7.0.0"
-isort = "^5.13.2"
-black = "^24.2.0"
+[project.urls]
+Homepage = "https://github.com/sbalian/quantum-random"
+Repository = "https://github.com/sbalian/quantum-random"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/qrandom"]
 
 [tool.pytest.ini_options]
 addopts = "--verbose"
