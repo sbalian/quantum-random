@@ -4,46 +4,48 @@ on: push
 
 jobs:
   test:
+    name: Tests and type checks
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ['3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     defaults:
       run:
         shell: bash
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-      - name: Install the package (no lock file)
-        run: rm poetry.lock && poetry install -E numpy
+          version: "0.5.4"
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+      - name: Install the project
+        run: uv sync --all-extras --dev
       - name: Run pytest
-        run: QRANDOM_API_KEY=key poetry run pytest
+        run: QRANDOM_API_KEY=key uv run pytest
       - name: Run mypy
-        run: poetry run mypy --install-types --non-interactive .
+        run: uv run mypy --install-types --non-interactive .
 
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
         with:
-          python-version: '3.10'
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-      - name: Install the package
-        run: poetry install -E numpy
+          version: "0.5.4"
+      - name: Set up Python
+        run: uv python install
+      - name: Install the project
+        run: uv sync --all-extras --dev
       - name: Run black
-        run: poetry run black --check .
+        run: uv run black --check .
       - name: Run isort
-        run: poetry run isort --check .
+        run: uv run isort --check .
       - name: Run flake8
-        run: poetry run flake8
+        run: uv run flake8 --extend-exclude .venv
