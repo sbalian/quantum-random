@@ -9,13 +9,11 @@ from qrandom import _exceptions, _util
 
 
 def find_api_key() -> str:
-    """Find and return the ANU API key. Raise APIKeyNotFoundError if key is not found.
+    """Return the ANU API key. Raise APIKeyNotFoundError if the key is not found.
 
-    1. Return QRANDOM_API_KEY if defined.
-    2. Get the config file as $QRANDOM_CONFIG_DIR/qrandom.ini (defaulting
-       to the XDG home config directory if QRANDOM_CONFIG_DIR is not defined).
-    3. Read the key from the config file if the file exists, otherwise, raise
-       APIKeyNotFoundError.
+    - Return QRANDOM_API_KEY if defined.
+    - Return the key from the config file $QRANDOM_CONFIG_DIR/qrandom.ini (using
+      ~/.config/qrandom/qrandom.ini if QRANDOM_CONFIG_DIR is not defined).
 
     """
     api_key = os.getenv("QRANDOM_API_KEY")
