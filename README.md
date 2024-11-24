@@ -8,12 +8,11 @@
 ![License](https://img.shields.io/github/license/sbalian/quantum-random)
 
 Use the [Python random module][pyrandom] with real quantum random numbers from
-[ANU][anu]. The default pseudo-random generator is replaced by calls to
-the ANU API.
+[ANU][anu].
 
 ## Usage
 
-Import `qrandom` and use it like the standard `random` module. For example:
+Import `qrandom` and use it like the standard `random` module:
 
 ```python
 >>> import qrandom
@@ -28,10 +27,10 @@ Import `qrandom` and use it like the standard `random` module. For example:
 -0.8370871276247828
 ```
 
-Alternatively, you can use the class `qrandom.QuantumRandom`. It has the same
+You can also use the class `qrandom.QuantumRandom`. It has the same
 interface as `random.Random`.
 
-There is also a [NumPy][numpy] interface, although it is not fully tested:
+There is also a [NumPy][numpy] interface but it is not fully tested:
 
 ```python
 >>> from qrandom.numpy import quantum_rng
@@ -44,33 +43,29 @@ array([[0.37220278, 0.24337193, 0.67534826],
        [0.35894084, 0.72219929, 0.55388594]])
 ```
 
-NumPy is supported using [RandomGen][randomgen].
+The NumPy integration is implemented using [RandomGen][randomgen].
 
 ## Installation
 
-The minimum supported Python version is 3.9. Install with `pip`:
-
 ```bash
-pip install -U quantum-random
+pip install quantum-random
 ```
 
-If you want NumPy support:
+The minimum supported version of Python is 3.9. If you want NumPy support:
 
 ```bash
-pip install -U 'quantum-random[numpy]'
+pip install 'quantum-random[numpy]'
 ```
 
-## First-time setup: setting your API key
+## Setting your API key
 
-ANU requires you to use an API key. You can get a free trial or pay for a key
-[here][anupricing].
-
-You can pass your key to `qrandom` in three ways:
+ANU requires an API key. You can get a free trial or pay for a key
+[here][anupricing]. You can set the key in three ways:
 
 1. By setting the environment variable `QRANDOM_API_KEY`.
 2. By running the included command line utility `qrandom-init` to save your
-key in `qrandom.ini` in a subdirectory of your home config directory
-as specified by XDG, e.g., `/home/<your-username>/.config/qrandom/`.
+key in `qrandom.ini` in a subdirectory of your home or user config directory
+(e.g., `~/.config/qrandom/`).
 3. By running `qrandom-init` to save your key in `qrandom.ini` in a directory
 of your choice, and then specifying this directory by setting
 `QRANDOM_CONFIG_DIR`.
@@ -88,15 +83,14 @@ if you need to pre-fetch at the start of your computation.
 
 ## Tests
 
-The tests run for Python 3.9 - 3.12 on the latest Windows,
-macOS and Ubuntu runner images.
-
-See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
+The tests run for Python 3.9 - 3.13 on the latest Windows, macOS and Ubuntu runner
+images. See [here](./analysis/uniform.md) for a visualisation and a Kolmogorov–Smirnov
 test.
 
 ## Notes on implementation
 
-The `qrandom` module exposes a class derived from `random.Random` with a
+The default pseudo-random generator is replaced by calls to
+the ANU API. The `qrandom` module exposes a class derived from `random.Random` with a
 `random()` method that outputs quantum floats in the range [0, 1)
 (converted from 64-bit integers). Overriding `random.Random.random`
 is sufficient to make the `qrandom` module behave mostly like the
@@ -106,10 +100,6 @@ are `getrandbits()` and `randbytes()`: these are not available in
 produce arbitrarily long sequences. Finally, the user is warned when `seed()`
 is called because the quantum generator has no state. For the same reason,
 `getstate()` and `setstate()` are not implemented.
-
-## License
-
-See [LICENCE](./LICENSE).
 
 [anu]: https://quantumnumbers.anu.edu.au
 [anupricing]: https://quantumnumbers.anu.edu.au/pricing
