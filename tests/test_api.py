@@ -148,7 +148,7 @@ def test_find_api_key_from_default_config_dir(mocker, tmp_path):
     mocker.patch.dict(os.environ, environ, clear=True)
     with open(config_dir / "qrandom.ini", "w") as f:
         f.write("[default]\nkey = key-from-file\n")
-    mocker.patch("xdg.xdg_config_home", return_value=tmp_path)
+    mocker.patch("qrandom._util.xdg_config_home", return_value=tmp_path)
     assert _api.find_api_key() == "key-from-file"
 
 

@@ -1,14 +1,14 @@
 import configparser
+import pathlib
 
-import xdg
 from typer.testing import CliRunner
 
-from qrandom import _cli
+from qrandom import _cli, _util
 
 
 def test_default_flow(tmp_path, mocker):
     config_dir = tmp_path / ".config"
-    mocker.patch("xdg.xdg_config_home", return_value=config_dir)
+    mocker.patch("qrandom._util.xdg_config_home", return_value=config_dir)
     runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path):
         result = runner.invoke(_cli.app, input="\nmy-key")
@@ -32,7 +32,7 @@ def test_user_provides_custom_dir(tmp_path):
     assert result.exit_code == 0
     assert result.output == (
         "Where would you like to store the key? "
-        f"[{xdg.xdg_config_home() / 'qrandom'}]: {config_dir}\n"
+        f"[{_util.xdg_config_home() / 'qrandom'}]: {config_dir}\n"
         "Enter your API key: my-key\n"
         f"Stored API key in {config_dir / 'qrandom.ini'}.\n"
         "Since you did not write to the default path, do not forget to "
@@ -53,7 +53,7 @@ def test_quits_if_config_is_not_a_directory(tmp_path):
     assert result.exit_code == 1
     assert result.output == (
         "Where would you like to store the key? "
-        f"[{xdg.xdg_config_home() / 'qrandom'}]: {config_path}\n"
+        f"[{_util.xdg_config_home() / 'qrandom'}]: {config_path}\n"
         f"{config_path} is not a directory.\n"
     )
 
@@ -70,7 +70,7 @@ def test_confirm_overwrite(tmp_path):
     assert result.exit_code == 0
     assert result.output == (
         "Where would you like to store the key? "
-        f"[{xdg.xdg_config_home() / 'qrandom'}]: {config_dir}\n"
+        f"[{_util.xdg_config_home() / 'qrandom'}]: {config_dir}\n"
         f"Would you like to overwrite {config_path}? [y/N]: y\n"
         "Enter your API key: my-key\n"
         f"Stored API key in {config_dir / 'qrandom.ini'}.\n"
@@ -95,7 +95,7 @@ def test_do_not_overwrite(tmp_path):
     print(result.output)
     assert result.output == (
         "Where would you like to store the key? "
-        f"[{xdg.xdg_config_home() / 'qrandom'}]: {config_dir}\n"
+        f"[{pathlib.Path.home() / ".config" / 'qrandom'}]: {config_dir}\n"
         f"Would you like to overwrite {config_path}? [y/N]: n\n"
         "Aborted.\n"
     )

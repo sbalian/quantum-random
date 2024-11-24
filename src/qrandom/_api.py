@@ -4,7 +4,8 @@ import pathlib
 from typing import Dict, List, Optional, TypedDict, Union
 
 import requests
-import xdg
+
+from qrandom import _util
 
 
 def find_api_key() -> Union[str, None]:
@@ -23,7 +24,10 @@ def find_api_key() -> Union[str, None]:
 
     config_path = (
         pathlib.Path(
-            os.getenv("QRANDOM_CONFIG_DIR", str(xdg.xdg_config_home() / "qrandom"))
+            os.getenv(
+                "QRANDOM_CONFIG_DIR",
+                (_util.xdg_config_home() / "qrandom").as_posix(),
+            )
         )
         .expanduser()
         .resolve()

@@ -3,7 +3,8 @@ import os
 import pathlib
 
 import typer
-import xdg
+
+from qrandom import _util
 
 app = typer.Typer()
 
@@ -16,7 +17,7 @@ def main():
 
     """
 
-    default_config_dir = xdg.xdg_config_home() / "qrandom"
+    default_config_dir = _util.xdg_config_home() / "qrandom"
 
     config_dir: pathlib.Path = typer.prompt(
         "Where would you like to store the key?",
