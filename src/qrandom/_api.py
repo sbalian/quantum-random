@@ -39,9 +39,10 @@ def find_api_key() -> str:
         except KeyError as e:
             raise _exceptions.APIKeyNotFoundError(
                 f"KeyError: '{e}' not found in config file. "
-                "Format is an INI file with contents:\n"
+                "Format is an INI file with contents:\n\n"
                 "[default]\n"
-                "key=<your-api-key>"
+                "key=<your-api-key>\n\n"
+                "Fix the file, set QRANDOM_API_KEY or run qrandom-init."
             )
     else:
         raise _exceptions.APIKeyNotFoundError(
