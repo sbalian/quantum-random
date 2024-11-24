@@ -22,3 +22,8 @@ jobs:
         run: uv build
       - name: Publish
         run: uv publish
+      - name: Sleep
+        run: sleep 30s
+        shell: bash
+      - name: Test import
+        run: uv run --with quantum-random --no-project -- python -c "import qrandom"
