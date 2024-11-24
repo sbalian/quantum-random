@@ -3,17 +3,17 @@ import os
 import pytest
 import requests
 
-from qrandom import _api
+from qrandom import _api, _exceptions
 
 
 def test_client_url(anu_url):
-    client = _api.Client()
+    client = _api.Client(key="key")
     assert client.url == anu_url
 
 
-def test_client_constructs_correctly_by_default():
-    client = _api.Client()
-    assert client.key is None
+def test_client_constructs_correctly():
+    client = _api.Client(key="key")
+    assert client.key == "key"
     assert client.params == {
         "length": 1024,
         "type": "hex16",
@@ -22,8 +22,8 @@ def test_client_constructs_correctly_by_default():
 
 
 def test_client_constructs_correctly_passing_batch_size():
-    client = _api.Client(batch_size=10)
-    assert client.key is None
+    client = _api.Client(key="key", batch_size=10)
+    assert client.key == "key"
     assert client.params == {
         "length": 10,
         "type": "hex16",
@@ -64,16 +64,6 @@ def test_fetch_hex_raw_returns_correctly_with_set_batch_size(
     r_json = client.fetch_hex_raw()
     assert r_json == {"data": response["data"], "success": True}
     assert len(r_json["data"]) == 1023
-
-
-def test_fetch_hex_raw_raises_when_api_key_not_found():
-    client = _api.Client()
-    with pytest.raises(RuntimeError) as exc_info:
-        client.fetch_hex_raw()
-    assert (
-        exc_info.value.args[0]
-        == "API key not set (set QRANDOM_API_KEY or run qrandom-init)"
-    )
 
 
 def test_fetch_hex_raw_raises_on_failed_api_call(
@@ -165,7 +155,7 @@ def test_find_api_key_from_set_config_dir(mocker, tmp_path):
     assert _api.find_api_key() == "key-from-file"
 
 
-def test_find_api_key_returns_none_if_config_doesnt_exist_and_env_var_not_set(
+def test_find_api_key_raises_if_config_doesnt_exist_and_env_var_not_set(
     mocker, tmp_path
 ):
     config_dir = tmp_path / "qrandom"
@@ -175,4 +165,5 @@ def test_find_api_key_returns_none_if_config_doesnt_exist_and_env_var_not_set(
     }
     environ["QRANDOM_CONFIG_DIR"] = str(config_dir)
     mocker.patch.dict(os.environ, environ, clear=True)
-    assert _api.find_api_key() is None
+    with pytest.raises(_exceptions.APIKeyNotFoundError):
+        _api.find_api_key()

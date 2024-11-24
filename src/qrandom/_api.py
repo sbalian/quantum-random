@@ -1,21 +1,21 @@
 import configparser
 import os
 import pathlib
-from typing import Dict, List, Optional, TypedDict, Union
+from typing import Dict, List, TypedDict, Union
 
 import requests
 
-from qrandom import _util
+from qrandom import _exceptions, _util
 
 
-def find_api_key() -> Union[str, None]:
-    """Return the ANU API key if found, otherwise, return None.
+def find_api_key() -> str:
+    """Find and return the ANU API key. Raise APIKeyNotFoundError if key is not found.
 
     1. Return QRANDOM_API_KEY if defined.
     2. Get the config file as $QRANDOM_CONFIG_DIR/qrandom.ini (defaulting
        to the XDG home config directory if QRANDOM_CONFIG_DIR is not defined).
-    3. Read the key from the config file if the file exists, otherwise, return
-       None.
+    3. Read the key from the config file if the file exists, otherwise, raise
+       APIKeyNotFoundError.
 
     """
     api_key = os.getenv("QRANDOM_API_KEY")
@@ -38,7 +38,9 @@ def find_api_key() -> Union[str, None]:
         config.read(config_path)
         return config["default"]["key"]
     else:
-        return None
+        raise _exceptions.APIKeyNotFoundError(
+            "API key not set (set QRANDOM_API_KEY or run qrandom-init)"
+        )
 
 
 class Response(TypedDict):
@@ -51,13 +53,13 @@ class Response(TypedDict):
 class Client:
     url = "https://api.quantumnumbers.anu.edu.au"
 
-    def __init__(self, key: Optional[str] = None, batch_size: int = 1024) -> None:
+    def __init__(self, key: str, batch_size: int = 1024) -> None:
         """ANU API client.
 
         The API key can be obtained from https://quantumnumbers.anu.edu.au/pricing.
         batch_size is the number of numbers fetched (1024 by default).
 
-        """  # noqa: E501
+        """
         self.key = key
         self.params: Dict[str, Union[int, str]] = {
             "length": batch_size,
@@ -74,10 +76,6 @@ class Client:
         batch_size > 1024.
 
         """
-        if self.key is None:
-            raise RuntimeError(
-                "API key not set (set QRANDOM_API_KEY or run qrandom-init)"
-            )
         response = requests.get(
             self.url, params=self.params, headers={"x-api-key": self.key}
         )
