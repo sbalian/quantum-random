@@ -23,11 +23,11 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
       - name: Install the project
-        run: uv sync --all-extras --dev
+        run: uv sync --all-extras --all-groups
       - name: Run pytest
         run: QRANDOM_API_KEY=key uv run pytest
-      - name: Run mypy
-        run: uv run mypy --install-types --non-interactive .
+      - name: Run pyright
+        run: uv run pyright .
 
   lint:
     name: Lint
@@ -42,10 +42,6 @@ jobs:
       - name: Set up Python
         run: uv python install
       - name: Install the project
-        run: uv sync --all-extras --dev
-      - name: Run black
-        run: uv run black --check .
-      - name: Run isort
-        run: uv run isort --check .
-      - name: Run flake8
-        run: uv run flake8 --extend-exclude .venv
+        run: uv sync --all-extras --all-groups
+      - name: Check linting
+        run: uv run ruff check .
