@@ -23,9 +23,7 @@ def find_api_key() -> Union[str, None]:
 
     config_path = (
         pathlib.Path(
-            os.getenv(
-                "QRANDOM_CONFIG_DIR", str(xdg.xdg_config_home() / "qrandom")
-            )
+            os.getenv("QRANDOM_CONFIG_DIR", str(xdg.xdg_config_home() / "qrandom"))
         )
         .expanduser()
         .resolve()
@@ -49,9 +47,7 @@ class Response(TypedDict):
 class Client:
     url = "https://api.quantumnumbers.anu.edu.au"
 
-    def __init__(
-        self, key: Optional[str] = None, batch_size: int = 1024
-    ) -> None:
+    def __init__(self, key: Optional[str] = None, batch_size: int = 1024) -> None:
         """ANU API client.
 
         The API key can be obtained from https://quantumnumbers.anu.edu.au/pricing.

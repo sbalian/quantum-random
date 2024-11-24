@@ -21,9 +21,7 @@ class QuantumRandom(pyrandom.Random):
         self._rand_int64: List[int] = []
         if not (0 < batch_size <= 1024):
             raise ValueError("batch_size must be > 0 and up to 1024")
-        self._api_client = _api.Client(
-            _api.find_api_key(), batch_size=batch_size
-        )
+        self._api_client = _api.Client(_api.find_api_key(), batch_size=batch_size)
         return
 
     def fill(self, n: int = 1):
