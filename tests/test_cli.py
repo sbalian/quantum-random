@@ -92,10 +92,9 @@ def test_do_not_overwrite(tmp_path):
     with runner.isolated_filesystem(temp_dir=tmp_path):
         result = runner.invoke(_cli.app, input=f"{config_dir}\nn\nmy-key")
     assert result.exit_code == 1
-    print(result.output)
     assert result.output == (
         "Where would you like to store the key? "
         f"[{pathlib.Path.home() / '.config' / 'qrandom'}]: {config_dir}\n"
         f"Would you like to overwrite {config_path}? [y/N]: n\n"
-        "Aborted.\n"
+        "Aborted."
     )
