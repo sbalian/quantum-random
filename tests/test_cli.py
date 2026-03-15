@@ -9,9 +9,9 @@ from qrandom import _cli, _util
 def test_default_flow(tmp_path, mocker):
     config_dir = tmp_path / ".config"
     mocker.patch("qrandom._util.xdg_config_home", return_value=config_dir)
-    runner = CliRunner(color=False)
+    runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input="\nmy-key")
+        result = runner.invoke(_cli.app, input="\nmy-key", color=False)
     assert result.exit_code == 0
     assert result.output == (
         "Where would you like to store the key? "
@@ -26,9 +26,9 @@ def test_default_flow(tmp_path, mocker):
 
 def test_user_provides_custom_dir(tmp_path):
     config_dir = tmp_path / "key-dir"
-    runner = CliRunner(color=False)
+    runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input=f"{config_dir}\nmy-key")
+        result = runner.invoke(_cli.app, input=f"{config_dir}\nmy-key", color=False)
     assert result.exit_code == 0
     assert result.output == (
         "Where would you like to store the key? "
@@ -47,9 +47,9 @@ def test_quits_if_config_is_not_a_directory(tmp_path):
     config_path = tmp_path / "key"
     with open(config_path, "w") as f:
         f.write("xyz")
-    runner = CliRunner(color=False)
+    runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input=f"{config_path}")
+        result = runner.invoke(_cli.app, input=f"{config_path}", color=False)
     assert result.exit_code == 1
     assert result.output == (
         "Where would you like to store the key? "
@@ -64,9 +64,9 @@ def test_confirm_overwrite(tmp_path):
     config_path = config_dir / "qrandom.ini"
     with open(config_path, "w") as f:
         f.write("xyz")
-    runner = CliRunner(color=False)
+    runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input=f"{config_dir}\ny\nmy-key")
+        result = runner.invoke(_cli.app, input=f"{config_dir}\ny\nmy-key", color=False)
     assert result.exit_code == 0
     assert result.output == (
         "Where would you like to store the key? "
@@ -88,9 +88,9 @@ def test_do_not_overwrite(tmp_path):
     config_path = config_dir / "qrandom.ini"
     with open(config_path, "w") as f:
         f.write("xyz")
-    runner = CliRunner(color=False)
+    runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input=f"{config_dir}\nn\nmy-key")
+        result = runner.invoke(_cli.app, input=f"{config_dir}\nn\nmy-key", color=False)
     assert result.exit_code == 1
     assert result.output == (
         "Where would you like to store the key? "
