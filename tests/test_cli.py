@@ -96,5 +96,5 @@ def test_do_not_overwrite(tmp_path):
         "Where would you like to store the key? "
         f"[{pathlib.Path.home() / '.config' / 'qrandom'}]: {config_dir}\n"
         f"Would you like to overwrite {config_path}? [y/N]: n\n"
-        "Aborted."
+        "Aborted.\n"
     )
