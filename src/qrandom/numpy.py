@@ -5,7 +5,7 @@ from typing import Any
 import randomgen
 from numpy import random as numpy_random
 
-from . import _generator
+from qrandom import _generator
 
 
 class _ANUQRNG(_generator.QuantumRandom):
@@ -25,4 +25,4 @@ def quantum_rng(batch_size: int = 1024):
 
     """
     qrn = _ANUQRNG(batch_size=batch_size)
-    return numpy_random.Generator(randomgen.UserBitGenerator(qrn.random_raw))  # type: ignore[arg-type]  # noqa: E501
+    return numpy_random.Generator(randomgen.UserBitGenerator(qrn.random_raw))  # ty: ignore[invalid-argument-type]

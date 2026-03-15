@@ -1,12 +1,11 @@
 import random
-from typing import List, Tuple
 
 import matplotlib.pyplot as plt
 from scipy import stats
 
 import qrandom
 
-DataType = Tuple[Tuple[List[float], str], Tuple[List[float], str]]
+DataType = tuple[tuple[list[float], str], tuple[list[float], str]]
 
 
 def generate_data() -> DataType:

@@ -1,15 +1,16 @@
 # Analysis
 
-To run the analysis, first install the requirements (includes `quantum-random`):
+To run the analysis, [install uv](https://docs.astral.sh/uv/getting-started/installation/), then:
 
 ```bash
-pip install -r requirements.txt
+cd analysis
+uv sync --all-extras --all-groups
 ```
 
-Then run the script to generate the plot in `uniform.md`:
+Next, run the script to generate the plot in `uniform.md`:
 
 ```bash
-python generate_plot.py
+uv run generate_plot.py
 ```
 
 The output is written to `random.png`.

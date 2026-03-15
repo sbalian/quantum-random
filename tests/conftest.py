@@ -24,9 +24,7 @@ def anu_url():
 
 
 @pytest.fixture
-def api_client_with_successful_api_call(
-    mocked_responses, anu_url, test_responses
-):
+def api_client_with_successful_api_call(mocked_responses, anu_url, test_responses):
     mocked_responses.get(
         anu_url,
         json={"data": test_responses[0]["data"], "success": True},
@@ -46,9 +44,7 @@ def api_client_with_failed_api_call(mocked_responses, anu_url):
 
 
 @pytest.fixture
-def api_client_with_failed_api_call_and_no_json_response(
-    mocked_responses, anu_url
-):
+def api_client_with_failed_api_call_and_no_json_response(mocked_responses, anu_url):
     mocked_responses.get(
         anu_url,
         status=400,
@@ -99,9 +95,7 @@ def quantum_random_with_mocked_fetch_hex_raw_twice(mocker, test_responses):
 
 
 @pytest.fixture
-def quantum_random_with_mocked_fetch_hex_raw_five_times(
-    mocker, test_responses
-):
+def quantum_random_with_mocked_fetch_hex_raw_five_times(mocker, test_responses):
     mocker.patch(
         "qrandom._api.Client.fetch_hex_raw",
         side_effect=[test_responses[i] for i in range(5)],
@@ -110,9 +104,7 @@ def quantum_random_with_mocked_fetch_hex_raw_five_times(
 
 
 @pytest.fixture
-def quantum_random_with_mocked_fetch_hex_raw_for_all_data(
-    mocker, test_responses
-):
+def quantum_random_with_mocked_fetch_hex_raw_for_all_data(mocker, test_responses):
     mocker.patch(
         "qrandom._api.Client.fetch_hex_raw",
         side_effect=test_responses,

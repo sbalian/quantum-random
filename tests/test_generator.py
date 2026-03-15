@@ -22,9 +22,7 @@ def test_set_state_raises_on_call(quantum_random_with_no_api_calls):
 
 
 def test_seed_warns_on_call(quantum_random_with_no_api_calls):
-    with pytest.warns(
-        UserWarning, match=quantum_random_with_no_api_calls.seed.__doc__
-    ):
+    with pytest.warns(UserWarning, match=quantum_random_with_no_api_calls.seed.__doc__):
         quantum_random_with_no_api_calls.seed()
 
 
@@ -37,18 +35,14 @@ def test_fill_gets_2048_nums_after_two_calls(
     quantum_random_with_mocked_fetch_hex_raw_twice,
 ):
     quantum_random_with_mocked_fetch_hex_raw_twice.fill(2)
-    assert (
-        len(quantum_random_with_mocked_fetch_hex_raw_twice._rand_int64) == 2048
-    )
+    assert len(quantum_random_with_mocked_fetch_hex_raw_twice._rand_int64) == 2048
 
 
 def test_get_rand_int64(quantum_random_with_mocked_fetch_hex_raw_five_times):
     for call in range(1024 * 5):
         quantum_random_with_mocked_fetch_hex_raw_five_times._get_rand_int64()
         assert (
-            len(
-                quantum_random_with_mocked_fetch_hex_raw_five_times._rand_int64
-            )
+            len(quantum_random_with_mocked_fetch_hex_raw_five_times._rand_int64)
             == (1024 - call - 1) % 1024
         )
 

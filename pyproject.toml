@@ -1,6 +1,6 @@
 [project]
 name = "quantum-random"
-version = "1.4.2"
+version = "1.5.0"
 description = "Quantum random numbers"
 readme = "README.md"
 license = {text = "MIT License"}
@@ -24,29 +24,31 @@ classifiers = [
     "Operating System :: MacOS",
     "License :: OSI Approved :: MIT License",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
-    "click>=8.1.7",
-    "requests>=2.32.3",
-    "xdg>=6.0.0",
+    "requests>=2.32.5",
+    "typer>=0.24.1",
 ]
 
 [project.optional-dependencies]
 numpy = [
-    "numpy>=2.0.2",
-    "randomgen>=2.1.1",
+    "numpy>=2.2.6",
+    "randomgen>=2.3.0",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest-mock>=3.14.0",
-    "pytest>=8.3.3",
-    "responses>=0.25.3",
-    "mypy>=1.13.0",
-    "flake8>=7.1.1",
-    "isort>=5.13.2",
-    "black>=24.10.0",
-    "pip>=24.3.1",
+    "click>=8.3.1",
+    "ipython>=8.38.0",
+    "matplotlib>=3.10.8",
+    "numpy>=2.2.6",
+    "pytest>=9.0.2",
+    "pytest-mock>=3.15.1",
+    "randomgen>=2.3.0",
+    "responses>=0.26.0",
+    "ruff>=0.15.6",
+    "scipy>=1.15.3",
+    "ty>=0.0.23",
 ]
 
 [project.scripts]
@@ -63,17 +65,11 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/qrandom"]
 
-[tool.pytest.ini_options]
-addopts = "--verbose"
-testpaths = "tests"
+[tool.ruff]
+target-version = "py312"
 
-[tool.mypy]
-ignore_missing_imports = true
+[tool.ruff.lint]
+select = ["F", "E", "W", "I001"]
 
-[tool.black]
-line-length = 79
-
-[tool.isort]
-profile = "black"
-line_length = 79
-known_first_party = ["qrandom"]
+[tool.ruff.lint.isort]
+known-first-party = ["qrandom"]

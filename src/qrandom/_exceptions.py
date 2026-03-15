@@ -1,0 +1,2 @@
+class APIKeyNotFoundError(Exception):
+    pass
