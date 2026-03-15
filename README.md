@@ -69,7 +69,7 @@ You can set the key in order of precedence as follows:
 2. Write the key to `qrandom.ini` using the `qrandom-init` setup utility (included with
 the package). By default, the INI file is saved in your home config directory
 (e.g., `~/.config/` in Linux) and `qrandom` will find it without you having to set
-any environment varialbes. If you choose to save to a different location, you
+any environment variables. If you choose to save to a different location, you
 must set `QRANDOM_CONFIG_DIR`.
 
 The config file is ignored if `QRANDOM_API_KEY` is set.
