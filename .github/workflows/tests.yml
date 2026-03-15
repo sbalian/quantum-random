@@ -25,7 +25,7 @@ jobs:
       - name: Install the project
         run: uv sync --all-extras --all-groups
       - name: Run pytest
-        run: QRANDOM_API_KEY=key uv run pytest
+        run: QRANDOM_API_KEY=key uv run pytest -vv
       - name: Run ty
         run: uv run ty check .
 
