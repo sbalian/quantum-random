@@ -1,7 +1,7 @@
 import configparser
 import os
 import pathlib
-from typing import Dict, List, TypedDict, Union
+from typing import TypedDict
 
 import requests
 
@@ -54,7 +54,7 @@ class Response(TypedDict):
     success: bool
     type: str
     length: str
-    data: List[str]
+    data: list[str]
 
 
 class Client:
@@ -68,7 +68,7 @@ class Client:
 
         """
         self.key = key
-        self.params: Dict[str, Union[int, str]] = {
+        self.params: dict[str, int | str] = {
             "length": batch_size,
             "type": "hex16",
             "size": 4,
@@ -105,7 +105,7 @@ class Client:
             )
         return r_json
 
-    def fetch_hex(self) -> List[str]:
+    def fetch_hex(self) -> list[str]:
         """Gets hexadecimal random numbers from the ANU API.
 
         Calls Client.fetch_hex_raw(batch_size) and processes the response.
@@ -113,7 +113,7 @@ class Client:
         """
         return self.fetch_hex_raw()["data"]
 
-    def fetch_int64(self) -> List[int]:
+    def fetch_int64(self) -> list[int]:
         """Gets random int64s from the ANU API.
 
         Calls Client.fetch_hex(batch_size) and converts the hex numbers to
