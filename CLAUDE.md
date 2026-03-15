@@ -36,4 +36,4 @@ GitHub Actions runs tests across Python 3.10–3.14 on Linux, macOS, and Windows
 ## Notes
 
 - API key is read from `QRANDOM_API_KEY` env var or a config file (`qrandom.ini`) in `QRANDOM_CONFIG_DIR` (defaults to XDG config home)
-- Pass `color=False` to `runner.invoke()` in CLI tests to avoid ANSI codes causing assertion failures across platforms
+- Pass `color=False` to `runner.invoke()` in CLI tests; for assertions involving Typer's abort message, also apply `click.utils.strip_ansi()` since Typer appends a reset code even with `color=False`

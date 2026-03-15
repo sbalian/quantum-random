@@ -1,6 +1,7 @@
 import configparser
 import pathlib
 
+import click
 from typer.testing import CliRunner
 
 from qrandom import _cli, _util
@@ -92,7 +93,7 @@ def test_do_not_overwrite(tmp_path):
     with runner.isolated_filesystem(temp_dir=tmp_path):
         result = runner.invoke(_cli.app, input=f"{config_dir}\nn\nmy-key", color=False)
     assert result.exit_code == 1
-    assert result.output == (
+    assert click.utils.strip_ansi(result.output) == (
         "Where would you like to store the key? "
         f"[{pathlib.Path.home() / '.config' / 'qrandom'}]: {config_dir}\n"
         f"Would you like to overwrite {config_path}? [y/N]: n\n"
