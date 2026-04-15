@@ -27,4 +27,4 @@ jobs:
         run: sleep 30s
         shell: bash
       - name: Test import
-        run: QRANDOM_API_KEY=key uv run --with quantum-random --no-project -- python -c "import qrandom"
+        run: QRANDOM_API_KEY=key uv run --with "quantum-random==${GITHUB_REF_NAME#v}" --no-project -- python -c "import qrandom"
