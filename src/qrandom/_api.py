@@ -1,7 +1,7 @@
 import configparser
 import os
 import pathlib
-from typing import TypedDict
+from typing import Any, TypedDict
 
 import requests
 
@@ -91,7 +91,12 @@ class Client:
         except requests.HTTPError as e:
             try:
                 # Extend the error message with more info if available as JSON
-                e.args = ((f"{e.args[0]}\nMore info: {e.response.json()}"),)
+                more_info: Any = (
+                    "requests.HTTPError.response is None"
+                    if e.response is None
+                    else e.response.json()
+                )
+                e.args = ((f"{e.args[0]}\nMore info: {more_info}"),)
                 raise e
             except requests.JSONDecodeError:
                 raise e
