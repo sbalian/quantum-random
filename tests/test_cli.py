@@ -7,12 +7,12 @@ from typer.testing import CliRunner
 from qrandom import _cli, _util
 
 
-def test_default_flow(tmp_path, mocker):
+def test_default_flow(tmp_path, mocker, monkeypatch):
     config_dir = tmp_path / ".config"
     mocker.patch("qrandom._util.xdg_config_home", return_value=config_dir)
+    monkeypatch.chdir(tmp_path)
     runner = CliRunner()
-    with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input="\nmy-key")
+    result = runner.invoke(_cli.app, input="\nmy-key")
     assert result.exit_code == 0
     assert click.utils.strip_ansi(result.output) == (
         "Where would you like to store the key? "
@@ -25,11 +25,11 @@ def test_default_flow(tmp_path, mocker):
     assert config["default"]["key"] == "my-key"
 
 
-def test_user_provides_custom_dir(tmp_path):
+def test_user_provides_custom_dir(tmp_path, monkeypatch):
     config_dir = tmp_path / "key-dir"
+    monkeypatch.chdir(tmp_path)
     runner = CliRunner()
-    with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input=f"{config_dir}\nmy-key")
+    result = runner.invoke(_cli.app, input=f"{config_dir}\nmy-key")
     assert result.exit_code == 0
     assert click.utils.strip_ansi(result.output) == (
         "Where would you like to store the key? "
@@ -44,13 +44,13 @@ def test_user_provides_custom_dir(tmp_path):
     assert config["default"]["key"] == "my-key"
 
 
-def test_quits_if_config_is_not_a_directory(tmp_path):
+def test_quits_if_config_is_not_a_directory(tmp_path, monkeypatch):
     config_path = tmp_path / "key"
     with open(config_path, "w") as f:
         f.write("xyz")
+    monkeypatch.chdir(tmp_path)
     runner = CliRunner()
-    with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input=f"{config_path}")
+    result = runner.invoke(_cli.app, input=f"{config_path}")
     assert result.exit_code == 1
     assert click.utils.strip_ansi(result.output) == (
         "Where would you like to store the key? "
@@ -59,15 +59,15 @@ def test_quits_if_config_is_not_a_directory(tmp_path):
     )
 
 
-def test_confirm_overwrite(tmp_path):
+def test_confirm_overwrite(tmp_path, monkeypatch):
     config_dir = tmp_path / "key-dir"
     config_dir.mkdir()
     config_path = config_dir / "qrandom.ini"
     with open(config_path, "w") as f:
         f.write("xyz")
+    monkeypatch.chdir(tmp_path)
     runner = CliRunner()
-    with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input=f"{config_dir}\ny\nmy-key")
+    result = runner.invoke(_cli.app, input=f"{config_dir}\ny\nmy-key")
     assert result.exit_code == 0
     assert click.utils.strip_ansi(result.output) == (
         "Where would you like to store the key? "
@@ -83,15 +83,15 @@ def test_confirm_overwrite(tmp_path):
     assert config["default"]["key"] == "my-key"
 
 
-def test_do_not_overwrite(tmp_path):
+def test_do_not_overwrite(tmp_path, monkeypatch):
     config_dir = tmp_path / "key-dir"
     config_dir.mkdir()
     config_path = config_dir / "qrandom.ini"
     with open(config_path, "w") as f:
         f.write("xyz")
+    monkeypatch.chdir(tmp_path)
     runner = CliRunner()
-    with runner.isolated_filesystem(temp_dir=tmp_path):
-        result = runner.invoke(_cli.app, input=f"{config_dir}\nn\nmy-key")
+    result = runner.invoke(_cli.app, input=f"{config_dir}\nn\nmy-key")
     assert result.exit_code == 1
     assert click.utils.strip_ansi(result.output) == (
         "Where would you like to store the key? "
