@@ -14,7 +14,7 @@ def test_default_flow(tmp_path, mocker, monkeypatch):
     runner = CliRunner()
     result = runner.invoke(_cli.app, input="\nmy-key")
     assert result.exit_code == 0
-    assert click.utils.strip_ansi(result.output) == (
+    assert click.unstyle(result.output) == (
         "Where would you like to store the key? "
         f"[{config_dir / 'qrandom'}]: \n"
         "Enter your API key: my-key\n"
@@ -31,7 +31,7 @@ def test_user_provides_custom_dir(tmp_path, monkeypatch):
     runner = CliRunner()
     result = runner.invoke(_cli.app, input=f"{config_dir}\nmy-key")
     assert result.exit_code == 0
-    assert click.utils.strip_ansi(result.output) == (
+    assert click.unstyle(result.output) == (
         "Where would you like to store the key? "
         f"[{_util.xdg_config_home() / 'qrandom'}]: {config_dir}\n"
         "Enter your API key: my-key\n"
@@ -52,7 +52,7 @@ def test_quits_if_config_is_not_a_directory(tmp_path, monkeypatch):
     runner = CliRunner()
     result = runner.invoke(_cli.app, input=f"{config_path}")
     assert result.exit_code == 1
-    assert click.utils.strip_ansi(result.output) == (
+    assert click.unstyle(result.output) == (
         "Where would you like to store the key? "
         f"[{_util.xdg_config_home() / 'qrandom'}]: {config_path}\n"
         f"{config_path} is not a directory.\n"
@@ -69,7 +69,7 @@ def test_confirm_overwrite(tmp_path, monkeypatch):
     runner = CliRunner()
     result = runner.invoke(_cli.app, input=f"{config_dir}\ny\nmy-key")
     assert result.exit_code == 0
-    assert click.utils.strip_ansi(result.output) == (
+    assert click.unstyle(result.output) == (
         "Where would you like to store the key? "
         f"[{_util.xdg_config_home() / 'qrandom'}]: {config_dir}\n"
         f"Would you like to overwrite {config_path}? [y/N]: y\n"
@@ -93,7 +93,7 @@ def test_do_not_overwrite(tmp_path, monkeypatch):
     runner = CliRunner()
     result = runner.invoke(_cli.app, input=f"{config_dir}\nn\nmy-key")
     assert result.exit_code == 1
-    assert click.utils.strip_ansi(result.output) == (
+    assert click.unstyle(result.output) == (
         "Where would you like to store the key? "
         f"[{pathlib.Path.home() / '.config' / 'qrandom'}]: {config_dir}\n"
         f"Would you like to overwrite {config_path}? [y/N]: n\n"

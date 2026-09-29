@@ -25,4 +25,4 @@ def quantum_rng(batch_size: int = 1024):
 
     """
     qrn = _ANUQRNG(batch_size=batch_size)
-    return numpy_random.Generator(randomgen.UserBitGenerator(qrn.random_raw))  # ty: ignore[invalid-argument-type]
+    return numpy_random.Generator(randomgen.UserBitGenerator(qrn.random_raw))  # pyright: ignore[reportArgumentType]
