@@ -12,7 +12,7 @@ uv sync --all-extras --all-groups
 QRANDOM_API_KEY=key uv run pytest
 
 # Type check
-uv run ty check .
+uv run pyright
 
 # Lint
 uv run ruff check .
@@ -36,4 +36,4 @@ GitHub Actions runs tests across Python 3.10–3.14 on Linux, macOS, and Windows
 ## Notes
 
 - API key is read from `QRANDOM_API_KEY` env var or a config file (`qrandom.ini`) in `QRANDOM_CONFIG_DIR` (defaults to XDG config home)
-- Use `click.utils.strip_ansi()` on `result.output` in CLI test assertions to handle ANSI codes consistently across platforms
+- Use `click.unstyle()` on `result.output` in CLI test assertions to handle ANSI codes consistently across platforms
