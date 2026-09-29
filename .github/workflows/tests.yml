@@ -23,12 +23,16 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           version: "0.10.10"
+      - name: Install just
+        uses: extractions/setup-just@v4
+        with:
+          just-version: "1.58.0"
       - name: Install the project
         run: uv sync --all-extras --all-groups
       - name: Run pytest
-        run: QRANDOM_API_KEY=key uv run pytest
+        run: just test
       - name: Run pyright
-        run: uv run pyright
+        run: just type-check
 
   lint:
     name: Lint
@@ -43,7 +47,11 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           version: "0.10.10"
+      - name: Install just
+        uses: extractions/setup-just@v4
+        with:
+          just-version: "1.58.0"
       - name: Install the project
         run: uv sync --all-extras --all-groups
       - name: Check linting
-        run: uv run ruff check .
+        run: just lint

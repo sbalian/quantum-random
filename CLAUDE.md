@@ -8,15 +8,17 @@ Python library for quantum random numbers, fetched from the [ANU Quantum Random 
 # Install with all extras and dev dependencies
 uv sync --all-extras --all-groups
 
-# Run tests
-QRANDOM_API_KEY=key uv run pytest
+# Run tests (sets a dummy QRANDOM_API_KEY; extra args go to pytest)
+just test
 
 # Type check
-uv run pyright
+just type-check
 
 # Lint
-uv run ruff check .
+just lint
 ```
+
+Recipes are defined in `justfile`.
 
 ## Structure
 
@@ -31,7 +33,7 @@ uv run ruff check .
 
 ## CI
 
-GitHub Actions runs tests across Python 3.10–3.14 on Linux, macOS, and Windows, plus a lint job pinned to 3.12. Python versions are managed via `UV_PYTHON` and `UV_MANAGED_PYTHON=1` env vars set at the job level.
+GitHub Actions runs tests across Python 3.10–3.14 on Linux, macOS, and Windows, plus a lint job pinned to 3.12. Python versions are managed via `UV_PYTHON` and `UV_MANAGED_PYTHON=1` env vars set at the job level. CI installs `just` via `extractions/setup-just` and runs the same recipes.
 
 ## Notes
 
