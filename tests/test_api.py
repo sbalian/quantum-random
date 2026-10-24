@@ -99,6 +99,17 @@ def test_fetch_hex_raw_raises_on_failed_api_call_with_200_status(
     )
 
 
+def test_fetch_hex_raw_raises_on_empty_data_with_200_status(
+    api_client_with_empty_data_and_200_status,
+):
+    with pytest.raises(requests.HTTPError) as exc_info:
+        api_client_with_empty_data_and_200_status.fetch_hex_raw()
+    assert (
+        exc_info.value.args[0]
+        == "the ANU response had no data even though the 'success' field was True\nMore info: {'data': [], 'success': True}"  # noqa: E501
+    )
+
+
 def test_fetch_hex_returns_hex_numbers_and_with_correct_length(
     api_client_with_mocked_fetch_hex_raw,
 ):

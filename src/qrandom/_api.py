@@ -108,6 +108,13 @@ class Client:
                 "the 'success' field in the ANU response was False even "
                 f"though the status code was {response.status_code}"
             )
+        if not r_json.get("data"):
+            # The API has been seen to return success with no data, which
+            # would otherwise surface later as an IndexError in the generator
+            raise requests.HTTPError(
+                "the ANU response had no data even though the 'success' field "
+                f"was True\nMore info: {r_json}"
+            )
         return r_json
 
     def fetch_hex(self) -> list[str]:
