@@ -53,6 +53,16 @@ def api_client_with_failed_api_call_and_no_json_response(mocked_responses, anu_u
 
 
 @pytest.fixture
+def api_client_with_empty_data_and_200_status(mocked_responses, anu_url):
+    mocked_responses.get(
+        anu_url,
+        json={"data": [], "success": True},
+        status=200,
+    )
+    return _api.Client("key")
+
+
+@pytest.fixture
 def api_client_with_failed_api_call_with_200_status(mocked_responses, anu_url):
     mocked_responses.get(
         anu_url,
