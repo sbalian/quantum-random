@@ -1,6 +1,6 @@
 [project]
 name = "quantum-random"
-version = "1.5.5"
+version = "1.5.6"
 description = "Quantum random numbers"
 readme = "README.md"
 license = {text = "MIT License"}
@@ -24,7 +24,7 @@ classifiers = [
     "Operating System :: MacOS",
     "License :: OSI Approved :: MIT License",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     "requests>=2.32.5",
     "typer>=0.24.1",
