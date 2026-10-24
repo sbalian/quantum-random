@@ -23,8 +23,12 @@ jobs:
         run: uv build
       - name: Publish
         run: uv publish
-      - name: Sleep
-        run: sleep 30s
-        shell: bash
       - name: Test import
-        run: QRANDOM_API_KEY=key uv run --with "quantum-random==${GITHUB_REF_NAME#v}" --no-project -- python -c "import qrandom"
+        run: |
+          for i in $(seq 1 10); do
+            QRANDOM_API_KEY=key uv run --refresh --with "quantum-random==${GITHUB_REF_NAME#v}" --no-project -- python -c "import qrandom" && exit 0
+            echo "Attempt $i failed; retrying in 30s"
+            sleep 30
+          done
+          exit 1
+        shell: bash
