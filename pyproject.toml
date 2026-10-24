@@ -1,6 +1,6 @@
 [project]
 name = "quantum-random"
-version = "1.5.4"
+version = "1.5.5"
 description = "Quantum random numbers"
 readme = "README.md"
 license = {text = "MIT License"}
